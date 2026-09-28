@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J. Cislini - Resume</title>
-    <!-- Web Fonts resembling NI typography -->
+    <!-- Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 
     <style>
         :root {
-            /* NI / Emerson Color Palette */
+            /* Palette */
             --ni-green-dark: #044123;
             --ni-green-primary: #009b65;
             --ni-green-hover: #006b46;
@@ -22,7 +22,19 @@
             --ni-card-bg: #ffffff;
             --ni-text-dark: #044123;
             --ni-text-body: #2d3748;
+            --ni-text-muted: #718096;
+            --ni-text-footer: #a0aec0;
             --ni-border: #e2e8f0;
+            --ni-border-dark: #cbd5e0;
+            --ni-danger: #e53e3e;
+
+            /* Alpha / Tint Colors */
+            --ni-green-alpha-12: rgba(0, 155, 101, 0.12);
+            --ni-green-alpha-08: rgba(0, 155, 101, 0.08);
+            --ni-green-alpha-shadow: rgba(0, 155, 101, 0.4);
+            --ni-danger-alpha-12: rgba(229, 62, 62, 0.12);
+            --ni-shadow-light: rgba(0, 0, 0, 0.03);
+            --ni-shadow-medium: rgba(0, 0, 0, 0.15);
 
             /* Typography */
             --font-heading: 'DM Serif Display', Georgia, serif;
@@ -40,13 +52,22 @@
             background-color: var(--ni-bg-light);
             color: var(--ni-text-body);
             line-height: 1.6;
-            padding: 0;
-            margin: 0;
+        }
+
+        /* Typography & Links Defaults */
+        a {
+            color: var(--ni-green-primary);
+            text-decoration: none;
+            transition: color 0.15s ease, text-decoration 0.15s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         /* Header / Navigation Bar */
         header {
-            background-color: #ffffff;
+            background-color: var(--ni-card-bg);
             border-bottom: 1px solid var(--ni-border);
             padding: 1rem 2rem;
             position: sticky;
@@ -77,15 +98,14 @@
 
         .nav-links a {
             color: var(--ni-green-dark);
-            text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
             margin-left: 1.5rem;
-            transition: color 0.15s ease;
         }
 
         .nav-links a:hover {
             color: var(--ni-green-primary);
+            text-decoration: none;
         }
 
         /* Main Container */
@@ -101,7 +121,7 @@
             border-radius: 8px;
             padding: 3rem 2.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 8px var(--ni-shadow-light);
         }
 
         .eyebrow {
@@ -129,6 +149,10 @@
             max-width: 800px;
         }
 
+        .hero-subtitle a {
+            font-weight: 600;
+        }
+
         .btn-group {
             display: flex;
             gap: 1rem;
@@ -137,10 +161,9 @@
 
         .btn-primary, .btn-secondary, .btn-verify {
             background-color: var(--ni-green-primary);
-            color: #ffffff !important;
+            color: #ffffff;
             padding: 0.75rem 1.75rem;
             border-radius: 24px;
-            text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
             line-height: 1.2;
@@ -154,11 +177,13 @@
             font-family: var(--font-body);
         }
 
-        a.btn-primary, 
-        a.btn-primary:visited, 
-        a.btn-primary:active, 
-        a.btn-primary:hover {
-            color: #ffffff !important;
+        .btn-primary:hover, .btn-secondary:hover, .btn-verify:hover {
+            text-decoration: none;
+            background-color: var(--ni-green-hover);
+        }
+
+        .btn-full {
+            width: 100%;
         }
 
         .btn-verify {
@@ -175,13 +200,18 @@
             gap: 2rem;
         }
 
-        /* Resume Sections */
+        /* Resume Cards */
         .section-card {
             background-color: var(--ni-card-bg);
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 8px var(--ni-shadow-light);
+        }
+
+        .section-card-accent {
+            text-align: center;
+            border-top: 4px solid var(--ni-green-primary);
         }
 
         .section-title {
@@ -194,6 +224,24 @@
             font-weight: 400;
         }
 
+        .widget-title {
+            font-family: var(--font-heading);
+            color: var(--ni-green-dark);
+            font-size: 1.25rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .widget-icon {
+            margin-bottom: 0.75rem;
+        }
+
+        .widget-description {
+            font-size: 0.85rem;
+            color: var(--ni-text-body);
+            margin-bottom: 1.25rem;
+        }
+
+        /* Timeline Components */
         .timeline-container {
             position: relative;
             padding-left: 40px;
@@ -206,7 +254,7 @@
             top: 11px;
             bottom: 11px;
             width: 2px;
-            background-color: #cbd5e0;
+            background-color: var(--ni-border-dark);
             transform: translateX(-50%);
             z-index: 1;
         }
@@ -244,7 +292,7 @@
             50% {
                 background-color: var(--ni-green-primary);
                 border-color: var(--ni-green-dark);
-                box-shadow: 0 0 4px 1px rgba(0, 155, 101, 0.4);
+                box-shadow: 0 0 4px 1px var(--ni-green-alpha-shadow);
             }
         }
 
@@ -265,13 +313,13 @@
         }
 
         .active-badge, .valable-badge {
-            background-color: rgba(0, 155, 101, 0.12);
+            background-color: var(--ni-green-alpha-12);
             color: var(--ni-green-primary);
         }
 
         .expired-badge {
-            background-color: rgba(229, 62, 62, 0.12);
-            color: #e53e3e;
+            background-color: var(--ni-danger-alpha-12);
+            color: var(--ni-danger);
         }
 
         .timeline-group {
@@ -328,7 +376,7 @@
 
         .item-date {
             font-size: 0.85rem;
-            color: #718096;
+            color: var(--ni-text-muted);
             font-weight: 500;
         }
 
@@ -342,13 +390,9 @@
             gap: 0.5rem;
         }
 
-        .item-subtitle a {
-            color: var(--ni-green-primary);
-            text-decoration: none;
-        }
-
-        .item-subtitle a:hover {
-            text-decoration: underline;
+        .timeline-item p {
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
         }
 
         .timeline-item ul {
@@ -361,6 +405,7 @@
             font-size: 0.95rem;
         }
 
+        /* Content List Elements */
         .skills-list {
             display: flex;
             flex-wrap: wrap;
@@ -377,9 +422,12 @@
             border-radius: 4px;
         }
 
-        .contact-info p {
+        .contact-info p, .language-item {
             margin-bottom: 0.75rem;
             font-size: 0.95rem;
+        }
+
+        .contact-info p {
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -387,7 +435,6 @@
 
         .contact-info a {
             color: var(--ni-green-dark);
-            text-decoration: none;
             font-weight: 500;
         }
 
@@ -396,7 +443,7 @@
         }
 
         .award-box {
-            background-color: rgba(0, 155, 101, 0.08);
+            background-color: var(--ni-green-alpha-08);
             border-left: 4px solid var(--ni-green-primary);
             padding: 1rem;
             border-radius: 0 6px 6px 0;
@@ -414,13 +461,18 @@
             color: var(--ni-text-body);
         }
 
-        .award-box a {
-            color: var(--ni-green-primary);
-            text-decoration: none;
+        .github-chart-container {
+            display: block;
+            border-radius: 6px;
+            border: 1px solid var(--ni-border);
+            padding: 8px;
+            background-color: var(--ni-card-bg);
         }
 
-        .award-box a:hover {
-            text-decoration: underline;
+        .github-chart-img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         #floatingContactBtn {
@@ -429,17 +481,40 @@
             right: 24px;
             background-color: var(--ni-green-primary);
             color: #ffffff;
-            text-decoration: none;
             font-weight: 600;
             padding: 12px 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px var(--ni-shadow-medium);
             transition: background-color 0.15s ease-out;
             z-index: 1000;
         }
 
         #floatingContactBtn:hover {
+            text-decoration: none;
             background-color: var(--ni-green-hover);
+        }
+
+        /* Gate Elements */
+        .gate-container {
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+
+        .gate-description {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: var(--ni-text-body);
+        }
+
+        .turnstile-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        #gate-status {
+            font-size: 0.85rem;
+            color: var(--ni-text-muted);
         }
 
         footer {
@@ -452,8 +527,7 @@
         }
 
         footer a {
-            color: #a0aec0;
-            text-decoration: none;
+            color: var(--ni-text-footer);
         }
 
         @media (max-width: 850px) {
@@ -485,10 +559,10 @@
         
         <!-- Hero Spotlight Section -->
         <section class="hero-spotlight" id="about">
-            <p class="eyebrow">Aspiring Electronics Engineer at <a href="https://www.heia-fr.ch/" target="_blank" style="color: var(--ni-green-primary); text-decoration: none;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">HEIA-FR</a></p>
+            <p class="eyebrow">Aspiring Electronics Engineer at <a href="https://www.heia-fr.ch/" target="_blank">HEIA-FR</a></p>
             <h1 class="hero-title">Precision Hardware & Electronics Systems</h1>
             <p class="hero-subtitle">
-                Former Electronics Apprentice at <a href="https://www.schindler.ch/" target="_blank" style="color: var(--ni-green-primary); font-weight: 600; text-decoration: none;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">Schindler</a> R&D with strong technical expertise in hardware development, PCBA prototyping, and operational safety. Recognized as Ticino's Best Apprentice for 2025 by <a href="https://www.ameti.ch/" target="_blank" style="color: var(--ni-green-primary); font-weight: 600; text-decoration: none;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">AMETI</a>.
+                Former Electronics Apprentice at <a href="https://www.schindler.ch/" target="_blank">Schindler</a> R&D with strong technical expertise in hardware development, PCBA prototyping, and operational safety. Recognized as Ticino's Best Apprentice for 2025 by <a href="https://www.ameti.ch/" target="_blank">AMETI</a>.
             </p>
             <div class="btn-group">
                 <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" class="btn-primary">Connect on LinkedIn</a>
@@ -502,8 +576,8 @@
             <main>
                 
                 <div class="award-box">
-                    <h4><a href="https://www.ameti.ch/" target="_blank" style="color: var(--ni-green-primary); text-decoration: none;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">AMETI</a> Award Winner - Best Apprentice 2025</h4>
-                    <p>Recognized by <a href="https://www.ameti.ch/" target="_blank" style="color: var(--ni-green-primary); text-decoration: none;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">AMETI</a> as the <strong>Best Apprentice in Ticino for the year 2025</strong> based on final exam performance during the Electronics Technician apprenticeship.</p>
+                    <h4><a href="https://www.ameti.ch/" target="_blank">AMETI</a> Award Winner - Best Apprentice 2025</h4>
+                    <p>Recognized by <a href="https://www.ameti.ch/" target="_blank">AMETI</a> as the <strong>Best Apprentice in Ticino for the year 2025</strong> based on final exam performance during the Electronics Technician apprenticeship.</p>
                 </div>
 
                 <section class="section-card" id="experience">
@@ -518,7 +592,7 @@
                             <div class="item-subtitle">
                                 <a href="https://www.armee.ch/" target="_blank">Swiss Armed Forces</a> · Full-time (10 mos)
                             </div>
-                            <p style="font-size: 0.95rem; margin-top: 0.25rem;">
+                            <p>
                                 Completed 10 months of military service in the Swiss Army. Responsible for the safe transportation of personnel and equipment, vehicle inspections and maintenance, and task execution under strict procedures and time constraints.
                             </p>
                             <ul>
@@ -535,11 +609,11 @@
                             <div class="item-subtitle">
                                 <a href="https://www.schindler.ch/" target="_blank">Schindler Aufzüge AG</a> · Locarno, Ticino, Switzerland · Apprenticeship (4 yrs)
                             </div>
-                            <p style="font-size: 0.95rem; margin-top: 0.25rem;">
+                            <p>
                                 Developed strong technical skills in electronics and hardware development. Joined the R&D team <strong>“Phygital Hardware”</strong>, contributing to the development of “PCBA PORT” prototypes and completing the final graduation project within the team.
                             </p>
                             <ul>
-                                <li>Awarded <strong>Best Apprentice in Ticino for 2025</strong> by <a href="https://www.ameti.ch/" target="_blank" style="color: var(--ni-green-primary); text-decoration: none;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">AMETI</a> based on final exam results.</li>
+                                <li>Awarded <strong>Best Apprentice in Ticino for 2025</strong> by <a href="https://www.ameti.ch/" target="_blank">AMETI</a> based on final exam results.</li>
                                 <li>Obtained the integrated Technical Professional Maturity with excellent results in humanistic and scientific subjects.</li>
                             </ul>
                         </div>
@@ -624,72 +698,67 @@
             </main>
 
             <aside>
-                <section class="section-card" id="linkedin-widget" style="text-align: center; border-top: 4px solid var(--ni-green-primary);">
-                    <div style="margin-bottom: 0.75rem;">
+                <section class="section-card section-card-accent" id="linkedin-widget">
+                    <div class="widget-icon">
                         <svg width="36" height="36" viewBox="0 0 24 24" fill="var(--ni-green-primary)">
                             <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.45 1.45 0 1 0 0 2.9 1.45 1.45 0 0 0 0-2.9z"/>
                         </svg>
                     </div>
-                    <h3 style="font-family: var(--font-heading); color: var(--ni-green-dark); font-size: 1.25rem; margin-bottom: 0.3rem;">Connect on LinkedIn</h3>
-                    <p style="font-size: 0.85rem; color: var(--ni-text-body); margin-bottom: 1.25rem;">Explore professional updates, network, and R&D hardware projects.</p>
-                    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" class="btn-primary" style="width: 100%;">
+                    <h3 class="widget-title">Connect on LinkedIn</h3>
+                    <p class="widget-description">Explore professional updates, network, and R&D hardware projects.</p>
+                    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" class="btn-primary btn-full">
                         View Linkedin Profile ↗
                     </a>
                 </section>
 
-                <section class="section-card" id="github-widget" style="text-align: center; border-top: 4px solid var(--ni-green-primary);">
-                    <div style="margin-bottom: 0.75rem;">
+                <section class="section-card section-card-accent" id="github-widget">
+                    <div class="widget-icon">
                         <svg height="36" width="36" viewBox="0 0 16 16" fill="var(--ni-green-primary)">
                             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
                         </svg>
                     </div>
                     
-                    <h3 style="font-family: var(--font-heading); color: var(--ni-green-dark); font-size: 1.25rem; margin-bottom: 0.3rem;">GitHub Activity</h3>
-                    <p style="font-size: 0.85rem; color: var(--ni-text-body); margin-bottom: 1.25rem;">Contributions & Code Commit Graph</p>
+                    <h3 class="widget-title">GitHub Activity</h3>
+                    <p class="widget-description">Contributions & Code Commit Graph</p>
                     
-                    <a href="https://github.com/joshua-cislini" target="_blank" style="display: block; border-radius: 6px; border: 1px solid var(--ni-border); padding: 8px; background-color: #ffffff;">
-                        <img src="https://ghchart.rshah.org/009b65/joshua-cislini" alt="Joshua Cislini's GitHub Contribution Chart" style="width: 100%; height: auto; display: block;" />
+                    <a href="https://github.com/joshua-cislini" target="_blank" class="github-chart-container">
+                        <img src="https://ghchart.rshah.org/009b65/joshua-cislini" alt="Joshua Cislini's GitHub Contribution Chart" class="github-chart-img" />
                     </a>
                     
-                    <a href="https://github.com/joshua-cislini" target="_blank" class="btn-primary" style="margin-top: 1.25rem; width: 100%;">
+                    <a href="https://github.com/joshua-cislini" target="_blank" class="btn-primary btn-full" style="margin-top: 1.25rem;">
                         View GitHub Profile ↗
                     </a>
                 </section>
 
-                <!-- Contact Info Card with Turnstile Gate & Resume Download Button -->
+                <!-- Contact Info Card -->
                 <section class="section-card" id="contact">
                     <h2 class="section-title">Contact</h2>
                     
-                    <!-- Revealed Content Container (Hidden by Default) -->
                     <div class="contact-info" id="contact-info-content" style="display: none;">
                         <p><strong>E-mail:</strong> <a id="email-link" href="#"></a></p>
                         <p><strong>Phone:</strong> <a id="phone-link" href="#"></a></p>
                         <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank">joshua-cislini</a></p>
                         
-                        <!-- Resume Download Button (Matches GitHub/LinkedIn Widget Style) -->
                         <div style="margin-top: 1.25rem;">
-                            <!-- Resume Download Button (Exact match for LinkedIn & GitHub widget buttons) -->
-                            <a id="download-resume-link" href="#" download="Joshua_Cislini_Resume.pdf" class="btn-primary" style="margin-top: 1.25rem; width: 100%;">
+                            <a id="download-resume-link" href="#" download="Joshua_Cislini_Resume.pdf" class="btn-primary btn-full">
                                 Download Resume ⤓
                             </a>
                         </div>
                     </div>
 
-                    <!-- Turnstile Widget & Gate Container -->
-                    <div id="contact-gate" style="text-align: center; padding: 0.5rem 0;">
-                        <p style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--ni-text-body);">
+                    <div id="contact-gate" class="gate-container">
+                        <p class="gate-description">
                             Verify safety check to view direct contact information & downloadable resume:
                         </p>
 
-                        <!-- Turnstile Widget -->
-                        <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                        <div class="turnstile-wrapper">
                             <div class="cf-turnstile" 
                                  data-sitekey="0x4AAAAAAFGMgR9DIjsQzy0M" 
                                  data-callback="onTurnstileSuccess"
                                  data-size="compact"></div>
                         </div>
 
-                        <p id="gate-status" style="font-size: 0.85rem; color: #718096;"></p>
+                        <p id="gate-status"></p>
                     </div>
                 </section>
 
@@ -708,10 +777,10 @@
 
                 <section class="section-card">
                     <h2 class="section-title">Languages</h2>
-                    <p style="font-size: 0.95rem; margin-bottom: 0.4rem;"><strong>Italian:</strong> Native</p>
-                    <p style="font-size: 0.95rem; margin-bottom: 0.4rem;"><strong>English:</strong> Bilingual</p>
-                    <p style="font-size: 0.95rem; margin-bottom: 0.4rem;"><strong>French:</strong> Limited working</p>
-                    <p style="font-size: 0.95rem;"><strong>German:</strong> Limited working</p>
+                    <p class="language-item"><strong>Italian:</strong> Native</p>
+                    <p class="language-item"><strong>English:</strong> Bilingual</p>
+                    <p class="language-item"><strong>French:</strong> Limited working</p>
+                    <p class="language-item" style="margin-bottom: 0;"><strong>German:</strong> Limited working</p>
                 </section>
             </aside>
 
@@ -725,10 +794,8 @@
     </footer>
 
     <script>
-        // Global object memory for Blob URL
         let activeResumeBlobUrl = null;
 
-        // Global Turnstile Callback Function
         async function onTurnstileSuccess(token) {
             const statusEl = document.getElementById("gate-status");
             statusEl.textContent = "Verifying safety check...";
@@ -752,27 +819,24 @@
                     phoneLink.href = "tel:" + data.phone.replace(/\s+/g, '');
                     phoneLink.textContent = data.phone;
 
-                    // Convert Base64 PDF to Blob and bind to button link
                     if (data.resumeBase64) {
                         const blob = base64ToBlob(data.resumeBase64, 'application/pdf');
                         activeResumeBlobUrl = URL.createObjectURL(blob);
                         document.getElementById("download-resume-link").href = activeResumeBlobUrl;
                     }
 
-                    // Hide gate & display contact info
                     document.getElementById("contact-gate").style.display = "none";
                     document.getElementById("contact-info-content").style.display = "block";
                 } else {
                     statusEl.textContent = "Verification failed. Please refresh the page and try again.";
-                    statusEl.style.color = "#e53e3e";
+                    statusEl.style.color = "var(--ni-danger)";
                 }
             } catch (error) {
                 statusEl.textContent = "Unable to connect to verification server.";
-                statusEl.style.color = "#e53e3e";
+                statusEl.style.color = "var(--ni-danger)";
             }
         }
 
-        // Convert base64 data to Blob
         function base64ToBlob(base64, mimeType) {
             const byteCharacters = atob(base64);
             const byteArrays = [];
@@ -788,7 +852,6 @@
             return new Blob(byteArrays, { type: mimeType });
         }
 
-        // Hero Resume button click handler
         function handleHeroResumeClick() {
             if (activeResumeBlobUrl) {
                 const a = document.createElement("a");
@@ -802,7 +865,6 @@
             }
         }
 
-        // Dynamic Date Evaluator
         document.addEventListener("DOMContentLoaded", function() {
             const today = new Date();
 
