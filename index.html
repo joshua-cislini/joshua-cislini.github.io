@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J. Cislini - Resume</title>
-    <!-- Web Fonts -->
+    <!-- Web Fonts resemblance to NI typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -67,7 +67,7 @@
             z-index: 0;
         }
 
-        /* Bottom-Left FPS Widget */
+        /* Fixed Bottom-Left FPS Counter Widget */
         #fps-widget {
             position: fixed;
             bottom: 24px;
@@ -122,8 +122,8 @@
             opacity: 1;
         }
 
-        /* Elevate main content above background canvas */
-        header, .container, footer, #floatingContactBtn, #fps-widget {
+        /* Elevate main content sections above canvas */
+        header, .container, footer {
             position: relative;
             z-index: 1;
         }
@@ -899,13 +899,12 @@
             let mouse = { x: -1000, y: -1000, active: false };
             const particles = [];
             
-            const particleCount = Math.floor(Math.min(width, height) / 2);
+            const particleCount = Math.floor(Math.min(width, height) / 18);
 
             let isExploding = false;
-            let explosionProgress = 0; // 0 = green, 1 = full red
+            let explosionProgress = 0;
             let popupTimeout = null;
 
-            // Real-time FPS Calculation Variables
             let lastTime = performance.now();
             let frameCount = 0;
 
@@ -930,14 +929,12 @@
                     if (isExploding) {
                         this.x += this.vx;
                         this.y += this.vy;
-                        this.vx *= 0.98; // Friction deceleration
+                        this.vx *= 0.98;
                         this.vy *= 0.98;
 
-                        // Smoothly ease velocities back to gentle target drift
                         this.vx += (this.targetVx - this.vx) * 0.02;
                         this.vy += (this.targetVy - this.vy) * 0.02;
 
-                        // Wrap around edges cleanly during explosion transition
                         if (this.x < 0) this.x = width;
                         if (this.x > width) this.x = 0;
                         if (this.y < 0) this.y = height;
@@ -973,7 +970,6 @@
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                     
-                    // Smooth RGB Interpolation between Green (0, 155, 101) and Red (229, 62, 62)
                     const r = Math.round(0 + (229 - 0) * explosionProgress);
                     const g = Math.round(155 + (62 - 155) * explosionProgress);
                     const b = Math.round(101 + (62 - 101) * explosionProgress);
@@ -999,7 +995,6 @@
                     popup.classList.remove('show');
                 }, 3500);
 
-                // Shoot particles outwards cleanly in all directions
                 particles.forEach(p => {
                     const angle = Math.random() * Math.PI * 2;
                     const speed = Math.random() * 16 + 8;
@@ -1010,7 +1005,6 @@
                     p.captured = false;
                 });
 
-                // Smoothly fade back from red to green without position jumping
                 const fadeInterval = setInterval(() => {
                     explosionProgress -= 0.03;
                     if (explosionProgress <= 0) {
@@ -1023,14 +1017,14 @@
 
             function updateFPS(now) {
                 frameCount++;
-                if (now - lastTime >= 500) { // Update FPS counter twice per second
+                if (now - lastTime >= 500) {
                     const fps = Math.round((frameCount * 1000) / (now - lastTime));
                     fpsText.textContent = `${fps} FPS`;
 
                     if (fps >= 50) {
                         fpsDot.style.backgroundColor = 'var(--ni-green-primary)';
                     } else if (fps >= 30) {
-                        fpsDot.style.backgroundColor = '#d69e2e'; // Orange / Yellow warning
+                        fpsDot.style.backgroundColor = '#d69e2e';
                     } else {
                         fpsDot.style.backgroundColor = 'var(--ni-danger)';
                     }
