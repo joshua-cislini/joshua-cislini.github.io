@@ -67,6 +67,35 @@
             z-index: 0;
         }
 
+        /* Bottom-Left FPS Widget */
+        #fps-widget {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            background-color: var(--ni-card-bg);
+            color: var(--ni-text-dark);
+            border: 1px solid var(--ni-border);
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 8px 14px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--ni-shadow-medium);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-body);
+            user-select: none;
+        }
+
+        .fps-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--ni-green-primary);
+            display: inline-block;
+        }
+
         /* Red Centered Easter Egg Popup */
         #easter-egg-popup {
             position: fixed;
@@ -94,7 +123,7 @@
         }
 
         /* Elevate main content above background canvas */
-        header, .container, footer, #floatingContactBtn {
+        header, .container, footer, #floatingContactBtn, #fps-widget {
             position: relative;
             z-index: 1;
         }
@@ -590,6 +619,12 @@
     <!-- Particle Background Canvas -->
     <canvas id="bg-canvas"></canvas>
 
+    <!-- Bottom-Left FPS Widget -->
+    <div id="fps-widget">
+        <span class="fps-indicator" id="fps-dot"></span>
+        <span id="fps-text">60 FPS</span>
+    </div>
+
     <!-- Red Centered Easter Egg Popup -->
     <div id="easter-egg-popup">
         🚨 You seriously have nothing better to do?
@@ -855,6 +890,9 @@
             const ctx = canvas.getContext('2d');
             const popup = document.getElementById('easter-egg-popup');
 
+            const fpsText = document.getElementById('fps-text');
+            const fpsDot = document.getElementById('fps-dot');
+
             let width = (canvas.width = window.innerWidth);
             let height = (canvas.height = window.innerHeight);
 
@@ -864,7 +902,12 @@
             const particleCount = Math.floor(Math.min(width, height) / 2);
 
             let isExploding = false;
+            let explosionProgress = 0; // 0 = green, 1 = full red
             let popupTimeout = null;
+
+            // Real-time FPS Calculation Variables
+            let lastTime = performance.now();
+            let frameCount = 0;
 
             class Particle {
                 constructor() {
@@ -876,6 +919,8 @@
                     this.y = Math.random() * height;
                     this.vx = (Math.random() - 0.5) * 0.8;
                     this.vy = (Math.random() - 0.5) * 0.8;
+                    this.targetVx = this.vx;
+                    this.targetVy = this.vy;
                     this.radius = Math.random() * 1.5 + 1;
                     this.captured = false;
                     this.connectionsCount = 0;
@@ -885,8 +930,19 @@
                     if (isExploding) {
                         this.x += this.vx;
                         this.y += this.vy;
-                        this.vx *= 0.96;
-                        this.vy *= 0.96;
+                        this.vx *= 0.98; // Friction deceleration
+                        this.vy *= 0.98;
+
+                        // Smoothly ease velocities back to gentle target drift
+                        this.vx += (this.targetVx - this.vx) * 0.02;
+                        this.vy += (this.targetVy - this.vy) * 0.02;
+
+                        // Wrap around edges cleanly during explosion transition
+                        if (this.x < 0) this.x = width;
+                        if (this.x > width) this.x = 0;
+                        if (this.y < 0) this.y = height;
+                        if (this.y > height) this.y = 0;
+
                         return;
                     }
 
@@ -916,7 +972,14 @@
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = isExploding ? 'rgba(229, 62, 62, 0.8)' : 'rgba(0, 155, 101, 0.4)';
+                    
+                    // Smooth RGB Interpolation between Green (0, 155, 101) and Red (229, 62, 62)
+                    const r = Math.round(0 + (229 - 0) * explosionProgress);
+                    const g = Math.round(155 + (62 - 155) * explosionProgress);
+                    const b = Math.round(101 + (62 - 101) * explosionProgress);
+                    const alpha = 0.4 + 0.4 * explosionProgress;
+
+                    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
                     ctx.fill();
                 }
             }
@@ -927,6 +990,7 @@
 
             function triggerExplosion() {
                 isExploding = true;
+                explosionProgress = 1;
 
                 popup.classList.add('show');
 
@@ -935,26 +999,53 @@
                     popup.classList.remove('show');
                 }, 3500);
 
+                // Shoot particles outwards cleanly in all directions
                 particles.forEach(p => {
                     const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * 18 + 6;
+                    const speed = Math.random() * 16 + 8;
                     p.vx = Math.cos(angle) * speed;
                     p.vy = Math.sin(angle) * speed;
+                    p.targetVx = (Math.random() - 0.5) * 0.8;
+                    p.targetVy = (Math.random() - 0.5) * 0.8;
                     p.captured = false;
                 });
 
-                setTimeout(() => {
-                    isExploding = false;
-                    particles.forEach(p => p.reset());
-                }, 1400);
+                // Smoothly fade back from red to green without position jumping
+                const fadeInterval = setInterval(() => {
+                    explosionProgress -= 0.03;
+                    if (explosionProgress <= 0) {
+                        explosionProgress = 0;
+                        isExploding = false;
+                        clearInterval(fadeInterval);
+                    }
+                }, 30);
             }
 
-            function animate() {
+            function updateFPS(now) {
+                frameCount++;
+                if (now - lastTime >= 500) { // Update FPS counter twice per second
+                    const fps = Math.round((frameCount * 1000) / (now - lastTime));
+                    fpsText.textContent = `${fps} FPS`;
+
+                    if (fps >= 50) {
+                        fpsDot.style.backgroundColor = 'var(--ni-green-primary)';
+                    } else if (fps >= 30) {
+                        fpsDot.style.backgroundColor = '#d69e2e'; // Orange / Yellow warning
+                    } else {
+                        fpsDot.style.backgroundColor = 'var(--ni-danger)';
+                    }
+
+                    frameCount = 0;
+                    lastTime = now;
+                }
+            }
+
+            function animate(now) {
+                updateFPS(now);
                 ctx.clearRect(0, 0, width, height);
 
                 let capturedCount = 0;
 
-                // Reset per-frame connection counts
                 for (let i = 0; i < particles.length; i++) {
                     particles[i].connectionsCount = 0;
                 }
@@ -967,9 +1058,7 @@
                         capturedCount++;
                     }
 
-                    // Check inter-particle connections with performance capping
                     for (let j = i + 1; j < particles.length; j++) {
-                        // Max connection limits: 2 max for captured particles, 5 max for free floating ones
                         const maxI = particles[i].captured ? 2 : 5;
                         const maxJ = particles[j].captured ? 2 : 5;
 
@@ -988,15 +1077,18 @@
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = isExploding 
-                                ? `rgba(229, 62, 62, ${0.2 * (1 - dist / 100)})` 
-                                : `rgba(0, 155, 101, ${0.15 * (1 - dist / 100)})`;
+
+                            const r = Math.round(0 + (229 - 0) * explosionProgress);
+                            const g = Math.round(155 + (62 - 155) * explosionProgress);
+                            const b = Math.round(101 + (62 - 101) * explosionProgress);
+                            const alpha = (0.15 + 0.1 * explosionProgress) * (1 - dist / 100);
+
+                            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
                             ctx.lineWidth = 0.75;
                             ctx.stroke();
                         }
                     }
 
-                    // Draw lines connecting particles directly to mouse cursor
                     if (mouse.active && !isExploding) {
                         let dx = particles[i].x - mouse.x;
                         let dy = particles[i].y - mouse.y;
@@ -1020,7 +1112,7 @@
                 requestAnimationFrame(animate);
             }
 
-            animate();
+            requestAnimationFrame(animate);
 
             // Event Listeners
             window.addEventListener('mousemove', (e) => {
