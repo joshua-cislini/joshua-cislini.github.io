@@ -19,7 +19,7 @@
             --ni-green-primary: #009b65;
             --ni-green-hover: #006b46;
             --ni-bg-light: #f4f4f4;
-            --ni-card-bg: #ffffff;
+            --ni-card-bg: rgba(255, 255, 255, 0.80);
             --ni-text-dark: #044123;
             --ni-text-body: #2d3748;
             --ni-text-muted: #718096;
@@ -52,7 +52,7 @@
             --ni-green-primary: #009b65;
             --ni-green-hover: #00be7d;
             --ni-bg-light: #0b100d;
-            --ni-card-bg: #121a15;
+            --ni-card-bg: rgba(18, 26, 21, 0.80);
             --ni-text-dark: #ffffff;
             --ni-text-body: #e2e8f0;
             --ni-text-muted: #94a3b8;
@@ -103,6 +103,8 @@
             bottom: 24px;
             left: 24px;
             background-color: var(--ni-card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             color: var(--ni-text-dark);
             border: 1px solid var(--ni-border);
             font-weight: 600;
@@ -173,6 +175,8 @@
         /* Header / Navigation Bar */
         header {
             background-color: var(--ni-card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--ni-border);
             padding: 1rem 2rem;
             position: sticky;
@@ -257,6 +261,8 @@
         /* Hero Spotlight Section */
         .hero-spotlight {
             background-color: var(--ni-card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border-radius: 8px;
             padding: 3rem 2.5rem;
             margin-bottom: 2rem;
@@ -358,6 +364,8 @@
         /* Resume Cards */
         .section-card {
             background-color: var(--ni-card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -628,6 +636,8 @@
             border: 1px solid var(--ni-border);
             padding: 8px;
             background-color: var(--ni-card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
@@ -752,7 +762,7 @@
             </p>
             <div class="btn-group">
                 <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" class="btn-primary">Connect on LinkedIn</a>
-                <button class="btn-primary" onclick="handleHeroResumeClick()">Download Resume ↗</button>
+                <button class="btn-primary" onclick="handleHeroResumeClick()">Download Resume ⤓</button>
                 <a href="#contact" class="btn-secondary">Contact Info</a>
             </div>
         </section>
@@ -987,7 +997,6 @@
            Global Error Shield & Handler for Third-Party / IFrame Issues
            ------------------------------------------------------------- */
         window.addEventListener('error', function(event) {
-            // Ignore generic cross-origin script errors triggered by external widgets inside sandboxes
             if (event && (event.message === 'Script error.' || event.message === 'Script error')) {
                 event.preventDefault();
                 return true;
@@ -995,7 +1004,6 @@
         }, true);
 
         window.addEventListener('unhandledrejection', function(event) {
-            // Prevent unhandled rejections from crashing preview runner
             if (event && event.preventDefault) {
                 event.preventDefault();
             }
@@ -1104,12 +1112,9 @@
             const fpsText = document.getElementById('fps-text');
             const fpsDot = document.getElementById('fps-dot');
 
-            let width = (canvas.width = window.innerWidth);
-            let height = (canvas.height = window.innerHeight);
-
+            let width, height;
             let mouse = { x: -1000, y: -1000, active: false };
-            const particles = [];
-            const particleCount = Math.floor(Math.min(width, height) / 3);
+            let particles = [];
 
             let isExploding = false;
             let explosionProgress = 0;
@@ -1117,6 +1122,11 @@
 
             let lastTime = performance.now();
             let frameCount = 0;
+
+            function updateDimensions() {
+                width = canvas.width = window.innerWidth || document.documentElement.clientWidth || 1000;
+                height = canvas.height = window.innerHeight || document.documentElement.clientHeight || 800;
+            }
 
             class Particle {
                 constructor() {
@@ -1126,11 +1136,11 @@
                 reset() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.8;
-                    this.vy = (Math.random() - 0.5) * 0.8;
+                    this.vx = (Math.random() - 0.5) * 0.9;
+                    this.vy = (Math.random() - 0.5) * 0.9;
                     this.targetVx = this.vx;
                     this.targetVy = this.vy;
-                    this.radius = Math.random() * 1.5 + 1;
+                    this.radius = Math.random() * 2 + 1.5;
                     this.captured = false;
                     this.connectionsCount = 0;
                 }
@@ -1164,9 +1174,9 @@
                         let dy = mouse.y - this.y;
                         let dist = Math.sqrt(dx * dx + dy * dy);
 
-                        if (dist < 140) {
-                            this.x += dx * 0.018;
-                            this.y += dy * 0.018;
+                        if (dist < 150) {
+                            this.x += dx * 0.02;
+                            this.y += dy * 0.02;
                             this.captured = true;
                         } else {
                             this.captured = false;
@@ -1188,15 +1198,20 @@
                     const r = Math.round(baseR + (229 - baseR) * explosionProgress);
                     const g = Math.round(baseG + (62 - baseG) * explosionProgress);
                     const b = Math.round(baseB + (62 - baseB) * explosionProgress);
-                    const alpha = 0.4 + 0.4 * explosionProgress;
+                    const alpha = 0.6 + 0.3 * explosionProgress;
 
                     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
                     ctx.fill();
                 }
             }
 
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
+            function initParticles() {
+                updateDimensions();
+                particles = [];
+                const count = Math.max(80, Math.floor(Math.min(width, height) / 3.5));
+                for (let i = 0; i < count; i++) {
+                    particles.push(new Particle());
+                }
             }
 
             function triggerExplosion() {
@@ -1286,7 +1301,7 @@
                         let dy = particles[i].y - particles[j].y;
                         let dist = Math.sqrt(dx * dx + dy * dy);
 
-                        if (dist < 100) {
+                        if (dist < 120) {
                             particles[i].connectionsCount++;
                             particles[j].connectionsCount++;
 
@@ -1297,10 +1312,10 @@
                             const r = Math.round(baseR + (229 - baseR) * explosionProgress);
                             const g = Math.round(baseG + (62 - baseG) * explosionProgress);
                             const b = Math.round(baseB + (62 - baseB) * explosionProgress);
-                            const alpha = (0.2 + 0.1 * explosionProgress) * (1 - dist / 100);
+                            const alpha = (0.35 + 0.2 * explosionProgress) * (1 - dist / 120);
 
                             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-                            ctx.lineWidth = 0.75;
+                            ctx.lineWidth = 1;
                             ctx.stroke();
                         }
                     }
@@ -1310,12 +1325,12 @@
                         let dy = particles[i].y - mouse.y;
                         let dist = Math.sqrt(dx * dx + dy * dy);
 
-                        if (dist < 140) {
+                        if (dist < 150) {
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(mouse.x, mouse.y);
-                            ctx.strokeStyle = `rgba(${baseR}, ${baseG}, ${baseB}, ${0.35 * (1 - dist / 140)})`;
-                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = `rgba(${baseR}, ${baseG}, ${baseB}, ${0.5 * (1 - dist / 150)})`;
+                            ctx.lineWidth = 1.2;
                             ctx.stroke();
                         }
                     }
@@ -1328,6 +1343,7 @@
                 requestAnimationFrame(animate);
             }
 
+            initParticles();
             requestAnimationFrame(animate);
 
             // Event Listeners
@@ -1342,9 +1358,11 @@
             });
 
             window.addEventListener('resize', () => {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
+                initParticles();
             });
+
+            setTimeout(initParticles, 300);
+            setTimeout(initParticles, 1000);
         })();
 
         /* -------------------------------------------------------------
