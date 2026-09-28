@@ -52,6 +52,25 @@
             background-color: var(--ni-bg-light);
             color: var(--ni-text-body);
             line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Particle Background Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Elevate main content above background canvas */
+        header, .container, footer, #floatingContactBtn {
+            position: relative;
+            z-index: 1;
         }
 
         /* Typography & Links Defaults */
@@ -542,6 +561,9 @@
 </head>
 <body>
 
+    <!-- Particle Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
     <header>
         <div class="nav-container">
             <div class="brand-logo">Joshua Cislini <span>| Resume</span></div>
@@ -794,6 +816,125 @@
     </footer>
 
     <script>
+        /* -------------------------------------------------------------
+           Particle Constellation Canvas Script
+           ------------------------------------------------------------- */
+        (function initParticleCanvas() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width = (canvas.width = window.innerWidth);
+            let height = (canvas.height = window.innerHeight);
+
+            let mouse = { x: -1000, y: -1000, active: false };
+            const particles = [];
+            const particleCount = Math.floor(Math.min(width, height) / 18);
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.8;
+                    this.vy = (Math.random() - 0.5) * 0.8;
+                    this.radius = Math.random() * 1.5 + 1;
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                    // Mouse pull effect
+                    if (mouse.active) {
+                        let dx = mouse.x - this.x;
+                        let dy = mouse.y - this.y;
+                        let dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            this.x += dx * 0.015;
+                            this.y += dy * 0.015;
+                        }
+                    }
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(0, 155, 101, 0.4)';
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+
+                    // Draw connecting lines between nearby particles
+                    for (let j = i + 1; j < particles.length; j++) {
+                        let dx = particles[i].x - particles[j].x;
+                        let dy = particles[i].y - particles[j].y;
+                        let dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(0, 155, 101, ${0.15 * (1 - dist / 100)})`;
+                            ctx.lineWidth = 0.75;
+                            ctx.stroke();
+                        }
+                    }
+
+                    // Draw lines connecting particles to mouse cursor
+                    if (mouse.active) {
+                        let dx = particles[i].x - mouse.x;
+                        let dy = particles[i].y - mouse.y;
+                        let dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 140) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.strokeStyle = `rgba(0, 155, 101, ${0.3 * (1 - dist / 140)})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            // Event Listeners
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+                mouse.active = true;
+            }, { passive: true });
+
+            window.addEventListener('mouseleave', () => {
+                mouse.active = false;
+            });
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+        })();
+
+        /* -------------------------------------------------------------
+           Resume Interactivity & Turnstile Decryption
+           ------------------------------------------------------------- */
         let activeResumeBlobUrl = null;
 
         async function onTurnstileSuccess(token) {
