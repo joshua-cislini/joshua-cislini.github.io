@@ -137,7 +137,7 @@
 
         .btn-primary, .btn-secondary, .btn-verify {
             background-color: var(--ni-green-primary);
-            color: #ffffff;
+            color: #ffffff !important; /* Added !important to enforce white text on <a> links */
             padding: 0.75rem 1.75rem;
             border-radius: 24px;
             text-decoration: none;
@@ -152,9 +152,10 @@
             cursor: pointer;
         }
 
+        /* Ensure hover state also remains white */
         .btn-primary:hover, .btn-secondary:hover, .btn-verify:hover {
             background-color: var(--ni-green-hover);
-            color: #ffffff;
+            color: #ffffff !important;
         }
 
         .btn-verify {
