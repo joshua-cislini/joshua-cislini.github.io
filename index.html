@@ -67,6 +67,34 @@
             z-index: 0;
         }
 
+        /* Fun Easter Egg Popup Styles */
+        #easter-egg-popup {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background-color: var(--ni-green-dark);
+            color: #ffffff;
+            padding: 0.85rem 1.75rem;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 2000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid var(--ni-green-primary);
+        }
+
+        #easter-egg-popup.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
         /* Elevate main content above background canvas */
         header, .container, footer, #floatingContactBtn {
             position: relative;
@@ -564,6 +592,11 @@
     <!-- Particle Background Canvas -->
     <canvas id="bg-canvas"></canvas>
 
+    <!-- Fun Easter Egg Popup Notification -->
+    <div id="easter-egg-popup">
+        ⚡ You seriously have nothing better to do?
+    </div>
+
     <header>
         <div class="nav-container">
             <div class="brand-logo">Joshua Cislini <span>| Resume</span></div>
@@ -817,51 +850,85 @@
 
     <script>
         /* -------------------------------------------------------------
-           Particle Constellation Canvas Script
+           Particle Constellation + Explosion Easter Egg Script
            ------------------------------------------------------------- */
         (function initParticleCanvas() {
             const canvas = document.getElementById('bg-canvas');
             const ctx = canvas.getContext('2d');
+            const popup = document.getElementById('easter-egg-popup');
 
             let width = (canvas.width = window.innerWidth);
             let height = (canvas.height = window.innerHeight);
 
             let mouse = { x: -1000, y: -1000, active: false };
             const particles = [];
-            const particleCount = Math.floor(Math.min(width, height) / 18);
+            
+            // ==============================================================
+            // ⚙️ ADJUST PARTICLE QUANTITY HERE
+            // Replace with a fixed number like `50` or adjust the divisor (`/ 18`).
+            // Lower divisor = More particles | Higher divisor = Fewer particles
+            // ==============================================================
+            const particleCount = Math.floor(Math.min(width, height) / 10);
+
+            let isExploding = false;
+            let popupTimeout = null;
 
             class Particle {
                 constructor() {
+                    this.reset();
+                }
+
+                reset() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
                     this.vx = (Math.random() - 0.5) * 0.8;
                     this.vy = (Math.random() - 0.5) * 0.8;
                     this.radius = Math.random() * 1.5 + 1;
+                    this.captured = false;
                 }
 
                 update() {
+                    if (isExploding) {
+                        this.x += this.vx;
+                        this.y += this.vy;
+                        this.vx *= 0.96; // friction
+                        this.vy *= 0.96;
+                        return;
+                    }
+
                     this.x += this.vx;
                     this.y += this.vy;
 
                     if (this.x < 0 || this.x > width) this.vx *= -1;
                     if (this.y < 0 || this.y > height) this.vy *= -1;
 
-                    // Mouse pull effect
+                    // Mouse pull & collection logic
                     if (mouse.active) {
                         let dx = mouse.x - this.x;
                         let dy = mouse.y - this.y;
                         let dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 120) {
-                            this.x += dx * 0.015;
-                            this.y += dy * 0.015;
+
+                        // Capture radius
+                        if (dist < 15) {
+                            this.captured = true;
+                            this.x = mouse.x;
+                            this.y = mouse.y;
+                        } else if (dist < 180) {
+                            // Magnet attraction towards mouse
+                            this.x += dx * 0.04;
+                            this.y += dy * 0.04;
+                        } else {
+                            this.captured = false;
                         }
+                    } else {
+                        this.captured = false;
                     }
                 }
 
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(0, 155, 101, 0.4)';
+                    ctx.fillStyle = isExploding ? 'rgba(0, 155, 101, 0.8)' : 'rgba(0, 155, 101, 0.4)';
                     ctx.fill();
                 }
             }
@@ -870,14 +937,50 @@
                 particles.push(new Particle());
             }
 
+            function triggerExplosion() {
+                isExploding = true;
+
+                // Show Easter Egg Popup
+                popup.classList.add('show');
+
+                if (popupTimeout) clearTimeout(popupTimeout);
+                popupTimeout = setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 3500);
+
+                // Shoot particles outwards in all 360 degrees
+                particles.forEach(p => {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 18 + 6; // High explosion velocity
+                    p.vx = Math.cos(angle) * speed;
+                    p.vy = Math.sin(angle) * speed;
+                    p.captured = false;
+                });
+
+                // Reset back to gentle physics after explosion calms down
+                setTimeout(() => {
+                    isExploding = false;
+                    particles.forEach(p => {
+                        p.vx = (Math.random() - 0.5) * 0.8;
+                        p.vy = (Math.random() - 0.5) * 0.8;
+                    });
+                }, 1200);
+            }
+
             function animate() {
                 ctx.clearRect(0, 0, width, height);
+
+                let capturedCount = 0;
 
                 for (let i = 0; i < particles.length; i++) {
                     particles[i].update();
                     particles[i].draw();
 
-                    // Draw connecting lines between nearby particles
+                    if (particles[i].captured) {
+                        capturedCount++;
+                    }
+
+                    // Draw connecting lines between nearby floating particles
                     for (let j = i + 1; j < particles.length; j++) {
                         let dx = particles[i].x - particles[j].x;
                         let dy = particles[i].y - particles[j].y;
@@ -894,20 +997,25 @@
                     }
 
                     // Draw lines connecting particles to mouse cursor
-                    if (mouse.active) {
+                    if (mouse.active && !isExploding) {
                         let dx = particles[i].x - mouse.x;
                         let dy = particles[i].y - mouse.y;
                         let dist = Math.sqrt(dx * dx + dy * dy);
 
-                        if (dist < 140) {
+                        if (dist < 180) {
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(mouse.x, mouse.y);
-                            ctx.strokeStyle = `rgba(0, 155, 101, ${0.3 * (1 - dist / 140)})`;
+                            ctx.strokeStyle = `rgba(0, 155, 101, ${0.35 * (1 - dist / 180)})`;
                             ctx.lineWidth = 1;
                             ctx.stroke();
                         }
                     }
+                }
+
+                // Check if ALL particles have been collected at the cursor position
+                if (!isExploding && capturedCount >= particles.length && particles.length > 0) {
+                    triggerExplosion();
                 }
 
                 requestAnimationFrame(animate);
