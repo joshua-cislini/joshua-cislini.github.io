@@ -192,10 +192,9 @@
 
         .timeline-container {
             position: relative;
-            padding-left: 40px; /* Fixed padding for alignment */
+            padding-left: 40px;
         }
 
-        /* Base Continuous Vertical Line */
         .timeline-container::before {
             content: '';
             position: absolute;
@@ -217,7 +216,6 @@
             margin-bottom: 0;
         }
 
-        /* All Dots - Fixed 12px size, hollow by default */
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -233,7 +231,6 @@
             transition: background-color 0.3s ease;
         }
 
-        /* INTERNAL FADE PULSE ANIMATION (Contained inside dot) */
         @keyframes internal-dot-pulse {
             0%, 100% {
                 background-color: var(--ni-card-bg);
@@ -247,12 +244,10 @@
             }
         }
 
-        /* Applied ONLY to active Experience and Education timeline items */
         .timeline-item.active-item::before {
             animation: internal-dot-pulse 2s infinite ease-in-out;
         }
 
-        /* Badges Styling */
         .active-badge, .valable-badge, .expired-badge {
             display: inline-block;
             font-size: 0.75rem;
@@ -275,7 +270,6 @@
             color: #e53e3e;
         }
 
-        /* LINKED GROUP (Sharing Identical Dates) */
         .timeline-group {
             position: relative;
             margin-bottom: 2rem;
@@ -283,7 +277,6 @@
             padding: 0;
         }
 
-        /* Subtle Secondary Line */
         .timeline-group::before {
             content: '';
             position: absolute;
@@ -306,7 +299,6 @@
             margin-bottom: 0;
         }
 
-        /* Linked Dots - Made HOLLOW (white background matching primary dot) */
         .timeline-group .timeline-item::before {
             border: 2px solid var(--ni-green-primary);
             background-color: var(--ni-card-bg);
@@ -365,7 +357,6 @@
             font-size: 0.95rem;
         }
 
-        /* Sidebar Badges / Lists */
         .skills-list {
             display: flex;
             flex-wrap: wrap;
@@ -428,7 +419,6 @@
             text-decoration: underline;
         }
 
-        /* Floating Contact Button */
         #floatingContactBtn {
             position: fixed;
             bottom: 24px;
@@ -448,7 +438,6 @@
             background-color: var(--ni-green-hover);
         }
 
-        /* Footer */
         footer {
             background-color: var(--ni-green-dark);
             color: #ffffff;
@@ -463,7 +452,6 @@
             text-decoration: none;
         }
 
-        /* Responsive Design */
         @media (max-width: 850px) {
             .grid-layout {
                 grid-template-columns: 1fr;
@@ -500,6 +488,7 @@
             </p>
             <div class="btn-group">
                 <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" class="btn-primary">Connect on LinkedIn</a>
+                <button class="btn-primary" onclick="handleHeroResumeClick()">Download PDF Resume ↗</button>
                 <a href="#contact" class="btn-secondary">Contact Info</a>
             </div>
         </section>
@@ -508,13 +497,11 @@
             
             <main>
                 
-                <!-- Award Banner -->
                 <div class="award-box">
                     <h4><a href="https://www.ameti.ch/" target="_blank" style="color: var(--ni-green-primary); text-decoration: none;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">AMETI</a> Award Winner - Best Apprentice 2025</h4>
                     <p>Recognized by <a href="https://www.ameti.ch/" target="_blank" style="color: var(--ni-green-primary); text-decoration: none;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">AMETI</a> as the <strong>Best Apprentice in Ticino for the year 2025</strong> based on final exam performance during the Electronics Technician apprenticeship.</p>
                 </div>
 
-                <!-- Experience Section -->
                 <section class="section-card" id="experience">
                     <h2 class="section-title">Experience</h2>
 
@@ -555,7 +542,6 @@
                     </div>
                 </section>
 
-                <!-- Education Section -->
                 <section class="section-card" id="education">
                     <h2 class="section-title">Education</h2>
 
@@ -570,7 +556,6 @@
                             </div>
                         </div>
 
-                        <!-- Linked Group for identical dates -->
                         <div class="timeline-group">
                             <div class="timeline-item">
                                 <div class="item-header">
@@ -595,12 +580,10 @@
                     </div>
                 </section>
 
-                <!-- Licenses & Certifications Section -->
                 <section class="section-card" id="licenses">
                     <h2 class="section-title">Licenses & Certifications</h2>
                     
                     <div class="timeline-container">
-                        
                         <div class="timeline-item">
                             <div class="item-header">
                                 <span class="item-title">ADR Driver Training Certificate</span>
@@ -637,8 +620,6 @@
             </main>
 
             <aside>
-                
-                <!-- NI-Themed LinkedIn Profile Widget -->
                 <section class="section-card" id="linkedin-widget" style="text-align: center; border-top: 4px solid var(--ni-green-primary);">
                     <div style="margin-bottom: 0.75rem;">
                         <svg width="36" height="36" viewBox="0 0 24 24" fill="var(--ni-green-primary)">
@@ -652,7 +633,6 @@
                     </a>
                 </section>
 
-                <!-- GitHub Activity Widget -->
                 <section class="section-card" id="github-widget" style="text-align: center; border-top: 4px solid var(--ni-green-primary);">
                     <div style="margin-bottom: 0.75rem;">
                         <svg height="36" width="36" viewBox="0 0 16 16" fill="var(--ni-green-primary)">
@@ -672,7 +652,7 @@
                     </a>
                 </section>
 
-                <!-- Contact Info Card with Turnstile Gate -->
+                <!-- Contact Info Card with Turnstile Gate & Resume Download Button -->
                 <section class="section-card" id="contact">
                     <h2 class="section-title">Contact</h2>
                     
@@ -681,12 +661,19 @@
                         <p><strong>E-mail:</strong> <a id="email-link" href="#"></a></p>
                         <p><strong>Phone:</strong> <a id="phone-link" href="#"></a></p>
                         <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank">joshua-cislini</a></p>
+                        
+                        <!-- Resume Download Button (Matches GitHub/LinkedIn Widget Style) -->
+                        <div style="margin-top: 1.25rem;">
+                            <a id="download-resume-link" href="#" download="Joshua_Cislini_Resume.pdf" class="btn-primary" style="width: 100%;">
+                                Download Resume PDF ↗
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Turnstile Widget & Gate Container -->
                     <div id="contact-gate" style="text-align: center; padding: 0.5rem 0;">
                         <p style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--ni-text-body);">
-                            Verify safety check to view direct contact information:
+                            Verify safety check to view direct contact information & downloadable resume:
                         </p>
 
                         <!-- Turnstile Widget -->
@@ -701,7 +688,6 @@
                     </div>
                 </section>
 
-                <!-- Technical Skills -->
                 <section class="section-card" id="skills">
                     <h2 class="section-title">Skills & Hobbies</h2>
                     <ul class="skills-list">
@@ -715,7 +701,6 @@
                     </ul>
                 </section>
 
-                <!-- Languages -->
                 <section class="section-card">
                     <h2 class="section-title">Languages</h2>
                     <p style="font-size: 0.95rem; margin-bottom: 0.4rem;"><strong>Italian:</strong> Native</p>
@@ -728,22 +713,22 @@
         </div>
     </div>
 
-    <!-- Floating Action Button -->
     <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" id="floatingContactBtn">Connect with Joshua</a>
-    
-    <!-- Footer -->
+
     <footer>
         <p>© 2026 Joshua Cislini. Design inspired by <a href="https://www.ni.com" target="_blank">ni.com</a></p>
     </footer>
 
     <script>
+        // Global object memory for Blob URL
+        let activeResumeBlobUrl = null;
+
         // Global Turnstile Callback Function
         async function onTurnstileSuccess(token) {
             const statusEl = document.getElementById("gate-status");
             statusEl.textContent = "Verifying safety check...";
 
             try {
-                // Send token to your Cloudflare Worker endpoint
                 const response = await fetch("https://contact-decrypt.cislinij.workers.dev/", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -762,7 +747,14 @@
                     phoneLink.href = "tel:" + data.phone.replace(/\s+/g, '');
                     phoneLink.textContent = data.phone;
 
-                    // Hide the Turnstile gate and display the contact info
+                    // Convert Base64 PDF to Blob and bind to button link
+                    if (data.resumeBase64) {
+                        const blob = base64ToBlob(data.resumeBase64, 'application/pdf');
+                        activeResumeBlobUrl = URL.createObjectURL(blob);
+                        document.getElementById("download-resume-link").href = activeResumeBlobUrl;
+                    }
+
+                    // Hide gate & display contact info
                     document.getElementById("contact-gate").style.display = "none";
                     document.getElementById("contact-info-content").style.display = "block";
                 } else {
@@ -772,6 +764,36 @@
             } catch (error) {
                 statusEl.textContent = "Unable to connect to verification server.";
                 statusEl.style.color = "#e53e3e";
+            }
+        }
+
+        // Convert base64 data to Blob
+        function base64ToBlob(base64, mimeType) {
+            const byteCharacters = atob(base64);
+            const byteArrays = [];
+            for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                const slice = byteCharacters.slice(offset, offset + 512);
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+            }
+            return new Blob(byteArrays, { type: mimeType });
+        }
+
+        // Hero Resume button click handler
+        function handleHeroResumeClick() {
+            if (activeResumeBlobUrl) {
+                const a = document.createElement("a");
+                a.href = activeResumeBlobUrl;
+                a.download = "Joshua_Cislini_Resume.pdf";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
             }
         }
 
@@ -788,7 +810,7 @@
                 if (!str) return null;
                 const clean = str.trim().toLowerCase();
                 if (clean.includes("present") || clean.includes("current")) {
-                    return new Date(8640000000000000); // far future
+                    return new Date(8640000000000000);
                 }
 
                 const matches = clean.match(/([a-z]{3})\s+(\d{4})/);
@@ -800,7 +822,6 @@
                     }
                 }
                 
-                // Fallback for standalone year
                 const yearMatch = clean.match(/(\d{4})/);
                 if (yearMatch) {
                     const y = parseInt(yearMatch[1]);
@@ -809,7 +830,6 @@
                 return null;
             }
 
-            // 1. Process Experience and Education sections
             const generalSections = document.querySelectorAll("#experience, #education");
             generalSections.forEach(section => {
                 const items = section.querySelectorAll(".timeline-item");
@@ -837,7 +857,6 @@
                 });
             });
 
-            // 2. Process Licenses & Certifications Section
             const licenseSection = document.querySelector("#licenses");
             if (licenseSection) {
                 const licenseItems = licenseSection.querySelectorAll(".timeline-item");
