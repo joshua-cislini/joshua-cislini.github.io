@@ -676,15 +676,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 6px;
-            border: 1px solid var(--ni-border);
-            background-color: var(--ni-card-bg);
+            border: none;
+            background-color: transparent;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             transition: background-color 0.3s ease, border-color 0.3s ease;
             
             /* Fits exactly 20 full columns (20 × 12px = 192px) */
-            width: 242px; /* + small border tweak */
+            width: 241px; /* + small border tweak */
             
             /* Fits exactly 7 vertical rows (7 × 12px - 2px = 82px) */
             height: 86px; /* + small border tweak */
@@ -697,7 +696,7 @@
         .github-chart-img {
             position: absolute;
             right: -1px; /* + small border tweak */
-            top: -19px; /* Slices off top month text + small border tweak */
+            top: -18px; /* Slices off top month text + small border tweak */
             width: 663px;
             height: 104px;
             max-width: none;
