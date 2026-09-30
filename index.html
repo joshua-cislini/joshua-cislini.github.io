@@ -1059,6 +1059,18 @@
     </footer>
 
     <script>
+        // ==========================================
+        // PARTICLE ANIMATION CONFIGURATION
+        // Customize speed, mouse sensitivity & visuals
+        // ==========================================
+        const PARTICLE_SPEED = 0.4;          // Initial max velocity: (Math.random() - 0.5) * PARTICLE_SPEED
+        const MOUSE_RADIUS = 85;             // Distance (px) within which particles interact with cursor
+        const MOUSE_FORCE = 0.008;           // Weak pull/push strength toward mouse
+        const PARTICLE_FRICTION = 0.98;      // Velocity damping factor per frame (0.95 - 0.99)
+        const MOUSE_LINE_OPACITY = 0.3;      // Peak opacity of lines drawn to mouse
+        const MOUSE_LINE_WIDTH = 0.8;        // Line width of connections to mouse
+        const EXPLOSION_THRESHOLD = 0.35;    // Percentage of captured particles required to trigger explosion (0.35 = 35%)
+
         /* Global Error Shield */
         window.addEventListener('error', function(event) {
             if (event && (event.message === 'Script error.' || event.message === 'Script error')) {
@@ -1247,9 +1259,8 @@
                 reset() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
-                    // Lowered initial speed per request
-                    this.vx = (Math.random() - 0.5) * 0.3;
-                    this.vy = (Math.random() - 0.5) * 0.3;
+                    this.vx = (Math.random() - 0.5) * PARTICLE_SPEED;
+                    this.vy = (Math.random() - 0.5) * PARTICLE_SPEED;
                     this.targetVx = this.vx;
                     this.targetVy = this.vy;
                     this.radius = Math.random() * 2 + 1.5;
@@ -1261,8 +1272,8 @@
                     if (isExploding) {
                         this.x += this.vx;
                         this.y += this.vy;
-                        this.vx *= 0.98;
-                        this.vy *= 0.98;
+                        this.vx *= PARTICLE_FRICTION;
+                        this.vy *= PARTICLE_FRICTION;
 
                         this.vx += (this.targetVx - this.vx) * 0.02;
                         this.vy += (this.targetVy - this.vy) * 0.02;
@@ -1286,9 +1297,8 @@
                         let dy = mouse.y - this.y;
                         let dist = Math.sqrt(dx * dx + dy * dy);
 
-                        // Shorter reach (85px vs 150px) & fragile velocity nudge
-                        if (dist < 85 && dist > 0) {
-                            let force = (1 - dist / 85) * 0.008;
+                        if (dist < MOUSE_RADIUS && dist > 0) {
+                            let force = (1 - dist / MOUSE_RADIUS) * MOUSE_FORCE;
                             this.vx += (dx / dist) * force;
                             this.vy += (dy / dist) * force;
                             this.captured = true;
@@ -1299,9 +1309,8 @@
                         this.captured = false;
                     }
 
-                    // Gently slow particles down so momentum bleeds off
-                    this.vx *= 0.98;
-                    this.vy *= 0.98;
+                    this.vx *= PARTICLE_FRICTION;
+                    this.vy *= PARTICLE_FRICTION;
                 }
 
                 draw() {
@@ -1344,8 +1353,8 @@
                     const speed = Math.random() * 16 + 8;
                     p.vx = Math.cos(angle) * speed;
                     p.vy = Math.sin(angle) * speed;
-                    p.targetVx = (Math.random() - 0.5) * 0.3;
-                    p.targetVy = (Math.random() - 0.5) * 0.3;
+                    p.targetVx = (Math.random() - 0.5) * PARTICLE_SPEED;
+                    p.targetVy = (Math.random() - 0.5) * PARTICLE_SPEED;
                     p.captured = false;
                 });
 
@@ -1438,20 +1447,18 @@
                         let dy = particles[i].y - mouse.y;
                         let dist = Math.sqrt(dx * dx + dy * dy);
 
-                        // Fragile mouse link rendering
-                        if (dist < 85) {
+                        if (dist < MOUSE_RADIUS) {
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(mouse.x, mouse.y);
-                            ctx.strokeStyle = `rgba(${cachedParticleColors.r}, ${cachedParticleColors.g}, ${cachedParticleColors.b}, ${0.3 * (1 - dist / 85)})`;
-                            ctx.lineWidth = 0.8;
+                            ctx.strokeStyle = `rgba(${cachedParticleColors.r}, ${cachedParticleColors.g}, ${cachedParticleColors.b}, ${MOUSE_LINE_OPACITY * (1 - dist / MOUSE_RADIUS)})`;
+                            ctx.lineWidth = MOUSE_LINE_WIDTH;
                             ctx.stroke();
                         }
                     }
                 }
 
-                // Explosions trigger when 35%+ of particles are active around the mouse due to fragile pull physics
-                if (!isExploding && particles.length > 0 && capturedCount >= Math.floor(particles.length * 0.35)) {
+                if (!isExploding && particles.length > 0 && capturedCount >= Math.floor(particles.length * EXPLOSION_THRESHOLD)) {
                     triggerExplosion();
                 }
 
