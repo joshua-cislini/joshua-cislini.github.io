@@ -671,17 +671,6 @@
             color: var(--ni-text-body);
         }
 
-        /* Prevent sidebar items from auto-stretching when sibling heights change */
-        .grid-layout aside {
-            align-self: start;
-        }
-
-        /* Fully isolated, static GitHub section */
-        #github-widget {
-            box-sizing: border-box;
-            align-self: start;
-        }
-
         /* Cropped & Zoomed Recent Weeks GitHub Chart */
         .github-chart-container {
             display: flex;
@@ -698,7 +687,7 @@
             width: 242px; /* + small border tweak */
             
             /* Fits exactly 7 vertical rows (7 × 12px - 2px = 82px) */
-            height: 85px; /* + small border tweak */
+            height: 86px; /* + small border tweak */
             
             margin: 0 auto;
             overflow: hidden;
