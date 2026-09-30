@@ -671,6 +671,17 @@
             color: var(--ni-text-body);
         }
 
+        /* Prevent sidebar items from auto-stretching when sibling heights change */
+        .grid-layout aside {
+            align-self: start;
+        }
+
+        /* Fully isolated, static GitHub section */
+        #github-widget {
+            box-sizing: border-box;
+            align-self: start;
+        }
+
         /* Cropped & Zoomed Recent Weeks GitHub Chart */
         .github-chart-container {
             display: flex;
