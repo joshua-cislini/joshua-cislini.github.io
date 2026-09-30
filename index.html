@@ -12,13 +12,13 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://joshua-cislini.github.io/">
     
-    <!-- Fonts: non-render-blocking (media swap trick), trimmed to weights/styles actually used -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap"></noscript>
 
-    <!-- Apply saved theme before first paint (no flash / no layout change) -->
+    <!-- Apply saved theme before first paint -->
     <script>
         try {
             if (localStorage.getItem("cislini_resume_theme") === "dark") document.documentElement.classList.add("dark-theme");
@@ -26,7 +26,6 @@
     </script>
 
     <style>
-        /* Metric-matched fallback so the Inter swap doesn't shift layout (CLS) */
         @font-face {
             font-family: "Inter Fallback";
             src: local("Arial");
@@ -46,19 +45,19 @@
             --ni-card-bg: rgba(255, 255, 255, 0.2);
             --ni-text-dark: #044123;
             --ni-text-body: #2d3748;
-            --ni-text-muted: #5a6778; /* AA contrast */
+            --ni-text-muted: #5a6778;
             --ni-text-footer: #a0aec0;
             --ni-border: #e2e8f0;
             --ni-border-dark: #cbd5e0;
             --ni-fps-bg: #ffffff;
-            --ni-danger: #c53030; /* AA contrast */
+            --ni-danger: #c53030;
             --ni-warning: #d69e2e;
 
             /* Award card glass */
             --ni-award-bg: rgba(255, 255, 255, 0.1);
             --ni-award-edge: rgba(255, 255, 255, 0.6);
 
-            /* Accessible text/button greens (AA >= 4.5:1) */
+            /* Accessible greens */
             --ni-green-text: #007048;
             --ni-btn-bg: #00744c;
             --ni-btn-hover: #005a3b;
@@ -82,7 +81,6 @@
             --particle-color-b: 101;
         }
 
-        /* Dark Theme Overrides */
         html.dark-theme {
             --ni-green-dark: #38a169;
             --ni-green-primary: #009b65;
@@ -114,6 +112,11 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        /* Smooth Scrolling & Anchor Offset Fix */
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -209,7 +212,6 @@
             text-decoration: underline;
         }
 
-        /* Links inside running text must not rely on colour alone */
         main a:not(.btn-verify), p a, .item-subtitle a, .eyebrow a {
             text-decoration: underline;
             text-underline-offset: 2px;
@@ -311,6 +313,7 @@
             border: 1px solid var(--ni-border);
             transition: background-color 0.3s ease, border-color 0.3s ease;
             min-height: 220px;
+            scroll-margin-top: 80px;
         }
 
         .eyebrow {
@@ -413,7 +416,7 @@
             box-shadow: 0 2px 8px var(--ni-shadow-light);
             border: 1px solid var(--ni-border);
             transition: background-color 0.3s ease, border-color 0.3s ease;
-            contain: layout style;
+            scroll-margin-top: 80px;
         }
 
         .section-card-accent {
@@ -448,7 +451,7 @@
             margin-bottom: 1.25rem;
         }
 
-        /* Timeline Items & Dynamic Badges Stability */
+        /* Timeline Items */
         .timeline-container {
             position: relative;
             padding-left: 40px;
@@ -507,7 +510,6 @@
             animation: internal-dot-pulse 2s infinite ease-in-out;
         }
 
-        /* Layout-stable badge elements */
         .item-title {
             font-size: 1.1rem;
             font-weight: 600;
@@ -621,25 +623,6 @@
             font-size: 0.95rem;
         }
 
-        /* Widgets & Utilities */
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            list-style: none;
-        }
-
-        .skill-badge {
-            background-color: var(--ni-bg-light);
-            color: var(--ni-text-dark);
-            border: 1px solid var(--ni-border);
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 0.4rem 0.8rem;
-            border-radius: 4px;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
-
         .contact-info p, .language-item {
             margin-bottom: 0.75rem;
             font-size: 0.95rem;
@@ -661,7 +644,6 @@
         }
 
         .award-box {
-            /* Frosted glass, 50% opaque: green tint layered over a semi-opaque base */
             background:
                 linear-gradient(var(--ni-green-alpha-08), var(--ni-green-alpha-08)),
                 var(--ni-award-bg);
@@ -689,22 +671,36 @@
             color: var(--ni-text-body);
         }
 
+        /* Cropped & Zoomed Recent Weeks GitHub Chart */
         .github-chart-container {
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border-radius: 6px;
             border: 1px solid var(--ni-border);
-            padding: 8px;
             background-color: var(--ni-card-bg);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             transition: background-color 0.3s ease, border-color 0.3s ease;
-            min-height: 110px;
+            
+            /* Fits exactly 20 full columns (20 × 12px = 192px) */
+            width: 242px; /* + small border tweak */
+            
+            /* Fits exactly 7 vertical rows (7 × 12px - 2px = 82px) */
+            height: 85px; /* + small border tweak */
+            
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
         }
 
         .github-chart-img {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 663 / 104;
+            position: absolute;
+            right: -1px; /* + small border tweak */
+            top: -19px; /* Slices off top month text + small border tweak */
+            width: 663px;
+            height: 104px;
+            max-width: none;
             display: block;
         }
 
@@ -742,7 +738,7 @@
             display: flex;
             justify-content: center;
             margin-bottom: 1rem;
-            min-height: 120px; /* compact Turnstile is 130x120: reserve it to avoid CLS */
+            min-height: 120px;
             align-items: center;
         }
 
@@ -808,7 +804,7 @@
                 <a href="#experience">Experience</a>
                 <a href="#education">Education</a>
                 <a href="#licenses">Licenses</a>
-                <a href="#skills">Skills & Hobbies</a>
+                <a href="#contact">Contact</a>
                 <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light/dark theme">
                     <span id="theme-icon">🌙</span> <span id="theme-text">Dark</span>
                 </button>
@@ -854,10 +850,10 @@
                                 <a href="https://www.armee.ch/" target="_blank" rel="noopener noreferrer">Swiss Armed Forces</a> · Full-time (10 mos)
                             </div>
                             <p>
-                                Completed 10 months of military service in the Swiss Army. Responsible for the safe transportation of personnel and equipment, vehicle inspections and maintenance, and task execution under strict procedures and time constraints.
+                                Completed 10 months of military service in the Swiss Army as Truck Driver. Responsible for the safe transportation of personnel and equipment, basic vehicle inspections and maintenance, and task execution under strict procedures and time constraints.
                             </p>
                             <ul>
-                                <li>Strengthened responsibility, discipline, teamwork, and adaptability in demanding environments.</li>
+                                <li>Strengthened responsibility, discipline, teamwork, and adaptability in demanding environments while also practicing French and German.</li>
                                 <li>Enhanced problem-solving abilities, resilience under pressure, situational awareness, and operational safety.</li>
                             </ul>
                         </div>
@@ -959,46 +955,7 @@
             </main>
 
             <aside>
-                <section class="section-card section-card-accent" id="linkedin-widget">
-                    <div class="widget-icon">
-                        <svg width="36" height="36" viewBox="0 0 24 24" fill="var(--ni-green-primary)">
-                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.45 1.45 0 1 0 0 2.9 1.45 1.45 0 0 0 0-2.9z"/>
-                        </svg>
-                    </div>
-                    <h2 class="widget-title">Connect on LinkedIn</h2>
-                    <p class="widget-description">Explore professional updates, network, and R&D hardware projects.</p>
-                    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary btn-full">
-                        View Linkedin Profile ↗
-                    </a>
-                </section>
-
-                <section class="section-card section-card-accent" id="github-widget">
-                    <div class="widget-icon">
-                        <svg height="36" width="36" viewBox="0 0 16 16" fill="var(--ni-green-primary)">
-                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-                        </svg>
-                    </div>
-                    
-                    <h2 class="widget-title">GitHub Activity</h2>
-                    <p class="widget-description">Contributions & Code Commit Graph</p>
-                    
-                    <!-- Fixed Natural Dimensions to Prevent Aspect Ratio Issues & Image CLS -->
-                    <a href="https://github.com/joshua-cislini" target="_blank" rel="noopener noreferrer" class="github-chart-container">
-                        <img src="https://ghchart.rshah.org/009b65/joshua-cislini" 
-                             alt="Joshua Cislini's GitHub Contribution Chart" 
-                             class="github-chart-img"
-                             width="663"
-                             height="104"
-                             loading="lazy"
-                             decoding="async"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x100/044123/ffffff?text=GitHub+Profile+@joshua-cislini';" />
-                    </a>
-                    
-                    <a href="https://github.com/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary btn-full" style="margin-top: 1.25rem;">
-                        View GitHub Profile ↗
-                    </a>
-                </section>
-
+                <!-- 1. Contact Section -->
                 <section class="section-card" id="contact">
                     <h2 class="section-title">Contact</h2>
                     
@@ -1027,17 +984,45 @@
                     </div>
                 </section>
 
-                <section class="section-card" id="skills">
-                    <h2 class="section-title">Skills & Hobbies</h2>
-                    <ul class="skills-list">
-                        <li class="skill-badge">Electronics VET/EFZ</li>
-                        <li class="skill-badge">Hardware Development</li>
-                        <li class="skill-badge">PCBA Prototyping</li>
-                        <li class="skill-badge">R&D Engineering</li>
-                        <li class="skill-badge">FPV Drones</li>
-                        <li class="skill-badge">Operational Safety</li>
-                        <li class="skill-badge">Logistics & Transport</li>
-                    </ul>
+                <!-- 2. LinkedIn Section -->
+                <section class="section-card section-card-accent" id="linkedin-widget">
+                    <div class="widget-icon">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="var(--ni-green-primary)">
+                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.45 1.45 0 1 0 0 2.9 1.45 1.45 0 0 0 0-2.9z"/>
+                        </svg>
+                    </div>
+                    <h2 class="widget-title">Connect on LinkedIn</h2>
+                    <p class="widget-description">Explore professional updates, network, and R&D hardware projects.</p>
+                    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary btn-full">
+                        View Linkedin Profile ↗
+                    </a>
+                </section>
+
+                <!-- 3. GitHub Section -->
+                <section class="section-card section-card-accent" id="github-widget">
+                    <div class="widget-icon">
+                        <svg height="36" width="36" viewBox="0 0 16 16" fill="var(--ni-green-primary)">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                        </svg>
+                    </div>
+                    
+                    <h2 class="widget-title">GitHub Activity</h2>
+                    <p class="widget-description">Contributions & Code Commit Graph</p>
+                    
+                    <a href="https://github.com/joshua-cislini" target="_blank" rel="noopener noreferrer" class="github-chart-container">
+                        <img src="https://ghchart.rshah.org/009b65/joshua-cislini" 
+                             alt="Joshua Cislini's GitHub Contribution Chart" 
+                             class="github-chart-img"
+                             width="663"
+                             height="104"
+                             loading="lazy"
+                             decoding="async"
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x100/044123/ffffff?text=GitHub+Profile+@joshua-cislini';" />
+                    </a>
+                    
+                    <a href="https://github.com/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary btn-full" style="margin-top: 1.25rem;">
+                        View GitHub Profile ↗
+                    </a>
                 </section>
 
                 <section class="section-card">
@@ -1075,8 +1060,6 @@
 
         let activeResumeBlobUrl = null;
 
-        /* Turnstile is loaded lazily (when #contact nears the viewport or on demand)
-           so its 28 KiB script + iframe stay out of the initial load. */
         const TURNSTILE_SITEKEY = "0x4AAAAAAFGMgR9DIjsQzy0M";
         let turnstileRequested = false;
 
@@ -1200,7 +1183,6 @@
             }
         }
 
-        /* Pre-cached Particle CSS Variables (Fixes Forced Synchronous Layout) */
         let cachedParticleColors = { r: 0, g: 155, b: 101 };
 
         function updateParticleColorsCache() {
@@ -1219,44 +1201,33 @@
             const ctx = canvas.getContext('2d');
             if (!ctx) return;
 
-            // ==========================================
-            // CONFIGURATION CONSTANTS
-            // ==========================================
-            
-            // Particle Generation & Sizing
-            const PARTICLE_DENSITY_DIVISOR = 3; // Lower = more particles
-            const MIN_PARTICLE_COUNT       = 80;  // Minimum particle floor
+            const PARTICLE_DENSITY_DIVISOR = 3;
+            const MIN_PARTICLE_COUNT       = 80;
             const MIN_PARTICLE_RADIUS      = 1.5;
             const MAX_PARTICLE_RADIUS      = 3.5;
 
-            // Base Particle Motion
-            const BASE_SPEED_X             = 0.3; // Base horizontal velocity range (-0.45 to +0.45)
-            const BASE_SPEED_Y             = 0.3; // Base vertical velocity range (-0.45 to +0.45)
+            const BASE_SPEED_X             = 0.3;
+            const BASE_SPEED_Y             = 0.3;
 
-            // Mouse Interaction & Attraction
-            const MOUSE_ATTRACT_RADIUS     = 100; // Distance (px) within which mouse attracts particles
-            const MOUSE_ATTRACT_FORCE      = 0.007;// Pull force intensity toward mouse
-            const MOUSE_LINE_MAX_DIST      = 200; // Distance (px) for drawing lines from mouse to particles
-            const MOUSE_LINE_ALPHA         = 0.5; // Max opacity of mouse interaction lines
-            const MOUSE_LINE_WIDTH         = 1.2; // Width of line drawn to mouse
+            const MOUSE_ATTRACT_RADIUS     = 100;
+            const MOUSE_ATTRACT_FORCE      = 0.007;
+            const MOUSE_LINE_MAX_DIST      = 200;
+            const MOUSE_LINE_ALPHA         = 0.5;
+            const MOUSE_LINE_WIDTH         = 1.2;
 
-            // Particle-to-Particle Connections
-            const CONNECTION_MAX_DIST      = 120; // Max distance (px) to draw lines between particles
-            const CAPTURED_MAX_CONN        = 2;   // Max line connections per particle when captured by mouse
-            const UNCAPTURED_MAX_CONN      = 5;   // Max line connections per particle when free
-            const CONNECTION_BASE_ALPHA    = 0.35;// Base opacity of particle-to-particle lines
-            const CONNECTION_LINE_WIDTH    = 1;   // Width of lines between particles
+            const CONNECTION_MAX_DIST      = 120;
+            const CAPTURED_MAX_CONN        = 2;
+            const UNCAPTURED_MAX_CONN      = 5;
+            const CONNECTION_BASE_ALPHA    = 0.35;
+            const CONNECTION_LINE_WIDTH    = 1;
 
-            // Explosion Effect Settings
-            const EXPLOSION_SPEED_MIN      = 8;   // Minimum velocity magnitude on explosion
-            const EXPLOSION_SPEED_MAX      = 24;  // Maximum velocity magnitude on explosion
-            const EXPLOSION_DRAG           = 0.98;// Speed dampening factor per frame
-            const EXPLOSION_RECOVERY_RATE  = 0.02;// Speed at which particles return to target velocity
-            const EXPLOSION_FADE_STEP      = 0.03;// Color/intensity decay speed per step
-            const EXPLOSION_FADE_INTERVAL  = 30;  // Fade tick interval in milliseconds
-            const POPUP_AUTO_HIDE_DELAY    = 3500;// Time (ms) popup stays visible
-
-            // ==========================================
+            const EXPLOSION_SPEED_MIN      = 8;
+            const EXPLOSION_SPEED_MAX      = 24;
+            const EXPLOSION_DRAG           = 0.98;
+            const EXPLOSION_RECOVERY_RATE  = 0.02;
+            const EXPLOSION_FADE_STEP      = 0.03;
+            const EXPLOSION_FADE_INTERVAL  = 30;
+            const POPUP_AUTO_HIDE_DELAY    = 3500;
 
             const popup = document.getElementById('easter-egg-popup');
             const fpsText = document.getElementById('fps-text');
@@ -1550,7 +1521,6 @@
                         try { localStorage.setItem("cislini_resume_theme", "light"); } catch(e) {}
                     }
                     
-                    // Update canvas cached colors slightly after transition
                     setTimeout(updateParticleColorsCache, 50);
                 });
             }
