@@ -9,20 +9,21 @@
     <meta name="author" content="Joshua Cislini">
     <meta name="robots" content="index, follow">
     
-    <!-- Canonical URL pointing to your GitHub Pages address -->
+    <!-- Canonical URL -->
     <link rel="canonical" href="https://joshua-cislini.github.io/">
     
-    <!-- Web Fonts resemblance to NI typography -->
+    <!-- Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Cloudflare Turnstile API with error handling fallback -->
+    <!-- Cloudflare Turnstile API -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <style>
         :root {
-            /* Palette - Light Theme (Default) */
+            /* Palette - Base & Neutrals */
+            --ni-white: #ffffff;
             --ni-green-dark: #044123;
             --ni-green-primary: #009b65;
             --ni-green-hover: #006b46;
@@ -35,6 +36,7 @@
             --ni-border: #e2e8f0;
             --ni-border-dark: #cbd5e0;
             --ni-danger: #e53e3e;
+            --ni-warning: #d69e2e;
 
             /* Alpha / Tint Colors */
             --ni-green-alpha-12: rgba(0, 155, 101, 0.12);
@@ -43,25 +45,26 @@
             --ni-danger-alpha-12: rgba(229, 62, 62, 0.12);
             --ni-shadow-light: rgba(0, 0, 0, 0.03);
             --ni-shadow-medium: rgba(0, 0, 0, 0.15);
+            --ni-shadow-dark: rgba(0, 0, 0, 0.2);
 
             /* Typography */
             --font-heading: 'DM Serif Display', Georgia, serif;
             --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             
-            /* Canvas Particles */
+            /* Canvas Particles RGB */
             --particle-color-r: 0;
             --particle-color-g: 155;
             --particle-color-b: 101;
         }
 
-        /* Dark Theme Overrides - Matches provided preview dark palette */
+        /* Dark Theme Overrides */
         body.dark-theme {
             --ni-green-dark: #38a169;
             --ni-green-primary: #009b65;
             --ni-green-hover: #00be7d;
             --ni-bg-light: #0b100d;
             --ni-card-bg: rgba(18, 26, 21, 0.80);
-            --ni-text-dark: #ffffff;
+            --ni-text-dark: var(--ni-white);
             --ni-text-body: #e2e8f0;
             --ni-text-muted: #94a3b8;
             --ni-text-footer: #64748b;
@@ -94,7 +97,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Particle Background Canvas */
+        /* Particle Canvas */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -105,7 +108,7 @@
             z-index: 0;
         }
 
-        /* Fixed Bottom-Left FPS Counter Widget */
+        /* FPS Counter Widget */
         #fps-widget {
             position: fixed;
             bottom: 24px;
@@ -137,17 +140,17 @@
             display: inline-block;
         }
 
-        /* Red Centered Easter Egg Popup */
+        /* Easter Egg Popup */
         #easter-egg-popup {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.7);
             background-color: var(--ni-danger);
-            color: #ffffff;
+            color: var(--ni-white);
             padding: 1.25rem 2.25rem;
             border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(229, 62, 62, 0.35), 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px rgba(229, 62, 62, 0.35), 0 5px 15px var(--ni-shadow-dark);
             font-weight: 700;
             font-size: 1.1rem;
             z-index: 2000;
@@ -155,7 +158,7 @@
             opacity: 0;
             pointer-events: none;
             text-align: center;
-            border: 2px solid #ffffff;
+            border: 2px solid var(--ni-white);
         }
 
         #easter-egg-popup.show {
@@ -163,13 +166,12 @@
             opacity: 1;
         }
 
-        /* Elevate main content sections above canvas */
+        /* Main Structural Containers */
         header, .container, footer {
             position: relative;
             z-index: 1;
         }
 
-        /* Typography & Links Defaults */
         a {
             color: var(--ni-green-primary);
             text-decoration: none;
@@ -180,7 +182,7 @@
             text-decoration: underline;
         }
 
-        /* Header / Navigation Bar */
+        /* Navigation Header */
         header {
             background-color: var(--ni-card-bg);
             backdrop-filter: blur(8px);
@@ -235,7 +237,6 @@
             text-decoration: none;
         }
 
-        /* Theme Toggle Button */
         .theme-toggle-btn {
             background: transparent;
             border: 1px solid var(--ni-border-dark);
@@ -259,14 +260,13 @@
             background-color: var(--ni-green-alpha-08);
         }
 
-        /* Main Container */
+        /* Main Content Layout */
         .container {
             max-width: 1100px;
             margin: 2rem auto;
             padding: 0 1.5rem;
         }
 
-        /* Hero Spotlight Section */
         .hero-spotlight {
             background-color: var(--ni-card-bg);
             backdrop-filter: blur(8px);
@@ -316,7 +316,7 @@
 
         .btn-primary, .btn-secondary, .btn-verify {
             background-color: var(--ni-green-primary);
-            color: #ffffff !important;
+            color: var(--ni-white) !important;
             padding: 0.75rem 1.75rem;
             border-radius: 24px;
             font-weight: 600;
@@ -341,7 +341,7 @@
         .btn-primary:hover, .btn-verify:hover {
             text-decoration: none;
             background-color: var(--ni-green-hover);
-            color: #ffffff !important;
+            color: var(--ni-white) !important;
         }
 
         .btn-secondary:hover {
@@ -362,14 +362,12 @@
             margin-top: 0.5rem;
         }
 
-        /* Two Column Layout */
         .grid-layout {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 2rem;
         }
 
-        /* Resume Cards */
         .section-card {
             background-color: var(--ni-card-bg);
             backdrop-filter: blur(8px);
@@ -414,7 +412,7 @@
             margin-bottom: 1.25rem;
         }
 
-        /* Timeline Components */
+        /* Timeline Items */
         .timeline-container {
             position: relative;
             padding-left: 40px;
@@ -580,7 +578,7 @@
             font-size: 0.95rem;
         }
 
-        /* Content List Elements */
+        /* Widgets & Badges */
         .skills-list {
             display: flex;
             flex-wrap: wrap;
@@ -660,7 +658,7 @@
             bottom: 24px;
             right: 24px;
             background-color: var(--ni-green-primary);
-            color: #ffffff;
+            color: var(--ni-white);
             font-weight: 600;
             padding: 12px 20px;
             border-radius: 8px;
@@ -674,7 +672,6 @@
             background-color: var(--ni-green-hover);
         }
 
-        /* Gate Elements */
         .gate-container {
             text-align: center;
             padding: 0.5rem 0;
@@ -701,7 +698,7 @@
 
         footer {
             background-color: var(--ni-green-dark);
-            color: #ffffff;
+            color: var(--ni-white);
             text-align: center;
             padding: 2rem 1rem;
             margin-top: 4rem;
@@ -763,13 +760,13 @@
         
         <!-- Hero Spotlight Section -->
         <section class="hero-spotlight" id="about">
-            <p class="eyebrow">Aspiring Electronics Engineer at <a href="https://www.heia-fr.ch/" target="_blank">HEIA-FR</a></p>
+            <p class="eyebrow">Aspiring Electronics Engineer at <a href="https://www.heia-fr.ch/" target="_blank" rel="noopener noreferrer">HEIA-FR</a></p>
             <h1 class="hero-title">Precision Hardware & Electronics Systems</h1>
             <p class="hero-subtitle">
-                Former Electronics Apprentice at <a href="https://www.schindler.ch/" target="_blank">Schindler</a> R&D with strong technical expertise in hardware development, PCBA prototyping, and operational safety. Recognized as Ticino's Best Apprentice for 2025 by <a href="https://www.ameti.ch/" target="_blank">AMETI</a>.
+                Former Electronics Apprentice at <a href="https://www.schindler.ch/" target="_blank" rel="noopener noreferrer">Schindler</a> R&D with strong technical expertise in hardware development, PCBA prototyping, and operational safety. Recognized as Ticino's Best Apprentice for 2025 by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a>.
             </p>
             <div class="btn-group">
-                <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" class="btn-primary">Connect on LinkedIn</a>
+                <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary">Connect on LinkedIn</a>
                 <button class="btn-primary" onclick="handleHeroResumeClick()">Download Resume ⤓</button>
                 <a href="#contact" class="btn-secondary">Contact Info</a>
             </div>
@@ -780,8 +777,8 @@
             <main>
                 
                 <div class="award-box">
-                    <h4><a href="https://www.ameti.ch/" target="_blank">AMETI</a> Award Winner - Best Apprentice 2025</h4>
-                    <p>Recognized by <a href="https://www.ameti.ch/" target="_blank">AMETI</a> as the <strong>Best Apprentice in Ticino for the year 2025</strong> based on final exam performance during the Electronics Technician apprenticeship.</p>
+                    <h4><a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> Award Winner - Best Apprentice 2025</h4>
+                    <p>Recognized by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> as the <strong>Best Apprentice in Ticino for the year 2025</strong> based on final exam performance during the Electronics Technician apprenticeship.</p>
                 </div>
 
                 <section class="section-card" id="experience">
@@ -794,7 +791,7 @@
                                 <span class="item-date">Jul 2025 ⟶ Apr 2026</span>
                             </div>
                             <div class="item-subtitle">
-                                <a href="https://www.armee.ch/" target="_blank">Swiss Armed Forces</a> · Full-time (10 mos)
+                                <a href="https://www.armee.ch/" target="_blank" rel="noopener noreferrer">Swiss Armed Forces</a> · Full-time (10 mos)
                             </div>
                             <p>
                                 Completed 10 months of military service in the Swiss Army. Responsible for the safe transportation of personnel and equipment, vehicle inspections and maintenance, and task execution under strict procedures and time constraints.
@@ -811,13 +808,13 @@
                                 <span class="item-date">Aug 2021 ⟶ Jul 2025</span>
                             </div>
                             <div class="item-subtitle">
-                                <a href="https://www.schindler.ch/" target="_blank">Schindler Aufzüge AG</a> · Locarno, Ticino, Switzerland · Apprenticeship (4 yrs)
+                                <a href="https://www.schindler.ch/" target="_blank" rel="noopener noreferrer">Schindler Aufzüge AG</a> · Locarno, Ticino, Switzerland · Apprenticeship (4 yrs)
                             </div>
                             <p>
                                 Developed strong technical skills in electronics and hardware development. Joined the R&D team <strong>“Phygital Hardware”</strong>, contributing to the development of “PCBA PORT” prototypes and completing the final graduation project within the team.
                             </p>
                             <ul>
-                                <li>Awarded <strong>Best Apprentice in Ticino for 2025</strong> by <a href="https://www.ameti.ch/" target="_blank">AMETI</a> based on final exam results.</li>
+                                <li>Awarded <strong>Best Apprentice in Ticino for 2025</strong> by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> based on final exam results.</li>
                                 <li>Obtained the integrated Technical Professional Maturity with excellent results in humanistic and scientific subjects.</li>
                             </ul>
                         </div>
@@ -834,7 +831,7 @@
                                 <span class="item-date">Sep 2026 ⟶ Jul 2029</span>
                             </div>
                             <div class="item-subtitle">
-                                <a href="https://www.heia-fr.ch/" target="_blank">College of Engineering and Architecture of Fribourg (HEIA-FR)</a>
+                                <a href="https://www.heia-fr.ch/" target="_blank" rel="noopener noreferrer">College of Engineering and Architecture of Fribourg (HEIA-FR)</a>
                             </div>
                         </div>
 
@@ -845,7 +842,7 @@
                                     <span class="item-date">Sep 2021 ⟶ Jun 2025</span>
                                 </div>
                                 <div class="item-subtitle">
-                                    <a href="https://www.cptlocarno.ti.ch/" target="_blank">CPT Locarno</a>
+                                    <a href="https://www.cptlocarno.ti.ch/" target="_blank" rel="noopener noreferrer">CPT Locarno</a>
                                 </div>
                             </div>
 
@@ -855,7 +852,7 @@
                                     <span class="item-date">Sep 2021 ⟶ Jun 2025</span>
                                 </div>
                                 <div class="item-subtitle">
-                                    <a href="https://www.cptlocarno.ti.ch/" target="_blank">CPT Locarno</a>
+                                    <a href="https://www.cptlocarno.ti.ch/" target="_blank" rel="noopener noreferrer">CPT Locarno</a>
                                 </div>
                             </div>
                         </div>
@@ -872,7 +869,7 @@
                                 <span class="item-date">Issued Sep 2025 ⟶ Exp. Sep 2030</span>
                             </div>
                             <div class="item-subtitle">
-                                <a href="https://www.armee.ch/" target="_blank">Swiss Armed Forces</a>
+                                <a href="https://www.armee.ch/" target="_blank" rel="noopener noreferrer">Swiss Armed Forces</a>
                             </div>
                         </div>
 
@@ -882,7 +879,7 @@
                                 <span class="item-date">Issued Aug 2025</span>
                             </div>
                             <div class="item-subtitle">
-                                <a href="https://www.armee.ch/" target="_blank">Swiss Armed Forces</a>
+                                <a href="https://www.armee.ch/" target="_blank" rel="noopener noreferrer">Swiss Armed Forces</a>
                             </div>
                         </div>
                         
@@ -892,9 +889,9 @@
                                 <span class="item-date">Issued Nov 2022 ⟶ Exp. Nov 2027</span>
                             </div>
                             <div class="item-subtitle">
-                                <a href="https://www.easa.europa.eu/" target="_blank">EASA - EU Aviation Safety Agency</a>
+                                <a href="https://www.easa.europa.eu/" target="_blank" rel="noopener noreferrer">EASA - EU Aviation Safety Agency</a>
                             </div>
-                            <a href="https://www.certificate.bazl.admin.ch/drone/v2/verify?cipher=cY6vYRmOzGUOimQEkM-DIhWPxuwysaf9C7ZJ-HWD3OeFShnojMpcstCijCXNEvmP3JpgwxYbrsa7VQ0wB0bB0QzYJvM7g4gR5jtj6AujyTqpmMGBaFp9edcc7WBW-x2VjTfJtJnG71dPyaSyMLDmdJh8oN3uex_O8ZPenyblmbk" target="_blank" class="btn-verify">Verify License ↗</a>
+                            <a href="https://www.certificate.bazl.admin.ch/drone/v2/verify?cipher=cY6vYRmOzGUOimQEkM-DIhWPxuwysaf9C7ZJ-HWD3OeFShnojMpcstCijCXNEvmP3JpgwxYbrsa7VQ0wB0bB0QzYJvM7g4gR5jtj6AujyTqpmMGBaFp9edcc7WBW-x2VjTfJtJnG71dPyaSyMLDmdJh8oN3uex_O8ZPenyblmbk" target="_blank" rel="noopener noreferrer" class="btn-verify">Verify License ↗</a>
                         </div>
                     </div>
                 </section>
@@ -910,7 +907,7 @@
                     </div>
                     <h3 class="widget-title">Connect on LinkedIn</h3>
                     <p class="widget-description">Explore professional updates, network, and R&D hardware projects.</p>
-                    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" class="btn-primary btn-full">
+                    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary btn-full">
                         View Linkedin Profile ↗
                     </a>
                 </section>
@@ -925,26 +922,25 @@
                     <h3 class="widget-title">GitHub Activity</h3>
                     <p class="widget-description">Contributions & Code Commit Graph</p>
                     
-                    <a href="https://github.com/joshua-cislini" target="_blank" class="github-chart-container">
+                    <a href="https://github.com/joshua-cislini" target="_blank" rel="noopener noreferrer" class="github-chart-container">
                         <img src="https://ghchart.rshah.org/009b65/joshua-cislini" 
                              alt="Joshua Cislini's GitHub Contribution Chart" 
                              class="github-chart-img"
                              onerror="this.onerror=null; this.src='https://placehold.co/400x100/044123/ffffff?text=GitHub+Profile+@joshua-cislini';" />
                     </a>
                     
-                    <a href="https://github.com/joshua-cislini" target="_blank" class="btn-primary btn-full" style="margin-top: 1.25rem;">
+                    <a href="https://github.com/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary btn-full" style="margin-top: 1.25rem;">
                         View GitHub Profile ↗
                     </a>
                 </section>
 
-                <!-- Contact Info Card -->
                 <section class="section-card" id="contact">
                     <h2 class="section-title">Contact</h2>
                     
                     <div class="contact-info" id="contact-info-content" style="display: none;">
                         <p><strong>E-mail:</strong> <a id="email-link" href="#"></a></p>
                         <p><strong>Phone:</strong> <a id="phone-link" href="#"></a></p>
-                        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank">joshua-cislini</a></p>
+                        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer">joshua-cislini</a></p>
                         
                         <div style="margin-top: 1.25rem;">
                             <a id="download-resume-link" href="#" download="Joshua_Cislini_Resume.pdf" class="btn-primary btn-full">
@@ -994,16 +990,14 @@
         </div>
     </div>
 
-    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" id="floatingContactBtn">Connect with Joshua</a>
+    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer" id="floatingContactBtn">Connect with Joshua</a>
 
     <footer>
-        <p>© 2026 Joshua Cislini. Design inspired by <a href="https://www.ni.com" target="_blank">ni.com</a></p>
+        <p>© 2026 Joshua Cislini. Design inspired by <a href="https://www.ni.com" target="_blank" rel="noopener noreferrer">ni.com</a></p>
     </footer>
 
     <script>
-        /* -------------------------------------------------------------
-           Global Error Shield & Handler for Third-Party / IFrame Issues
-           ------------------------------------------------------------- */
+        /* Error Handler */
         window.addEventListener('error', function(event) {
             if (event && (event.message === 'Script error.' || event.message === 'Script error')) {
                 event.preventDefault();
@@ -1017,9 +1011,6 @@
             }
         });
 
-        /* -------------------------------------------------------------
-           Global Handlers attached to Window for HTML Inline Bindings
-           ------------------------------------------------------------- */
         let activeResumeBlobUrl = null;
 
         window.handleHeroResumeClick = function() {
@@ -1107,9 +1098,7 @@
             }
         }
 
-        /* -------------------------------------------------------------
-           Particle Constellation + Explosion Easter Egg Script
-           ------------------------------------------------------------- */
+        /* Particle Canvas Script */
         (function initParticleCanvas() {
             const canvas = document.getElementById('bg-canvas');
             if (!canvas) return;
@@ -1130,6 +1119,15 @@
 
             let lastTime = performance.now();
             let frameCount = 0;
+
+            function getParticleColors() {
+                const styles = getComputedStyle(document.documentElement);
+                return {
+                    r: parseInt(styles.getPropertyValue('--particle-color-r').trim() || "0", 10),
+                    g: parseInt(styles.getPropertyValue('--particle-color-g').trim() || "155", 10),
+                    b: parseInt(styles.getPropertyValue('--particle-color-b').trim() || "101", 10)
+                };
+            }
 
             function updateDimensions() {
                 width = canvas.width = window.innerWidth || document.documentElement.clientWidth || 1000;
@@ -1198,14 +1196,10 @@
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                     
-                    const isDark = document.body.classList.contains('dark-theme');
-                    const baseR = 0;
-                    const baseG = isDark ? 220 : 155;
-                    const baseB = isDark ? 140 : 101;
-
-                    const r = Math.round(baseR + (229 - baseR) * explosionProgress);
-                    const g = Math.round(baseG + (62 - baseG) * explosionProgress);
-                    const b = Math.round(baseB + (62 - baseB) * explosionProgress);
+                    const baseColor = getParticleColors();
+                    const r = Math.round(baseColor.r + (229 - baseColor.r) * explosionProgress);
+                    const g = Math.round(baseColor.g + (62 - baseColor.g) * explosionProgress);
+                    const b = Math.round(baseColor.b + (62 - baseColor.b) * explosionProgress);
                     const alpha = 0.6 + 0.3 * explosionProgress;
 
                     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
@@ -1263,7 +1257,7 @@
                         if (fps >= 50) {
                             fpsDot.style.backgroundColor = 'var(--ni-green-primary)';
                         } else if (fps >= 30) {
-                            fpsDot.style.backgroundColor = '#d69e2e';
+                            fpsDot.style.backgroundColor = 'var(--ni-warning)';
                         } else {
                             fpsDot.style.backgroundColor = 'var(--ni-danger)';
                         }
@@ -1284,10 +1278,7 @@
                     particles[i].connectionsCount = 0;
                 }
 
-                const isDark = document.body.classList.contains('dark-theme');
-                const baseR = 0;
-                const baseG = isDark ? 220 : 155;
-                const baseB = isDark ? 140 : 101;
+                const baseColor = getParticleColors();
 
                 for (let i = 0; i < particles.length; i++) {
                     particles[i].update();
@@ -1317,9 +1308,9 @@
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
 
-                            const r = Math.round(baseR + (229 - baseR) * explosionProgress);
-                            const g = Math.round(baseG + (62 - baseG) * explosionProgress);
-                            const b = Math.round(baseB + (62 - baseB) * explosionProgress);
+                            const r = Math.round(baseColor.r + (229 - baseColor.r) * explosionProgress);
+                            const g = Math.round(baseColor.g + (62 - baseColor.g) * explosionProgress);
+                            const b = Math.round(baseColor.b + (62 - baseColor.b) * explosionProgress);
                             const alpha = (0.35 + 0.2 * explosionProgress) * (1 - dist / 120);
 
                             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
@@ -1337,7 +1328,7 @@
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(mouse.x, mouse.y);
-                            ctx.strokeStyle = `rgba(${baseR}, ${baseG}, ${baseB}, ${0.5 * (1 - dist / 150)})`;
+                            ctx.strokeStyle = `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, ${0.5 * (1 - dist / 150)})`;
                             ctx.lineWidth = 1.2;
                             ctx.stroke();
                         }
@@ -1354,7 +1345,6 @@
             initParticles();
             requestAnimationFrame(animate);
 
-            // Event Listeners
             window.addEventListener('mousemove', (e) => {
                 mouse.x = e.clientX;
                 mouse.y = e.clientY;
@@ -1373,16 +1363,13 @@
             setTimeout(initParticles, 1000);
         })();
 
-        /* -------------------------------------------------------------
-           Theme Switcher (Light / Dark Mode with Persistence)
-           ------------------------------------------------------------- */
+        /* Theme Switcher Script */
         document.addEventListener("DOMContentLoaded", function() {
             const themeToggleBtn = document.getElementById("theme-toggle");
             const themeIcon = document.getElementById("theme-icon");
             const themeText = document.getElementById("theme-text");
 
             if (themeToggleBtn) {
-                // Check if user previously saved a theme preference
                 try {
                     const savedTheme = localStorage.getItem("cislini_resume_theme");
                     if (savedTheme === "dark") {
@@ -1397,7 +1384,7 @@
                     const isDark = document.body.classList.contains("dark-theme");
 
                     if (isDark) {
-                        if (themeIcon) themeIcon.textContent = "☀️️";
+                        if (themeIcon) themeIcon.textContent = "☀️";
                         if (themeText) themeText.textContent = "Light";
                         try { localStorage.setItem("cislini_resume_theme", "dark"); } catch(e) {}
                     } else {
@@ -1408,7 +1395,6 @@
                 });
             }
 
-            /* Automatic Badges & Status Parser */
             const today = new Date();
             const monthMap = {
                 "jan": 0, "feb": 1, "mar": 2, "apr": 3, "may": 4, "jun": 5,
