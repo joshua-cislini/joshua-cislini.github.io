@@ -1224,19 +1224,19 @@
             // ==========================================
             
             // Particle Generation & Sizing
-            const PARTICLE_DENSITY_DIVISOR = 3.5; // Lower = more particles
+            const PARTICLE_DENSITY_DIVISOR = 3; // Lower = more particles
             const MIN_PARTICLE_COUNT       = 80;  // Minimum particle floor
             const MIN_PARTICLE_RADIUS      = 1.5;
             const MAX_PARTICLE_RADIUS      = 3.5;
 
             // Base Particle Motion
-            const BASE_SPEED_X             = 0.9; // Base horizontal velocity range (-0.45 to +0.45)
-            const BASE_SPEED_Y             = 0.9; // Base vertical velocity range (-0.45 to +0.45)
+            const BASE_SPEED_X             = 0.3; // Base horizontal velocity range (-0.45 to +0.45)
+            const BASE_SPEED_Y             = 0.3; // Base vertical velocity range (-0.45 to +0.45)
 
             // Mouse Interaction & Attraction
-            const MOUSE_ATTRACT_RADIUS     = 150; // Distance (px) within which mouse attracts particles
-            const MOUSE_ATTRACT_FORCE      = 0.02;// Pull force intensity toward mouse
-            const MOUSE_LINE_MAX_DIST      = 150; // Distance (px) for drawing lines from mouse to particles
+            const MOUSE_ATTRACT_RADIUS     = 100; // Distance (px) within which mouse attracts particles
+            const MOUSE_ATTRACT_FORCE      = 0.007;// Pull force intensity toward mouse
+            const MOUSE_LINE_MAX_DIST      = 200; // Distance (px) for drawing lines from mouse to particles
             const MOUSE_LINE_ALPHA         = 0.5; // Max opacity of mouse interaction lines
             const MOUSE_LINE_WIDTH         = 1.2; // Width of line drawn to mouse
 
