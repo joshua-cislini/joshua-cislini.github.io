@@ -212,6 +212,11 @@
             text-decoration: underline;
         }
 
+        main a:not(.btn-verify), p a, .item-subtitle a, .eyebrow a {
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
         /* Navigation Header */
         header {
             background-color: var(--ni-card-bg);
@@ -569,7 +574,7 @@
             margin-bottom: 0;
         }
 
-        .timeline-group .timeline-item:last-child::before {
+        .timeline-group .timeline-item::before {
             border: 2px solid var(--ni-green-primary);
             background-color: var(--ni-card-bg);
             width: 10px;
@@ -629,8 +634,8 @@
             gap: 0.5rem;
         }
 
-        /* Unified Link Styling for Contact Links */
-        .contact-info a {
+        /* Updated: Styles text contact links to match general links without affecting the download button */
+        .contact-info a:not(.btn-primary) {
             color: var(--ni-green-text);
             font-weight: 500;
             text-decoration: underline;
@@ -638,11 +643,7 @@
             transition: color 0.15s ease;
         }
 
-        .contact-info a:hover {
-            color: var(--ni-green-hover);
-        }
-
-        html.dark-theme .contact-info a:hover {
+        .contact-info a:not(.btn-primary):hover {
             color: var(--ni-green-hover);
         }
 
