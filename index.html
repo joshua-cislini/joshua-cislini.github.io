@@ -43,7 +43,7 @@
             --ni-green-primary: #009b65;
             --ni-green-hover: #006b46;
             --ni-bg-light: #f4f4f4;
-            --ni-card-bg: rgba(255, 255, 255, 0.80);
+            --ni-card-bg: rgba(255, 255, 255, 0.4);
             --ni-text-dark: #044123;
             --ni-text-body: #2d3748;
             --ni-text-muted: #5a6778; /* AA contrast */
@@ -52,6 +52,10 @@
             --ni-border-dark: #cbd5e0;
             --ni-danger: #c53030; /* AA contrast */
             --ni-warning: #d69e2e;
+
+            /* Award card glass */
+            --ni-award-bg: rgba(255, 255, 255, 0.2);
+            --ni-award-edge: rgba(255, 255, 255, 0.6);
 
             /* Accessible text/button greens (AA >= 4.5:1) */
             --ni-green-text: #007048;
@@ -88,6 +92,8 @@
             --ni-text-body: #e2e8f0;
             --ni-text-muted: #94a3b8;
             --ni-green-text: #34d399;
+            --ni-award-bg: rgba(18, 26, 21, 0.5);
+            --ni-award-edge: rgba(255, 255, 255, 0.08);
             --ni-text-footer: #64748b;
             --ni-border: #1e2d24;
             --ni-border-dark: #2d4235;
@@ -204,7 +210,7 @@
         }
 
         /* Links inside running text must not rely on colour alone */
-        p a, .item-subtitle a, .eyebrow a {
+        main a:not(.btn-verify), p a, .item-subtitle a, .eyebrow a {
             text-decoration: underline;
             text-underline-offset: 2px;
         }
@@ -655,7 +661,16 @@
         }
 
         .award-box {
-            background-color: var(--ni-green-alpha-08);
+            /* Frosted glass, 50% opaque: green tint layered over a semi-opaque base */
+            background:
+                linear-gradient(var(--ni-green-alpha-08), var(--ni-green-alpha-08)),
+                var(--ni-award-bg);
+            backdrop-filter: blur(12px) saturate(140%);
+            -webkit-backdrop-filter: blur(12px) saturate(140%);
+            border-top: 1px solid var(--ni-award-edge);
+            border-right: 1px solid var(--ni-award-edge);
+            border-bottom: 1px solid var(--ni-award-edge);
+            box-shadow: inset 0 1px 0 var(--ni-award-edge), 0 2px 8px var(--ni-shadow-light);
             border-left: 4px solid var(--ni-green-primary);
             padding: 1rem;
             border-radius: 0 6px 6px 0;
