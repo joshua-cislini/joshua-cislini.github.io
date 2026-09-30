@@ -1,1621 +1,225 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta name="google-site-verification" content="eyOd2bjKfIzi98xGXxJtUSpQsXCAXazxyoGRd3yZll4" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joshua Cislini</title>
-    <meta name="description" content="Official website and resume of Joshua Cislini - Electronics Technician VET, Swiss Armed Forces Soldier, and Electrical Engineering student at HEIA-FR. Ticino Best Apprentice 2025.">
-    <meta name="author" content="Joshua Cislini">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://joshua-cislini.github.io/">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap"></noscript>
-
-    <!-- Apply saved theme before first paint -->
-    <script>
-        try {
-            if (localStorage.getItem("cislini_resume_theme") === "dark") document.documentElement.classList.add("dark-theme");
-        } catch (e) {}
-    </script>
-
-    <style>
-        @font-face {
-            font-family: "Inter Fallback";
-            src: local("Arial");
-            size-adjust: 107.4%;
-            ascent-override: 90.2%;
-            descent-override: 22.5%;
-            line-gap-override: 0%;
-        }
-
-        :root {
-            /* Palette - Base & Neutrals */
-            --ni-white: #ffffff;
-            --ni-green-dark: #044123;
-            --ni-green-primary: #009b65;
-            --ni-green-hover: #006b46;
-            --ni-bg-light: #f4f4f4;
-            --ni-card-bg: rgba(255, 255, 255, 0.2);
-            --ni-text-dark: #044123;
-            --ni-text-body: #2d3748;
-            --ni-text-muted: #5a6778;
-            --ni-text-footer: #a0aec0;
-            --ni-border: #e2e8f0;
-            --ni-border-dark: #cbd5e0;
-            --ni-fps-bg: #ffffff;
-            --ni-danger: #c53030;
-            --ni-warning: #d69e2e;
-
-            /* Award card glass */
-            --ni-award-bg: rgba(255, 255, 255, 0.1);
-            --ni-award-edge: rgba(255, 255, 255, 0.6);
-
-            /* Accessible greens */
-            --ni-green-text: #007048;
-            --ni-btn-bg: #00744c;
-            --ni-btn-hover: #005a3b;
-
-            /* Alpha / Tint Colors */
-            --ni-green-alpha-12: rgba(0, 155, 101, 0.12);
-            --ni-green-alpha-08: rgba(0, 155, 101, 0.08);
-            --ni-green-alpha-shadow: rgba(0, 155, 101, 0.4);
-            --ni-danger-alpha-12: rgba(229, 62, 62, 0.12);
-            --ni-shadow-light: rgba(0, 0, 0, 0.03);
-            --ni-shadow-medium: rgba(0, 0, 0, 0.15);
-            --ni-shadow-dark: rgba(0, 0, 0, 0.2);
-
-            /* Typography */
-            --font-heading: 'DM Serif Display', Georgia, serif;
-            --font-body: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            
-            /* Canvas Particles RGB */
-            --particle-color-r: 0;
-            --particle-color-g: 155;
-            --particle-color-b: 101;
-        }
-
-        html.dark-theme {
-            --ni-green-dark: #38a169;
-            --ni-green-primary: #009b65;
-            --ni-green-hover: #00be7d;
-            --ni-bg-light: #0b100d;
-            --ni-card-bg: rgba(18, 26, 21, 0.2);
-            --ni-text-dark: var(--ni-white);
-            --ni-text-body: #e2e8f0;
-            --ni-text-muted: #94a3b8;
-            --ni-green-text: #34d399;
-            --ni-award-bg: rgba(18, 26, 21, 0.1);
-            --ni-award-edge: rgba(255, 255, 255, 0.08);
-            --ni-fps-bg: #1a2420;
-            --ni-text-footer: #64748b;
-            --ni-border: #1e2d24;
-            --ni-border-dark: #2d4235;
-            --ni-shadow-light: rgba(0, 0, 0, 0.4);
-            --ni-shadow-medium: rgba(0, 0, 0, 0.6);
-
-            --ni-green-alpha-12: rgba(0, 155, 101, 0.25);
-            --ni-green-alpha-08: rgba(0, 155, 101, 0.15);
-            
-            --particle-color-r: 0;
-            --particle-color-g: 220;
-            --particle-color-b: 140;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Smooth Scrolling & Anchor Offset Fix */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--ni-bg-light);
-            color: var(--ni-text-body);
-            line-height: 1.6;
-            position: relative;
-            min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Particle Canvas */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* FPS Counter Widget */
-        #fps-widget {
-            position: fixed;
-            bottom: 24px;
-            left: 24px;
-            background-color: var(--ni-fps-bg);
-            color: var(--ni-text-dark);
-            border: 1px solid var(--ni-border);
-            font-weight: 600;
-            font-size: 0.8rem;
-            padding: 8px 14px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px var(--ni-shadow-medium);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: var(--font-body);
-            user-select: none;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-        }
-
-        .fps-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--ni-green-primary);
-            display: inline-block;
-        }
-
-        /* Easter Egg Popup */
-        #easter-egg-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.7);
-            background-color: var(--ni-danger);
-            color: var(--ni-white);
-            padding: 1.25rem 2.25rem;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(229, 62, 62, 0.35), 0 5px 15px var(--ni-shadow-dark);
-            font-weight: 700;
-            font-size: 1.1rem;
-            z-index: 2000;
-            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s ease;
-            opacity: 0;
-            pointer-events: none;
-            text-align: center;
-            border: 2px solid var(--ni-white);
-        }
-
-        #easter-egg-popup.show {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-        }
-
-        /* Main Structural Containers */
-        header, .container, footer {
-            position: relative;
-            z-index: 1;
-        }
-
-        a {
-            color: var(--ni-green-text);
-            text-decoration: none;
-            transition: color 0.15s ease, text-decoration 0.15s ease;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        main a:not(.btn-verify), p a, .item-subtitle a, .eyebrow a {
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-
-        /* Navigation Header */
-        header {
-            background-color: var(--ni-card-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--ni-border);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .nav-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .brand-logo {
-            font-family: var(--font-body);
-            font-weight: 700;
-            font-size: 1.25rem;
-            letter-spacing: -0.5px;
-            color: var(--ni-text-dark);
-            text-transform: uppercase;
-        }
-
-        .brand-logo span {
-            color: var(--ni-green-text);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            color: var(--ni-text-dark);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.15s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--ni-green-text);
-            text-decoration: none;
-        }
-
-        .theme-toggle-btn {
-            background: transparent;
-            border: 1px solid var(--ni-border-dark);
-            color: var(--ni-text-dark);
-            padding: 6px 14px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-            font-family: var(--font-body);
-            user-select: none;
-        }
-
-        .theme-toggle-btn:hover {
-            border-color: var(--ni-green-primary);
-            color: var(--ni-green-text);
-            background-color: var(--ni-green-alpha-08);
-        }
-
-        /* Main Content Layout */
-        .container {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .hero-spotlight {
-            background-color: var(--ni-card-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 8px;
-            padding: 3rem 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px var(--ni-shadow-light);
-            border: 1px solid var(--ni-border);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            min-height: 220px;
-            scroll-margin-top: 80px;
-        }
-
-        .eyebrow {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--ni-green-text);
-            margin-bottom: 0.5rem;
-        }
-
-        .hero-title {
-            font-family: var(--font-heading);
-            font-size: 2.75rem;
-            color: var(--ni-text-dark);
-            line-height: 1.15;
-            margin-bottom: 1rem;
-            font-weight: 400;
-        }
-
-        .hero-subtitle {
-            font-size: 1.05rem;
-            color: var(--ni-text-body);
-            margin-bottom: 1.75rem;
-            max-width: 800px;
-        }
-
-        .hero-subtitle a {
-            font-weight: 600;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary, .btn-secondary, .btn-verify {
-            background-color: var(--ni-btn-bg);
-            color: var(--ni-white) !important;
-            padding: 0.75rem 1.75rem;
-            border-radius: 24px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            line-height: 1.2;
-            transition: background-color 0.15s ease-out, transform 0.1s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-            border: none;
-            cursor: pointer;
-            font-family: var(--font-body);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--ni-text-dark) !important;
-            border: 1px solid var(--ni-border-dark);
-        }
-
-        .btn-primary:hover, .btn-verify:hover {
-            text-decoration: none;
-            background-color: var(--ni-btn-hover);
-            color: var(--ni-white) !important;
-        }
-
-        .btn-secondary:hover {
-            text-decoration: none;
-            border-color: var(--ni-green-primary);
-            color: var(--ni-green-text) !important;
-            background-color: var(--ni-green-alpha-08);
-        }
-
-        .btn-full {
-            width: 100%;
-        }
-
-        .btn-verify {
-            font-size: 0.85rem;
-            padding: 0.5rem 1rem;
-            border-radius: 16px;
-            margin-top: 0.5rem;
-        }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            align-items: start;
-        }
-
-        .section-card {
-            background-color: var(--ni-card-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px var(--ni-shadow-light);
-            border: 1px solid var(--ni-border);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            scroll-margin-top: 80px;
-        }
-
-        .section-card-accent {
-            text-align: center;
-            border-top: 4px solid var(--ni-green-primary);
-        }
-
-        .section-title {
-            font-family: var(--font-heading);
-            font-size: 1.75rem;
-            color: var(--ni-text-dark);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--ni-border);
-            font-weight: 400;
-        }
-
-        .widget-title {
-            font-family: var(--font-heading);
-            color: var(--ni-text-dark);
-            font-size: 1.25rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .widget-icon {
-            margin-bottom: 0.75rem;
-        }
-
-        .widget-description {
-            font-size: 0.85rem;
-            color: var(--ni-text-body);
-            margin-bottom: 1.25rem;
-        }
-
-        /* Timeline Items */
-        .timeline-container {
-            position: relative;
-            padding-left: 40px;
-        }
-
-        .timeline-container::before {
-            content: '';
-            position: absolute;
-            left: 10px; 
-            top: 11px;
-            bottom: 11px;
-            width: 2px;
-            background-color: var(--ni-border-dark);
-            transform: translateX(-50%);
-            z-index: 1;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-        }
-
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 11px;
-            transform: translate(-50%, -50%);
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--ni-card-bg);
-            border: 2px solid var(--ni-green-primary);
-            z-index: 3;
-            transition: background-color 0.3s ease;
-        }
-
-        @keyframes internal-dot-pulse {
-            0%, 100% {
-                background-color: var(--ni-card-bg);
-                border-color: var(--ni-green-primary);
-                box-shadow: 0 0 0 0 rgba(0, 155, 101, 0);
-            }
-            50% {
-                background-color: var(--ni-green-primary);
-                border-color: var(--ni-green-hover);
-                box-shadow: 0 0 6px 2px var(--ni-green-alpha-shadow);
-            }
-        }
-
-        .timeline-item.active-item::before {
-            animation: internal-dot-pulse 2s infinite ease-in-out;
-        }
-
-        .item-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--ni-text-dark);
-            display: inline-flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            min-height: 1.6rem;
-        }
-
-        .active-badge, .valable-badge, .expired-badge {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 2px 8px;
-            border-radius: 12px;
-            letter-spacing: 0.5px;
-            vertical-align: middle;
-            line-height: 1.2;
-        }
-
-        .active-badge, .valable-badge {
-            background-color: var(--ni-green-alpha-12);
-            color: var(--ni-green-text);
-            border: 1px solid var(--ni-green-primary);
-        }
-
-        .expired-badge {
-            background-color: var(--ni-danger-alpha-12);
-            color: var(--ni-danger);
-            border: 1px solid var(--ni-danger);
-        }
-
-        .timeline-group {
-            position: relative;
-            margin-bottom: 2rem;
-            background-color: transparent;
-            padding: 0;
-        }
-
-        .timeline-group::before {
-            content: '';
-            position: absolute;
-            left: -15px;
-            top: 11px;
-            bottom: 11px;
-            width: 2px;
-            background-color: var(--ni-green-primary);
-            transform: translateX(-50%);
-            opacity: 0.35;
-            z-index: 2;
-            border-radius: 2px;
-        }
-
-        .timeline-group .timeline-item {
-            margin-bottom: 1.5rem;
-        }
-
-        .timeline-group .timeline-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .timeline-group .timeline-item::before {
-            border: 2px solid var(--ni-green-primary);
-            background-color: var(--ni-card-bg);
-            width: 10px;
-            height: 10px;
-            left: -30px;
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.25rem;
-            flex-wrap: wrap;
-            line-height: 1.2;
-            gap: 0.5rem;
-        }
-
-        .item-date {
-            font-size: 0.85rem;
-            color: var(--ni-text-muted);
-            font-weight: 500;
-        }
-
-        .item-subtitle {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--ni-green-text);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .timeline-item p {
-            font-size: 0.95rem;
-            margin-top: 0.25rem;
-        }
-
-        .timeline-item ul {
-            padding-left: 1.2rem;
-            margin-top: 0.5rem;
-        }
-
-        .timeline-item li {
-            margin-bottom: 0.4rem;
-            font-size: 0.95rem;
-        }
-
-        .contact-info p, .language-item {
-            margin-bottom: 0.75rem;
-            font-size: 0.95rem;
-        }
-
-        .contact-info p {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .contact-info a {
-            color: var(--ni-text-dark);
-            font-weight: 500;
-        }
-
-        .contact-info a:hover {
-            color: var(--ni-green-text);
-        }
-
-        .award-box {
-            background:
-                linear-gradient(var(--ni-green-alpha-08), var(--ni-green-alpha-08)),
-                var(--ni-award-bg);
-            backdrop-filter: blur(12px) saturate(140%);
-            -webkit-backdrop-filter: blur(12px) saturate(140%);
-            border-top: 1px solid var(--ni-award-edge);
-            border-right: 1px solid var(--ni-award-edge);
-            border-bottom: 1px solid var(--ni-award-edge);
-            box-shadow: inset 0 1px 0 var(--ni-award-edge), 0 2px 8px var(--ni-shadow-light);
-            border-left: 4px solid var(--ni-green-primary);
-            padding: 1rem;
-            border-radius: 0 6px 6px 0;
-            margin-bottom: 1.5rem;
-        }
-
-        .award-box h2 {
-            color: var(--ni-text-dark);
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .award-box p {
-            font-size: 0.85rem;
-            color: var(--ni-text-body);
-        }
-
-        /* Cropped & Zoomed Recent Weeks GitHub Chart */
-        .github-chart-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: none;
-            background-color: transparent;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            
-            /* Fits exactly 20 full columns (20 × 12px = 192px) */
-            width: 241px; /* + small border tweak */
-            
-            /* Fits exactly 7 vertical rows (7 × 12px - 2px = 82px) */
-            height: 86px; /* + small border tweak */
-            
-            margin: 0 auto;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .github-chart-img {
-            position: absolute;
-            right: -1px; /* + small border tweak */
-            top: -18px; /* Slices off top month text + small border tweak */
-            width: 663px;
-            height: 104px;
-            max-width: none;
-            display: block;
-        }
-
-        #floatingContactBtn {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background-color: var(--ni-btn-bg);
-            color: var(--ni-white) !important;
-            font-weight: 600;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px var(--ni-shadow-medium);
-            transition: background-color 0.15s ease-out;
-            z-index: 1000;
-        }
-
-        #floatingContactBtn:hover {
-            text-decoration: none;
-            background-color: var(--ni-btn-hover);
-        }
-
-        .gate-container {
-            text-align: center;
-            padding: 0.5rem 0;
-        }
-
-        .gate-description {
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            color: var(--ni-text-body);
-        }
-
-        .turnstile-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1rem;
-            min-height: 120px;
-            align-items: center;
-        }
-
-        #gate-status {
-            font-size: 0.85rem;
-            color: var(--ni-text-muted);
-        }
-
-        footer {
-            background-color: var(--ni-green-dark);
-            color: var(--ni-white);
-            text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 4rem;
-            font-size: 0.85rem;
-            transition: background-color 0.3s ease;
-        }
-
-        footer a {
-            color: #e2e8f0;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .timeline-item.active-item::before { animation: none; }
-            * { transition: none !important; }
-        }
-
-        @media (max-width: 850px) {
-            .grid-layout {
-                grid-template-columns: 1fr;
-            }
-            .hero-title {
-                font-size: 2.25rem;
-            }
-            .nav-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unified Link Styling Demo</title>
+  <style>
+    /* --------------------------------------------------
+       1. CSS Color Variables (Light & Dark Themes)
+       -------------------------------------------------- */
+    :root {
+      /* Theme Switching Colors */
+      --bg-color: #f8fafc;
+      --text-color: #0f172a;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+
+      /* Shared Link System (Light Mode) */
+      --link-color: #2563eb;
+      --link-hover-color: #1d4ed8;
+      --link-bg-hover: rgba(37, 99, 235, 0.08);
+      --link-border: transparent;
+      --link-border-hover: rgba(37, 99, 235, 0.2);
+    }
+
+    [data-theme="dark"] {
+      /* Theme Switching Colors */
+      --bg-color: #0f172a;
+      --text-color: #f8fafc;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+
+      /* Shared Link System (Dark Mode) */
+      --link-color: #60a5fa;
+      --link-hover-color: #93c5fd;
+      --link-bg-hover: rgba(96, 165, 250, 0.12);
+      --link-border: transparent;
+      --link-border-hover: rgba(96, 165, 250, 0.3);
+    }
+
+    /* --------------------------------------------------
+       2. General Base & Layout Styles
+       -------------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+    }
+
+    .theme-toggle-btn {
+      background: var(--card-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--link-color);
+    }
+
+    main {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .section-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .section-card h2 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .link-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    /* --------------------------------------------------
+       3. Shared Link Styling (Navigation, Inline & Contacts)
+       -------------------------------------------------- */
+    /* Applied to standard links and contact links alike */
+    a.custom-link,
+    .nav-links a,
+    .contact-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--link-color);
+      background-color: transparent;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--link-border);
+      transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    }
+
+    /* Shared Hover & Focus States across both Light & Dark modes */
+    a.custom-link:hover,
+    .nav-links a:hover,
+    .contact-links a:hover,
+    a.custom-link:focus-visible,
+    .nav-links a:focus-visible,
+    .contact-links a:focus-visible {
+      color: var(--link-hover-color);
+      background-color: var(--link-bg-hover);
+      border-color: var(--link-border-hover);
+      outline: none;
+    }
+
+    a.custom-link:active,
+    .nav-links a:active,
+    .contact-links a:active {
+      transform: translateY(1px);
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Particle Background Canvas -->
-    <canvas id="bg-canvas"></canvas>
-
-    <!-- Bottom-Left FPS Widget -->
-    <div id="fps-widget">
-        <span class="fps-indicator" id="fps-dot"></span>
-        <span id="fps-text">60 FPS</span>
-    </div>
-
-    <!-- Red Centered Easter Egg Popup -->
-    <div id="easter-egg-popup">
-        You seriously have nothing better to do?!
-    </div>
-
-    <header>
-        <div class="nav-container">
-            <div class="brand-logo">Joshua Cislini <span>| Resume</span></div>
-            <nav class="nav-links">
-                <a href="#about">About</a>
-                <a href="#experience">Experience</a>
-                <a href="#education">Education</a>
-                <a href="#licenses">Licenses</a>
-                <a href="#contact">Contact</a>
-                <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light/dark theme">
-                    <span id="theme-icon">🌙</span> <span id="theme-text">Dark</span>
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    <div class="container">
-        
-        <!-- Hero Spotlight Section -->
-        <section class="hero-spotlight" id="about">
-            <p class="eyebrow">Aspiring Electronics Engineer at <a href="https://www.heia-fr.ch/" target="_blank" rel="noopener noreferrer">HEIA-FR</a></p>
-            <h1 class="hero-title">Precision Hardware & Electronics Systems</h1>
-            <p class="hero-subtitle">
-                Former Electronics Apprentice at <a href="https://www.schindler.ch/" target="_blank" rel="noopener noreferrer">Schindler</a> R&D with strong technical expertise in hardware development, PCBA prototyping, and operational safety. Recognized as Ticino's Best Apprentice for 2025 by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a>.
-            </p>
-            <div class="btn-group">
-                <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary">Connect on LinkedIn</a>
-                <button type="button" class="btn-primary" onclick="handleHeroResumeClick()">Download Resume ⤓</button>
-                <a href="#contact" class="btn-secondary">Contact Info</a>
-            </div>
-        </section>
-
-        <div class="grid-layout">
-            
-            <main>
-                
-                <div class="award-box">
-                    <h2><a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> Award Winner - Best Apprentice 2025</h2>
-                    <p>Recognized by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> as the <strong>Best Apprentice in Ticino for the year 2025</strong> based on final exam performance during the Electronics Technician apprenticeship.</p>
-                </div>
-
-                <section class="section-card" id="experience">
-                    <h2 class="section-title">Experience</h2>
-
-                    <div class="timeline-container">
-                        <div class="timeline-item">
-                            <div class="item-header">
-                                <span class="item-title">Truck Driver | Soldier</span>
-                                <span class="item-date">Jul 2025 ⟶ Apr 2026</span>
-                            </div>
-                            <div class="item-subtitle">
-                                <a href="https://www.armee.ch/" target="_blank" rel="noopener noreferrer">Swiss Armed Forces</a> · Full-time (10 mos)
-                            </div>
-                            <p>
-                                Completed 10 months of military service in the Swiss Army as Truck Driver. Responsible for the safe transportation of personnel and equipment, basic vehicle inspections and maintenance, and task execution under strict procedures and time constraints.
-                            </p>
-                            <ul>
-                                <li>Strengthened responsibility, discipline, teamwork, and adaptability in demanding environments while also practicing French and German.</li>
-                                <li>Enhanced problem-solving abilities, resilience under pressure, situational awareness, and operational safety.</li>
-                            </ul>
-                        </div>
-
-                        <div class="timeline-item">
-                            <div class="item-header">
-                                <span class="item-title">Electronics Technician VET / EFZ / CFC / AFC</span>
-                                <span class="item-date">Aug 2021 ⟶ Jul 2025</span>
-                            </div>
-                            <div class="item-subtitle">
-                                <a href="https://www.schindler.ch/" target="_blank" rel="noopener noreferrer">Schindler Aufzüge AG</a> · Locarno, Ticino, Switzerland · Apprenticeship (4 yrs)
-                            </div>
-                            <p>
-                                Developed strong technical skills in electronics and hardware development. Joined the R&D team <strong>“Phygital Hardware”</strong>, contributing to the development of “PCBA PORT” prototypes and completing the final graduation project within the team.
-                            </p>
-                            <ul>
-                                <li>Awarded <strong>Best Apprentice in Ticino for 2025</strong> by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> based on final exam results.</li>
-                                <li>Obtained the integrated Technical Professional Maturity with excellent results in humanistic and scientific subjects.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="section-card" id="education">
-                    <h2 class="section-title">Education</h2>
-
-                    <div class="timeline-container">
-                        <div class="timeline-item">
-                            <div class="item-header">
-                                <span class="item-title">Bachelor of Engineering - Electrical & Electronics</span>
-                                <span class="item-date">Sep 2026 ⟶ Jul 2029</span>
-                            </div>
-                            <div class="item-subtitle">
-                                <a href="https://www.heia-fr.ch/" target="_blank" rel="noopener noreferrer">College of Engineering and Architecture of Fribourg (HEIA-FR)</a>
-                            </div>
-                        </div>
-
-                        <div class="timeline-group">
-                            <div class="timeline-item">
-                                <div class="item-header">
-                                    <span class="item-title">Technical Professional Maturity</span>
-                                    <span class="item-date">Sep 2021 ⟶ Jun 2025</span>
-                                </div>
-                                <div class="item-subtitle">
-                                    <a href="https://www.cptlocarno.ti.ch/" target="_blank" rel="noopener noreferrer">CPT Locarno</a>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="item-header">
-                                    <span class="item-title">Electronics Technician VET / EFZ / CFC / AFC</span>
-                                    <span class="item-date">Sep 2021 ⟶ Jun 2025</span>
-                                </div>
-                                <div class="item-subtitle">
-                                    <a href="https://www.cptlocarno.ti.ch/" target="_blank" rel="noopener noreferrer">CPT Locarno</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="section-card" id="licenses">
-                    <h2 class="section-title">Licenses & Certifications</h2>
-                    
-                    <div class="timeline-container">
-                        <div class="timeline-item">
-                            <div class="item-header">
-                                <span class="item-title">ADR Driver Training Certificate</span>
-                                <span class="item-date">Issued Sep 2025 ⟶ Exp. Sep 2030</span>
-                            </div>
-                            <div class="item-subtitle">
-                                <a href="https://www.armee.ch/" target="_blank" rel="noopener noreferrer">Swiss Armed Forces</a>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item">
-                            <div class="item-header">
-                                <span class="item-title">CE-Category Driving Licence</span>
-                                <span class="item-date">Issued Aug 2025</span>
-                            </div>
-                            <div class="item-subtitle">
-                                <a href="https://www.armee.ch/" target="_blank" rel="noopener noreferrer">Swiss Armed Forces</a>
-                            </div>
-                        </div>
-                        
-                        <div class="timeline-item">
-                            <div class="item-header">
-                                <span class="item-title">Remote Pilot Certificate (A1/A3 & A2)</span>
-                                <span class="item-date">Issued Nov 2022 ⟶ Exp. Nov 2027</span>
-                            </div>
-                            <div class="item-subtitle">
-                                <a href="https://www.easa.europa.eu/" target="_blank" rel="noopener noreferrer">EASA - EU Aviation Safety Agency</a>
-                            </div>
-                            <a href="https://www.certificate.bazl.admin.ch/drone/v2/verify?cipher=cY6vYRmOzGUOimQEkM-DIhWPxuwysaf9C7ZJ-HWD3OeFShnojMpcstCijCXNEvmP3JpgwxYbrsa7VQ0wB0bB0QzYJvM7g4gR5jtj6AujyTqpmMGBaFp9edcc7WBW-x2VjTfJtJnG71dPyaSyMLDmdJh8oN3uex_O8ZPenyblmbk" target="_blank" rel="noopener noreferrer" class="btn-verify">Verify License ↗</a>
-                        </div>
-                    </div>
-                </section>
-
-            </main>
-
-            <aside>
-                <!-- 1. Contact Section -->
-                <section class="section-card" id="contact">
-                    <h2 class="section-title">Contact</h2>
-                    
-                    <div class="contact-info" id="contact-info-content" style="display: none;">
-                        <p><strong>E-mail:</strong> <a id="email-link" href="#"></a></p>
-                        <p><strong>Phone:</strong> <a id="phone-link" href="#"></a></p>
-                        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer">joshua-cislini</a></p>
-                        
-                        <div style="margin-top: 1.25rem;">
-                            <a id="download-resume-link" href="#" download="Joshua_Cislini_Resume.pdf" class="btn-primary btn-full">
-                                Download Resume ⤓
-                            </a>
-                        </div>
-                    </div>
-
-                    <div id="contact-gate" class="gate-container">
-                        <p class="gate-description">
-                            Verify safety check to view direct contact information & downloadable resume:
-                        </p>
-
-                        <div class="turnstile-wrapper">
-                            <div id="turnstile-widget"></div>
-                        </div>
-
-                        <p id="gate-status" role="status" aria-live="polite"></p>
-                    </div>
-                </section>
-
-                <!-- 2. LinkedIn Section -->
-                <section class="section-card section-card-accent" id="linkedin-widget">
-                    <div class="widget-icon">
-                        <svg width="36" height="36" viewBox="0 0 24 24" fill="var(--ni-green-primary)">
-                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.45 1.45 0 1 0 0 2.9 1.45 1.45 0 0 0 0-2.9z"/>
-                        </svg>
-                    </div>
-                    <h2 class="widget-title">Connect on LinkedIn</h2>
-                    <p class="widget-description">Explore professional updates, network, and R&D hardware projects.</p>
-                    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary btn-full">
-                        View Linkedin Profile ↗
-                    </a>
-                </section>
-
-                <!-- 3. GitHub Section -->
-                <section class="section-card section-card-accent" id="github-widget">
-                    <div class="widget-icon">
-                        <svg height="36" width="36" viewBox="0 0 16 16" fill="var(--ni-green-primary)">
-                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-                        </svg>
-                    </div>
-                    
-                    <h2 class="widget-title">GitHub Activity</h2>
-                    <p class="widget-description">Contributions & Code Commit Graph</p>
-                    
-                    <a href="https://github.com/joshua-cislini" target="_blank" rel="noopener noreferrer" class="github-chart-container">
-                        <img src="https://ghchart.rshah.org/009b65/joshua-cislini" 
-                             alt="Joshua Cislini's GitHub Contribution Chart" 
-                             class="github-chart-img"
-                             width="663"
-                             height="104"
-                             loading="lazy"
-                             decoding="async"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x100/044123/ffffff?text=GitHub+Profile+@joshua-cislini';" />
-                    </a>
-                    
-                    <a href="https://github.com/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary btn-full" style="margin-top: 1.25rem;">
-                        View GitHub Profile ↗
-                    </a>
-                </section>
-
-                <section class="section-card">
-                    <h2 class="section-title">Languages</h2>
-                    <p class="language-item"><strong>Italian:</strong> Native</p>
-                    <p class="language-item"><strong>English:</strong> Bilingual</p>
-                    <p class="language-item"><strong>French:</strong> Limited working</p>
-                    <p class="language-item" style="margin-bottom: 0;"><strong>German:</strong> Limited working</p>
-                </section>
-            </aside>
-
-        </div>
-    </div>
-
-    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer" id="floatingContactBtn">Connect with Joshua</a>
-
-    <footer>
-        <p>© 2026 Joshua Cislini. Design inspired by <a href="https://www.ni.com" target="_blank" rel="noopener noreferrer">ni.com</a> (not associated).</p>
-    </footer>
-
-    <script>
-        /* Global Error Shield */
-        window.addEventListener('error', function(event) {
-            if (event && (event.message === 'Script error.' || event.message === 'Script error')) {
-                event.preventDefault();
-                return true;
-            }
-        }, true);
-
-        window.addEventListener('unhandledrejection', function(event) {
-            if (event && event.preventDefault) {
-                event.preventDefault();
-            }
-        });
-
-        let activeResumeBlobUrl = null;
-
-        const TURNSTILE_SITEKEY = "0x4AAAAAAFGMgR9DIjsQzy0M";
-        let turnstileRequested = false;
-
-        function loadTurnstile() {
-            if (turnstileRequested) return;
-            turnstileRequested = true;
-            const s = document.createElement("script");
-            s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoaded";
-            s.async = true;
-            s.defer = true;
-            s.onerror = function() { turnstileRequested = false; setGateStatus("Could not load the safety check.", true); };
-            document.head.appendChild(s);
-        }
-
-        function setGateStatus(msg, isError) {
-            const el = document.getElementById("gate-status");
-            if (!el) return;
-            el.textContent = msg;
-            el.style.color = isError ? "var(--ni-danger)" : "";
-        }
-
-        window.onTurnstileLoaded = function() {
-            if (!window.turnstile) return;
-            window.turnstile.render("#turnstile-widget", {
-                sitekey: TURNSTILE_SITEKEY,
-                size: "compact",
-                callback: window.onTurnstileSuccess,
-                "error-callback": function() { setGateStatus("Safety check failed. Please reload and retry.", true); },
-                "expired-callback": function() { setGateStatus("Check expired, please verify again.", true); }
-            });
-        };
-
-        (function observeContact() {
-            const contact = document.getElementById("contact");
-            if (!contact) return;
-            if (!("IntersectionObserver" in window)) { loadTurnstile(); return; }
-            const io = new IntersectionObserver(function(entries) {
-                if (entries.some(function(e) { return e.isIntersecting; })) {
-                    loadTurnstile();
-                    io.disconnect();
-                }
-            }, { rootMargin: "600px 0px" });
-            io.observe(contact);
-        })();
-
-        window.handleHeroResumeClick = function() {
-            if (activeResumeBlobUrl) {
-                const a = document.createElement("a");
-                a.href = activeResumeBlobUrl;
-                a.download = "Joshua_Cislini_Resume.pdf";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            } else {
-                loadTurnstile();
-                const contactSec = document.getElementById("contact");
-                if (contactSec) {
-                    contactSec.scrollIntoView({ behavior: "smooth" });
-                }
-            }
-        };
-
-        window.onTurnstileSuccess = async function(token) {
-            const statusEl = document.getElementById("gate-status");
-            if (statusEl) { statusEl.textContent = "Verifying safety check..."; statusEl.style.color = ""; }
-
-            try {
-                const response = await fetch("https://contact-decrypt.cislinij.workers.dev/", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ token: token })
-                });
-
-                const data = await response.json();
-
-                if (data && data.success) {
-                    const emailLink = document.getElementById("email-link");
-                    const phoneLink = document.getElementById("phone-link");
-
-                    if (emailLink) {
-                        emailLink.href = "mailto:" + data.email;
-                        emailLink.textContent = data.email;
-                    }
-
-                    if (phoneLink) {
-                        phoneLink.href = "tel:" + data.phone.replace(/\s+/g, '');
-                        phoneLink.textContent = data.phone;
-                    }
-
-                    if (data.resumeBase64) {
-                        const blob = base64ToBlob(data.resumeBase64, 'application/pdf');
-                        activeResumeBlobUrl = URL.createObjectURL(blob);
-                        const dlBtn = document.getElementById("download-resume-link");
-                        if (dlBtn) dlBtn.href = activeResumeBlobUrl;
-                    }
-
-                    const gate = document.getElementById("contact-gate");
-                    const info = document.getElementById("contact-info-content");
-                    if (gate) gate.style.display = "none";
-                    if (info) info.style.display = "block";
-                } else if (statusEl) {
-                    statusEl.textContent = "Verification failed. Please try again.";
-                    statusEl.style.color = "var(--ni-danger)";
-                }
-            } catch (error) {
-                if (statusEl) {
-                    statusEl.textContent = "Unable to connect to verification server.";
-                    statusEl.style.color = "var(--ni-danger)";
-                }
-            }
-        };
-
-        function base64ToBlob(base64, mimeType) {
-            try {
-                const bin = atob(base64);
-                const bytes = new Uint8Array(bin.length);
-                for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-                return new Blob([bytes], { type: mimeType });
-            } catch (e) {
-                return new Blob([], { type: mimeType });
-            }
-        }
-
-        let cachedParticleColors = { r: 0, g: 155, b: 101 };
-
-        function updateParticleColorsCache() {
-            const styles = getComputedStyle(document.documentElement);
-            cachedParticleColors = {
-                r: parseInt(styles.getPropertyValue('--particle-color-r').trim() || "0", 10),
-                g: parseInt(styles.getPropertyValue('--particle-color-g').trim() || "155", 10),
-                b: parseInt(styles.getPropertyValue('--particle-color-b').trim() || "101", 10)
-            };
-        }
-
-        /* Particle Canvas Script */
-        (function initParticleCanvas() {
-            const canvas = document.getElementById('bg-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            if (!ctx) return;
-
-            const PARTICLE_DENSITY_DIVISOR = 3;
-            const MIN_PARTICLE_COUNT       = 80;
-            const MIN_PARTICLE_RADIUS      = 1.5;
-            const MAX_PARTICLE_RADIUS      = 3.5;
-
-            const BASE_SPEED_X             = 0.3;
-            const BASE_SPEED_Y             = 0.3;
-
-            const MOUSE_ATTRACT_RADIUS     = 100;
-            const MOUSE_ATTRACT_FORCE      = 0.007;
-            const MOUSE_LINE_MAX_DIST      = 200;
-            const MOUSE_LINE_ALPHA         = 0.5;
-            const MOUSE_LINE_WIDTH         = 1.2;
-
-            const CONNECTION_MAX_DIST      = 120;
-            const CAPTURED_MAX_CONN        = 2;
-            const UNCAPTURED_MAX_CONN      = 5;
-            const CONNECTION_BASE_ALPHA    = 0.35;
-            const CONNECTION_LINE_WIDTH    = 1;
-
-            const EXPLOSION_SPEED_MIN      = 8;
-            const EXPLOSION_SPEED_MAX      = 24;
-            const EXPLOSION_DRAG           = 0.98;
-            const EXPLOSION_RECOVERY_RATE  = 0.02;
-            const EXPLOSION_FADE_STEP      = 0.03;
-            const EXPLOSION_FADE_INTERVAL  = 30;
-            const POPUP_AUTO_HIDE_DELAY    = 3500;
-
-            const popup = document.getElementById('easter-egg-popup');
-            const fpsText = document.getElementById('fps-text');
-            const fpsDot = document.getElementById('fps-dot');
-
-            let width, height;
-            let mouse = { x: -1000, y: -1000, active: false };
-            let particles = [];
-
-            let isExploding = false;
-            let explosionProgress = 0;
-            let popupTimeout = null;
-
-            let lastTime = performance.now();
-            let frameCount = 0;
-
-            function updateDimensions() {
-                width = canvas.width = window.innerWidth || document.documentElement.clientWidth || 1000;
-                height = canvas.height = window.innerHeight || document.documentElement.clientHeight || 800;
-            }
-
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-
-                reset() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * BASE_SPEED_X;
-                    this.vy = (Math.random() - 0.5) * BASE_SPEED_Y;
-                    this.targetVx = this.vx;
-                    this.targetVy = this.vy;
-                    this.radius = Math.random() * (MAX_PARTICLE_RADIUS - MIN_PARTICLE_RADIUS) + MIN_PARTICLE_RADIUS;
-                    this.captured = false;
-                    this.connectionsCount = 0;
-                }
-
-                update() {
-                    if (isExploding) {
-                        this.x += this.vx;
-                        this.y += this.vy;
-                        this.vx *= EXPLOSION_DRAG;
-                        this.vy *= EXPLOSION_DRAG;
-
-                        this.vx += (this.targetVx - this.vx) * EXPLOSION_RECOVERY_RATE;
-                        this.vy += (this.targetVy - this.vy) * EXPLOSION_RECOVERY_RATE;
-
-                        if (this.x < 0) this.x = width;
-                        if (this.x > width) this.x = 0;
-                        if (this.y < 0) this.y = height;
-                        if (this.y > height) this.y = 0;
-
-                        return;
-                    }
-
-                    this.x += this.vx;
-                    this.y += this.vy;
-
-                    if (this.x < 0 || this.x > width) this.vx *= -1;
-                    if (this.y < 0 || this.y > height) this.vy *= -1;
-
-                    if (mouse.active) {
-                        let dx = mouse.x - this.x;
-                        let dy = mouse.y - this.y;
-                        let dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < MOUSE_ATTRACT_RADIUS) {
-                            this.x += dx * MOUSE_ATTRACT_FORCE;
-                            this.y += dy * MOUSE_ATTRACT_FORCE;
-                            this.captured = true;
-                        } else {
-                            this.captured = false;
-                        }
-                    } else {
-                        this.captured = false;
-                    }
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    
-                    const r = Math.round(cachedParticleColors.r + (229 - cachedParticleColors.r) * explosionProgress);
-                    const g = Math.round(cachedParticleColors.g + (62 - cachedParticleColors.g) * explosionProgress);
-                    const b = Math.round(cachedParticleColors.b + (62 - cachedParticleColors.b) * explosionProgress);
-                    const alpha = 0.6 + 0.3 * explosionProgress;
-
-                    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-                    ctx.fill();
-                }
-            }
-
-            function initParticles() {
-                updateParticleColorsCache();
-                updateDimensions();
-                particles = [];
-                const count = Math.max(MIN_PARTICLE_COUNT, Math.floor(Math.min(width, height) / PARTICLE_DENSITY_DIVISOR));
-                for (let i = 0; i < count; i++) {
-                    particles.push(new Particle());
-                }
-            }
-
-            function triggerExplosion() {
-                isExploding = true;
-                explosionProgress = 1;
-
-                if (popup) popup.classList.add('show');
-
-                if (popupTimeout) clearTimeout(popupTimeout);
-                popupTimeout = setTimeout(() => {
-                    if (popup) popup.classList.remove('show');
-                }, POPUP_AUTO_HIDE_DELAY);
-
-                particles.forEach(p => {
-                    const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * (EXPLOSION_SPEED_MAX - EXPLOSION_SPEED_MIN) + EXPLOSION_SPEED_MIN;
-                    p.vx = Math.cos(angle) * speed;
-                    p.vy = Math.sin(angle) * speed;
-                    p.targetVx = (Math.random() - 0.5) * (BASE_SPEED_X * 0.88);
-                    p.targetVy = (Math.random() - 0.5) * (BASE_SPEED_Y * 0.88);
-                    p.captured = false;
-                });
-
-                const fadeInterval = setInterval(() => {
-                    explosionProgress -= EXPLOSION_FADE_STEP;
-                    if (explosionProgress <= 0) {
-                        explosionProgress = 0;
-                        isExploding = false;
-                        clearInterval(fadeInterval);
-                    }
-                }, EXPLOSION_FADE_INTERVAL);
-            }
-
-            function updateFPS(now) {
-                frameCount++;
-                if (now - lastTime >= 500) {
-                    const fps = Math.round((frameCount * 1000) / (now - lastTime));
-                    if (fpsText) fpsText.textContent = `${fps} FPS`;
-
-                    if (fpsDot) {
-                        if (fps >= 50) {
-                            fpsDot.style.backgroundColor = 'var(--ni-green-primary)';
-                        } else if (fps >= 30) {
-                            fpsDot.style.backgroundColor = 'var(--ni-warning)';
-                        } else {
-                            fpsDot.style.backgroundColor = 'var(--ni-danger)';
-                        }
-                    }
-
-                    frameCount = 0;
-                    lastTime = now;
-                }
-            }
-
-            const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-            let rafId = null;
-
-            function animate(now) {
-                rafId = requestAnimationFrame(animate);
-                updateFPS(now);
-                ctx.clearRect(0, 0, width, height);
-
-                let capturedCount = 0;
-
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].connectionsCount = 0;
-                }
-
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].update();
-                    particles[i].draw();
-
-                    if (particles[i].captured) {
-                        capturedCount++;
-                    }
-
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const maxI = particles[i].captured ? CAPTURED_MAX_CONN : UNCAPTURED_MAX_CONN;
-                        const maxJ = particles[j].captured ? CAPTURED_MAX_CONN : UNCAPTURED_MAX_CONN;
-
-                        if (particles[i].connectionsCount >= maxI || particles[j].connectionsCount >= maxJ) {
-                            continue;
-                        }
-
-                        let dx = particles[i].x - particles[j].x;
-                        let dy = particles[i].y - particles[j].y;
-                        let dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < CONNECTION_MAX_DIST) {
-                            particles[i].connectionsCount++;
-                            particles[j].connectionsCount++;
-
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-
-                            const r = Math.round(cachedParticleColors.r + (229 - cachedParticleColors.r) * explosionProgress);
-                            const g = Math.round(cachedParticleColors.g + (62 - cachedParticleColors.g) * explosionProgress);
-                            const b = Math.round(cachedParticleColors.b + (62 - cachedParticleColors.b) * explosionProgress);
-                            const alpha = (CONNECTION_BASE_ALPHA + 0.2 * explosionProgress) * (1 - dist / CONNECTION_MAX_DIST);
-
-                            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-                            ctx.lineWidth = CONNECTION_LINE_WIDTH;
-                            ctx.stroke();
-                        }
-                    }
-
-                    if (mouse.active && !isExploding) {
-                        let dx = particles[i].x - mouse.x;
-                        let dy = particles[i].y - mouse.y;
-                        let dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < MOUSE_LINE_MAX_DIST) {
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(mouse.x, mouse.y);
-                            ctx.strokeStyle = `rgba(${cachedParticleColors.r}, ${cachedParticleColors.g}, ${cachedParticleColors.b}, ${MOUSE_LINE_ALPHA * (1 - dist / MOUSE_LINE_MAX_DIST)})`;
-                            ctx.lineWidth = MOUSE_LINE_WIDTH;
-                            ctx.stroke();
-                        }
-                    }
-                }
-
-                if (!isExploding && capturedCount >= particles.length && particles.length > 0) {
-                    triggerExplosion();
-                }
-
-            }
-
-            initParticles();
-            if (reduceMotion) {
-                const fps = document.getElementById('fps-widget');
-                if (fps) fps.style.display = 'none';
-            } else {
-                rafId = requestAnimationFrame(animate);
-                document.addEventListener('visibilitychange', function() {
-                    if (document.hidden) {
-                        cancelAnimationFrame(rafId);
-                        rafId = null;
-                    } else if (rafId === null) {
-                        lastTime = performance.now();
-                        frameCount = 0;
-                        rafId = requestAnimationFrame(animate);
-                    }
-                });
-            }
-
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-                mouse.active = true;
-            }, { passive: true });
-
-            window.addEventListener('mouseleave', () => {
-                mouse.active = false;
-            });
-
-            let resizeTimeout;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(initParticles, 200);
-            });
-            
-        })();
-
-        /* Theme Switcher Script & Dynamic Date Status Parser */
-        document.addEventListener("DOMContentLoaded", function() {
-            const themeToggleBtn = document.getElementById("theme-toggle");
-            const themeIcon = document.getElementById("theme-icon");
-            const themeText = document.getElementById("theme-text");
-
-            if (themeToggleBtn) {
-                if (document.documentElement.classList.contains("dark-theme")) {
-                    if (themeIcon) themeIcon.textContent = "☀️";
-                    if (themeText) themeText.textContent = "Light";
-                }
-                updateParticleColorsCache();
-
-                themeToggleBtn.addEventListener("click", function() {
-                    document.documentElement.classList.toggle("dark-theme");
-                    const isDark = document.documentElement.classList.contains("dark-theme");
-
-                    if (isDark) {
-                        if (themeIcon) themeIcon.textContent = "☀️";
-                        if (themeText) themeText.textContent = "Light";
-                        try { localStorage.setItem("cislini_resume_theme", "dark"); } catch(e) {}
-                    } else {
-                        if (themeIcon) themeIcon.textContent = "🌙";
-                        if (themeText) themeText.textContent = "Dark";
-                        try { localStorage.setItem("cislini_resume_theme", "light"); } catch(e) {}
-                    }
-                    
-                    setTimeout(updateParticleColorsCache, 50);
-                });
-            }
-
-            const today = new Date();
-            const monthMap = {
-                "jan": 0, "feb": 1, "mar": 2, "apr": 3, "may": 4, "jun": 5,
-                "jul": 6, "aug": 7, "sep": 8, "oct": 9, "nov": 10, "dec": 11
-            };
-
-            function parseDateString(str, isEnd) {
-                if (!str) return null;
-                const clean = str.trim().toLowerCase();
-                if (clean.includes("present") || clean.includes("current")) {
-                    return new Date(8640000000000000);
-                }
-
-                const matches = clean.match(/([a-z]{3})\s+(\d{4})/);
-                if (matches) {
-                    const m = monthMap[matches[1]];
-                    const y = parseInt(matches[2]);
-                    if (m !== undefined && !isNaN(y)) {
-                        return isEnd ? new Date(y, m + 1, 0, 23, 59, 59) : new Date(y, m, 1);
-                    }
-                }
-                
-                const yearMatch = clean.match(/(\d{4})/);
-                if (yearMatch) {
-                    const y = parseInt(yearMatch[1]);
-                    return isEnd ? new Date(y, 11, 31, 23, 59, 59) : new Date(y, 0, 1);
-                }
-                return null;
-            }
-
-            const generalSections = document.querySelectorAll("#experience, #education");
-            generalSections.forEach(section => {
-                const items = section.querySelectorAll(".timeline-item");
-                items.forEach(item => {
-                    const dateEl = item.querySelector(".item-date");
-                    if (!dateEl) return;
-
-                    const dateText = dateEl.textContent;
-                    if (dateText.includes("⟶")) {
-                        const parts = dateText.split("⟶");
-                        const startDate = parseDateString(parts[0], false);
-                        const endDate = parseDateString(parts[1], true);
-
-                        if (startDate && endDate && today >= startDate && today <= endDate) {
-                            item.classList.add("active-item");
-                            const titleEl = item.querySelector(".item-title");
-                            if (titleEl && !titleEl.querySelector(".active-badge")) {
-                                const badge = document.createElement("span");
-                                badge.className = "active-badge";
-                                badge.textContent = "Current";
-                                titleEl.appendChild(badge);
-                            }
-                        }
-                    }
-                });
-            });
-
-            const licenseSection = document.querySelector("#licenses");
-            if (licenseSection) {
-                const licenseItems = licenseSection.querySelectorAll(".timeline-item");
-                licenseItems.forEach(item => {
-                    const dateEl = item.querySelector(".item-date");
-                    if (!dateEl) return;
-
-                    const dateText = dateEl.textContent;
-                    let isExpired = false;
-
-                    if (dateText.includes("Exp.")) {
-                        const expMatch = dateText.match(/Exp\.\s+([A-Za-z]{3}\s+\d{4})/i);
-                        if (expMatch) {
-                            const expDate = parseDateString(expMatch[1], true);
-                            if (expDate && today > expDate) {
-                                isExpired = true;
-                            }
-                        }
-                    }
-
-                    const titleEl = item.querySelector(".item-title");
-                    if (titleEl) {
-                        const badge = document.createElement("span");
-                        if (isExpired) {
-                            badge.className = "expired-badge";
-                            badge.textContent = "Expired";
-                        } else {
-                            badge.className = "valable-badge";
-                            badge.textContent = "Valable";
-                        }
-                        titleEl.appendChild(badge);
-                    }
-                });
-            }
-        });
-    </script>
+  <header>
+    <h1>Site Title</h1>
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle theme">
+      Toggle Light/Dark
+    </button>
+  </header>
+
+  <main>
+    <!-- Navigation Links -->
+    <section class="section-card">
+      <h2>Navigation Links</h2>
+      <nav class="link-group nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+      </nav>
+    </section>
+
+    <!-- Inline Paragraph Text Links -->
+    <section class="section-card">
+      <h2>Inline Content</h2>
+      <p>
+        Check out my latest updates on the 
+        <a href="#projects" class="custom-link">projects page</a> 
+        or jump straight to the documentation.
+      </p>
+    </section>
+
+    <!-- Contact Links matching exact same styles -->
+    <section class="section-card">
+      <h2>Contact Links</h2>
+      <div class="link-group contact-links">
+        <a href="mailto:example@email.com">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+          </svg>
+          Email Me
+        </a>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+          </svg>
+          LinkedIn
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Theme toggle interaction script
+    const toggleBtn = document.getElementById('themeToggleBtn');
+    const htmlElement = document.documentElement;
+
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlElement.setAttribute('data-theme', newTheme);
+    });
+  </script>
 </body>
 </html>
