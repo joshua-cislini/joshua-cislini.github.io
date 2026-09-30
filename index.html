@@ -12,14 +12,11 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://joshua-cislini.github.io/">
     
-    <!-- Preconnect & Asynchronous Google Fonts (Eliminates Render Blocking) -->
+    <!-- Preconnect & Synchronous Preload Google Fonts (Eliminates FOUT & CLS) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap">
-    </noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap">
     
     <!-- Cloudflare Turnstile API -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -592,7 +589,7 @@
             font-size: 0.95rem;
         }
 
-        /* Widgets & Explicit Chart Aspect Ratio to Prevent CLS */
+        /* Widgets & Utilities */
         .skills-list {
             display: flex;
             flex-wrap: wrap;
@@ -651,7 +648,6 @@
             color: var(--ni-text-body);
         }
 
-        /* GitHub Chart Aspect Ratio Reserve (Prevents Image CLS) */
         .github-chart-container {
             display: block;
             border-radius: 6px;
@@ -667,7 +663,6 @@
         .github-chart-img {
             width: 100%;
             height: auto;
-            aspect-ratio: 660 / 110;
             display: block;
         }
 
@@ -940,13 +935,13 @@
                     <h3 class="widget-title">GitHub Activity</h3>
                     <p class="widget-description">Contributions & Code Commit Graph</p>
                     
-                    <!-- Fixed Dimensions & Aspect Ratio to Prevent Image CLS -->
+                    <!-- Fixed Natural Dimensions to Prevent Aspect Ratio Issues & Image CLS -->
                     <a href="https://github.com/joshua-cislini" target="_blank" rel="noopener noreferrer" class="github-chart-container">
                         <img src="https://ghchart.rshah.org/009b65/joshua-cislini" 
                              alt="Joshua Cislini's GitHub Contribution Chart" 
                              class="github-chart-img"
-                             width="660"
-                             height="110"
+                             width="663"
+                             height="104"
                              loading="lazy"
                              decoding="async"
                              onerror="this.onerror=null; this.src='https://placehold.co/400x100/044123/ffffff?text=GitHub+Profile+@joshua-cislini';" />
@@ -1121,6 +1116,18 @@
             }
         }
 
+        /* Pre-cached Particle CSS Variables (Fixes Forced Synchronous Layout) */
+        let cachedParticleColors = { r: 0, g: 155, b: 101 };
+
+        function updateParticleColorsCache() {
+            const styles = getComputedStyle(document.documentElement);
+            cachedParticleColors = {
+                r: parseInt(styles.getPropertyValue('--particle-color-r').trim() || "0", 10),
+                g: parseInt(styles.getPropertyValue('--particle-color-g').trim() || "155", 10),
+                b: parseInt(styles.getPropertyValue('--particle-color-b').trim() || "101", 10)
+            };
+        }
+
         /* Particle Canvas Script */
         (function initParticleCanvas() {
             const canvas = document.getElementById('bg-canvas');
@@ -1142,15 +1149,6 @@
 
             let lastTime = performance.now();
             let frameCount = 0;
-
-            function getParticleColors() {
-                const styles = getComputedStyle(document.documentElement);
-                return {
-                    r: parseInt(styles.getPropertyValue('--particle-color-r').trim() || "0", 10),
-                    g: parseInt(styles.getPropertyValue('--particle-color-g').trim() || "155", 10),
-                    b: parseInt(styles.getPropertyValue('--particle-color-b').trim() || "101", 10)
-                };
-            }
 
             function updateDimensions() {
                 width = canvas.width = window.innerWidth || document.documentElement.clientWidth || 1000;
@@ -1219,10 +1217,9 @@
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                     
-                    const baseColor = getParticleColors();
-                    const r = Math.round(baseColor.r + (229 - baseColor.r) * explosionProgress);
-                    const g = Math.round(baseColor.g + (62 - baseColor.g) * explosionProgress);
-                    const b = Math.round(baseColor.b + (62 - baseColor.b) * explosionProgress);
+                    const r = Math.round(cachedParticleColors.r + (229 - cachedParticleColors.r) * explosionProgress);
+                    const g = Math.round(cachedParticleColors.g + (62 - cachedParticleColors.g) * explosionProgress);
+                    const b = Math.round(cachedParticleColors.b + (62 - cachedParticleColors.b) * explosionProgress);
                     const alpha = 0.6 + 0.3 * explosionProgress;
 
                     ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
@@ -1231,6 +1228,7 @@
             }
 
             function initParticles() {
+                updateParticleColorsCache();
                 updateDimensions();
                 particles = [];
                 const count = Math.max(80, Math.floor(Math.min(width, height) / 3.5));
@@ -1301,8 +1299,6 @@
                     particles[i].connectionsCount = 0;
                 }
 
-                const baseColor = getParticleColors();
-
                 for (let i = 0; i < particles.length; i++) {
                     particles[i].update();
                     particles[i].draw();
@@ -1331,9 +1327,9 @@
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
 
-                            const r = Math.round(baseColor.r + (229 - baseColor.r) * explosionProgress);
-                            const g = Math.round(baseColor.g + (62 - baseColor.g) * explosionProgress);
-                            const b = Math.round(baseColor.b + (62 - baseColor.b) * explosionProgress);
+                            const r = Math.round(cachedParticleColors.r + (229 - cachedParticleColors.r) * explosionProgress);
+                            const g = Math.round(cachedParticleColors.g + (62 - cachedParticleColors.g) * explosionProgress);
+                            const b = Math.round(cachedParticleColors.b + (62 - cachedParticleColors.b) * explosionProgress);
                             const alpha = (0.35 + 0.2 * explosionProgress) * (1 - dist / 120);
 
                             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
@@ -1351,7 +1347,7 @@
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(mouse.x, mouse.y);
-                            ctx.strokeStyle = `rgba(${baseColor.r}, ${baseColor.g}, ${baseColor.b}, ${0.5 * (1 - dist / 150)})`;
+                            ctx.strokeStyle = `rgba(${cachedParticleColors.r}, ${cachedParticleColors.g}, ${cachedParticleColors.b}, ${0.5 * (1 - dist / 150)})`;
                             ctx.lineWidth = 1.2;
                             ctx.stroke();
                         }
@@ -1378,15 +1374,15 @@
                 mouse.active = false;
             });
 
+            let resizeTimeout;
             window.addEventListener('resize', () => {
-                initParticles();
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(initParticles, 200);
             });
-
-            setTimeout(initParticles, 300);
-            setTimeout(initParticles, 1000);
+            
         })();
 
-        /* Theme Switcher Script */
+        /* Theme Switcher Script & Dynamic Date Status Parser */
         document.addEventListener("DOMContentLoaded", function() {
             const themeToggleBtn = document.getElementById("theme-toggle");
             const themeIcon = document.getElementById("theme-icon");
@@ -1415,6 +1411,9 @@
                         if (themeText) themeText.textContent = "Dark";
                         try { localStorage.setItem("cislini_resume_theme", "light"); } catch(e) {}
                     }
+                    
+                    // Update canvas cached colors slightly after transition
+                    setTimeout(updateParticleColorsCache, 50);
                 });
             }
 
