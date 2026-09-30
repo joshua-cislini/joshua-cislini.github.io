@@ -1247,8 +1247,8 @@
                 reset() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.9;
-                    this.vy = (Math.random() - 0.5) * 0.9;
+                    this.vx = (Math.random() - 0.5) * 0.4;
+                    this.vy = (Math.random() - 0.5) * 0.4;
                     this.targetVx = this.vx;
                     this.targetVy = this.vy;
                     this.radius = Math.random() * 2 + 1.5;
@@ -1334,7 +1334,7 @@
 
                 particles.forEach(p => {
                     const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * 5 + 5;
+                    const speed = Math.random() * 16 + 8;
                     p.vx = Math.cos(angle) * speed;
                     p.vy = Math.sin(angle) * speed;
                     p.targetVx = (Math.random() - 0.5) * 0.8;
