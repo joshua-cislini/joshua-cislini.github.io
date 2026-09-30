@@ -12,10 +12,14 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://joshua-cislini.github.io/">
     
-    <!-- Web Fonts -->
+    <!-- Preconnect & Asynchronous Google Fonts (Eliminates Render Blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap">
+    </noscript>
     
     <!-- Cloudflare Turnstile API -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -277,6 +281,7 @@
             box-shadow: 0 2px 8px var(--ni-shadow-light);
             border: 1px solid var(--ni-border);
             transition: background-color 0.3s ease, border-color 0.3s ease;
+            min-height: 220px;
         }
 
         .eyebrow {
@@ -366,6 +371,7 @@
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 2rem;
+            align-items: start;
         }
 
         .section-card {
@@ -378,6 +384,7 @@
             box-shadow: 0 2px 8px var(--ni-shadow-light);
             border: 1px solid var(--ni-border);
             transition: background-color 0.3s ease, border-color 0.3s ease;
+            contain: layout style;
         }
 
         .section-card-accent {
@@ -412,7 +419,7 @@
             margin-bottom: 1.25rem;
         }
 
-        /* Timeline Items */
+        /* Timeline Items & Dynamic Badges Stability */
         .timeline-container {
             position: relative;
             padding-left: 40px;
@@ -471,6 +478,18 @@
             animation: internal-dot-pulse 2s infinite ease-in-out;
         }
 
+        /* Layout-stable badge elements */
+        .item-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--ni-text-dark);
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            min-height: 1.6rem;
+        }
+
         .active-badge, .valable-badge, .expired-badge {
             display: inline-block;
             font-size: 0.75rem;
@@ -478,9 +497,9 @@
             text-transform: uppercase;
             padding: 2px 8px;
             border-radius: 12px;
-            margin-left: 8px;
             letter-spacing: 0.5px;
             vertical-align: middle;
+            line-height: 1.2;
         }
 
         .active-badge, .valable-badge {
@@ -539,12 +558,7 @@
             margin-bottom: 0.25rem;
             flex-wrap: wrap;
             line-height: 1.2;
-        }
-
-        .item-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--ni-text-dark);
+            gap: 0.5rem;
         }
 
         .item-date {
@@ -578,7 +592,7 @@
             font-size: 0.95rem;
         }
 
-        /* Widgets & Badges */
+        /* Widgets & Explicit Chart Aspect Ratio to Prevent CLS */
         .skills-list {
             display: flex;
             flex-wrap: wrap;
@@ -625,9 +639,10 @@
             margin-bottom: 1.5rem;
         }
 
-        .award-box h4 {
+        .award-box h3 {
             color: var(--ni-text-dark);
             font-size: 0.95rem;
+            font-weight: 700;
             margin-bottom: 0.25rem;
         }
 
@@ -636,6 +651,7 @@
             color: var(--ni-text-body);
         }
 
+        /* GitHub Chart Aspect Ratio Reserve (Prevents Image CLS) */
         .github-chart-container {
             display: block;
             border-radius: 6px;
@@ -645,11 +661,13 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             transition: background-color 0.3s ease, border-color 0.3s ease;
+            min-height: 110px;
         }
 
         .github-chart-img {
             width: 100%;
             height: auto;
+            aspect-ratio: 660 / 110;
             display: block;
         }
 
@@ -777,7 +795,7 @@
             <main>
                 
                 <div class="award-box">
-                    <h4><a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> Award Winner - Best Apprentice 2025</h4>
+                    <h3><a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> Award Winner - Best Apprentice 2025</h3>
                     <p>Recognized by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> as the <strong>Best Apprentice in Ticino for the year 2025</strong> based on final exam performance during the Electronics Technician apprenticeship.</p>
                 </div>
 
@@ -922,10 +940,15 @@
                     <h3 class="widget-title">GitHub Activity</h3>
                     <p class="widget-description">Contributions & Code Commit Graph</p>
                     
+                    <!-- Fixed Dimensions & Aspect Ratio to Prevent Image CLS -->
                     <a href="https://github.com/joshua-cislini" target="_blank" rel="noopener noreferrer" class="github-chart-container">
                         <img src="https://ghchart.rshah.org/009b65/joshua-cislini" 
                              alt="Joshua Cislini's GitHub Contribution Chart" 
                              class="github-chart-img"
+                             width="660"
+                             height="110"
+                             loading="lazy"
+                             decoding="async"
                              onerror="this.onerror=null; this.src='https://placehold.co/400x100/044123/ffffff?text=GitHub+Profile+@joshua-cislini';" />
                     </a>
                     
@@ -997,7 +1020,7 @@
     </footer>
 
     <script>
-        /* Error Handler */
+        /* Global Error Shield */
         window.addEventListener('error', function(event) {
             if (event && (event.message === 'Script error.' || event.message === 'Script error')) {
                 event.preventDefault();
