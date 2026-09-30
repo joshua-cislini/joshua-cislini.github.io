@@ -12,16 +12,30 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://joshua-cislini.github.io/">
     
-    <!-- Preconnect & Synchronous Preload Google Fonts (Eliminates FOUT & CLS) -->
+    <!-- Fonts: non-render-blocking (media swap trick), trimmed to weights/styles actually used -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap">
-    
-    <!-- Cloudflare Turnstile API -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap"></noscript>
+
+    <!-- Apply saved theme before first paint (no flash / no layout change) -->
+    <script>
+        try {
+            if (localStorage.getItem("cislini_resume_theme") === "dark") document.documentElement.classList.add("dark-theme");
+        } catch (e) {}
+    </script>
 
     <style>
+        /* Metric-matched fallback so the Inter swap doesn't shift layout (CLS) */
+        @font-face {
+            font-family: "Inter Fallback";
+            src: local("Arial");
+            size-adjust: 107.4%;
+            ascent-override: 90.2%;
+            descent-override: 22.5%;
+            line-gap-override: 0%;
+        }
+
         :root {
             /* Palette - Base & Neutrals */
             --ni-white: #ffffff;
@@ -32,12 +46,17 @@
             --ni-card-bg: rgba(255, 255, 255, 0.80);
             --ni-text-dark: #044123;
             --ni-text-body: #2d3748;
-            --ni-text-muted: #718096;
+            --ni-text-muted: #5a6778; /* AA contrast */
             --ni-text-footer: #a0aec0;
             --ni-border: #e2e8f0;
             --ni-border-dark: #cbd5e0;
-            --ni-danger: #e53e3e;
+            --ni-danger: #c53030; /* AA contrast */
             --ni-warning: #d69e2e;
+
+            /* Accessible text/button greens (AA >= 4.5:1) */
+            --ni-green-text: #007048;
+            --ni-btn-bg: #00744c;
+            --ni-btn-hover: #005a3b;
 
             /* Alpha / Tint Colors */
             --ni-green-alpha-12: rgba(0, 155, 101, 0.12);
@@ -50,7 +69,7 @@
 
             /* Typography */
             --font-heading: 'DM Serif Display', Georgia, serif;
-            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-body: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             
             /* Canvas Particles RGB */
             --particle-color-r: 0;
@@ -59,7 +78,7 @@
         }
 
         /* Dark Theme Overrides */
-        body.dark-theme {
+        html.dark-theme {
             --ni-green-dark: #38a169;
             --ni-green-primary: #009b65;
             --ni-green-hover: #00be7d;
@@ -68,6 +87,7 @@
             --ni-text-dark: var(--ni-white);
             --ni-text-body: #e2e8f0;
             --ni-text-muted: #94a3b8;
+            --ni-green-text: #34d399;
             --ni-text-footer: #64748b;
             --ni-border: #1e2d24;
             --ni-border-dark: #2d4235;
@@ -174,13 +194,19 @@
         }
 
         a {
-            color: var(--ni-green-primary);
+            color: var(--ni-green-text);
             text-decoration: none;
             transition: color 0.15s ease, text-decoration 0.15s ease;
         }
 
         a:hover {
             text-decoration: underline;
+        }
+
+        /* Links inside running text must not rely on colour alone */
+        p a, .item-subtitle a, .eyebrow a {
+            text-decoration: underline;
+            text-underline-offset: 2px;
         }
 
         /* Navigation Header */
@@ -216,7 +242,7 @@
         }
 
         .brand-logo span {
-            color: var(--ni-green-primary);
+            color: var(--ni-green-text);
         }
 
         .nav-links {
@@ -234,7 +260,7 @@
         }
 
         .nav-links a:hover {
-            color: var(--ni-green-primary);
+            color: var(--ni-green-text);
             text-decoration: none;
         }
 
@@ -257,7 +283,7 @@
 
         .theme-toggle-btn:hover {
             border-color: var(--ni-green-primary);
-            color: var(--ni-green-primary);
+            color: var(--ni-green-text);
             background-color: var(--ni-green-alpha-08);
         }
 
@@ -286,7 +312,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--ni-green-primary);
+            color: var(--ni-green-text);
             margin-bottom: 0.5rem;
         }
 
@@ -317,7 +343,7 @@
         }
 
         .btn-primary, .btn-secondary, .btn-verify {
-            background-color: var(--ni-green-primary);
+            background-color: var(--ni-btn-bg);
             color: var(--ni-white) !important;
             padding: 0.75rem 1.75rem;
             border-radius: 24px;
@@ -342,14 +368,14 @@
 
         .btn-primary:hover, .btn-verify:hover {
             text-decoration: none;
-            background-color: var(--ni-green-hover);
+            background-color: var(--ni-btn-hover);
             color: var(--ni-white) !important;
         }
 
         .btn-secondary:hover {
             text-decoration: none;
             border-color: var(--ni-green-primary);
-            color: var(--ni-green-primary) !important;
+            color: var(--ni-green-text) !important;
             background-color: var(--ni-green-alpha-08);
         }
 
@@ -501,7 +527,7 @@
 
         .active-badge, .valable-badge {
             background-color: var(--ni-green-alpha-12);
-            color: var(--ni-green-primary);
+            color: var(--ni-green-text);
             border: 1px solid var(--ni-green-primary);
         }
 
@@ -567,7 +593,7 @@
         .item-subtitle {
             font-size: 0.95rem;
             font-weight: 500;
-            color: var(--ni-green-primary);
+            color: var(--ni-green-text);
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
@@ -625,7 +651,7 @@
         }
 
         .contact-info a:hover {
-            color: var(--ni-green-primary);
+            color: var(--ni-green-text);
         }
 
         .award-box {
@@ -636,7 +662,7 @@
             margin-bottom: 1.5rem;
         }
 
-        .award-box h3 {
+        .award-box h2 {
             color: var(--ni-text-dark);
             font-size: 0.95rem;
             font-weight: 700;
@@ -663,6 +689,7 @@
         .github-chart-img {
             width: 100%;
             height: auto;
+            aspect-ratio: 663 / 104;
             display: block;
         }
 
@@ -670,8 +697,8 @@
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background-color: var(--ni-green-primary);
-            color: var(--ni-white);
+            background-color: var(--ni-btn-bg);
+            color: var(--ni-white) !important;
             font-weight: 600;
             padding: 12px 20px;
             border-radius: 8px;
@@ -682,7 +709,7 @@
 
         #floatingContactBtn:hover {
             text-decoration: none;
-            background-color: var(--ni-green-hover);
+            background-color: var(--ni-btn-hover);
         }
 
         .gate-container {
@@ -700,7 +727,7 @@
             display: flex;
             justify-content: center;
             margin-bottom: 1rem;
-            min-height: 65px;
+            min-height: 120px; /* compact Turnstile is 130x120: reserve it to avoid CLS */
             align-items: center;
         }
 
@@ -721,6 +748,11 @@
 
         footer a {
             color: #e2e8f0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .timeline-item.active-item::before { animation: none; }
+            * { transition: none !important; }
         }
 
         @media (max-width: 850px) {
@@ -762,7 +794,7 @@
                 <a href="#education">Education</a>
                 <a href="#licenses">Licenses</a>
                 <a href="#skills">Skills & Hobbies</a>
-                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+                <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light/dark theme">
                     <span id="theme-icon">🌙</span> <span id="theme-text">Dark</span>
                 </button>
             </nav>
@@ -780,7 +812,7 @@
             </p>
             <div class="btn-group">
                 <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary">Connect on LinkedIn</a>
-                <button class="btn-primary" onclick="handleHeroResumeClick()">Download Resume ⤓</button>
+                <button type="button" class="btn-primary" onclick="handleHeroResumeClick()">Download Resume ⤓</button>
                 <a href="#contact" class="btn-secondary">Contact Info</a>
             </div>
         </section>
@@ -790,7 +822,7 @@
             <main>
                 
                 <div class="award-box">
-                    <h3><a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> Award Winner - Best Apprentice 2025</h3>
+                    <h2><a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> Award Winner - Best Apprentice 2025</h2>
                     <p>Recognized by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a> as the <strong>Best Apprentice in Ticino for the year 2025</strong> based on final exam performance during the Electronics Technician apprenticeship.</p>
                 </div>
 
@@ -918,7 +950,7 @@
                             <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.45 1.45 0 1 0 0 2.9 1.45 1.45 0 0 0 0-2.9z"/>
                         </svg>
                     </div>
-                    <h3 class="widget-title">Connect on LinkedIn</h3>
+                    <h2 class="widget-title">Connect on LinkedIn</h2>
                     <p class="widget-description">Explore professional updates, network, and R&D hardware projects.</p>
                     <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer" class="btn-primary btn-full">
                         View Linkedin Profile ↗
@@ -932,7 +964,7 @@
                         </svg>
                     </div>
                     
-                    <h3 class="widget-title">GitHub Activity</h3>
+                    <h2 class="widget-title">GitHub Activity</h2>
                     <p class="widget-description">Contributions & Code Commit Graph</p>
                     
                     <!-- Fixed Natural Dimensions to Prevent Aspect Ratio Issues & Image CLS -->
@@ -973,13 +1005,10 @@
                         </p>
 
                         <div class="turnstile-wrapper">
-                            <div class="cf-turnstile" 
-                                 data-sitekey="0x4AAAAAAFGMgR9DIjsQzy0M" 
-                                 data-callback="onTurnstileSuccess"
-                                 data-size="compact"></div>
+                            <div id="turnstile-widget"></div>
                         </div>
 
-                        <p id="gate-status"></p>
+                        <p id="gate-status" role="status" aria-live="polite"></p>
                     </div>
                 </section>
 
@@ -1031,6 +1060,53 @@
 
         let activeResumeBlobUrl = null;
 
+        /* Turnstile is loaded lazily (when #contact nears the viewport or on demand)
+           so its 28 KiB script + iframe stay out of the initial load. */
+        const TURNSTILE_SITEKEY = "0x4AAAAAAFGMgR9DIjsQzy0M";
+        let turnstileRequested = false;
+
+        function loadTurnstile() {
+            if (turnstileRequested) return;
+            turnstileRequested = true;
+            const s = document.createElement("script");
+            s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoaded";
+            s.async = true;
+            s.defer = true;
+            s.onerror = function() { turnstileRequested = false; setGateStatus("Could not load the safety check.", true); };
+            document.head.appendChild(s);
+        }
+
+        function setGateStatus(msg, isError) {
+            const el = document.getElementById("gate-status");
+            if (!el) return;
+            el.textContent = msg;
+            el.style.color = isError ? "var(--ni-danger)" : "";
+        }
+
+        window.onTurnstileLoaded = function() {
+            if (!window.turnstile) return;
+            window.turnstile.render("#turnstile-widget", {
+                sitekey: TURNSTILE_SITEKEY,
+                size: "compact",
+                callback: window.onTurnstileSuccess,
+                "error-callback": function() { setGateStatus("Safety check failed. Please reload and retry.", true); },
+                "expired-callback": function() { setGateStatus("Check expired, please verify again.", true); }
+            });
+        };
+
+        (function observeContact() {
+            const contact = document.getElementById("contact");
+            if (!contact) return;
+            if (!("IntersectionObserver" in window)) { loadTurnstile(); return; }
+            const io = new IntersectionObserver(function(entries) {
+                if (entries.some(function(e) { return e.isIntersecting; })) {
+                    loadTurnstile();
+                    io.disconnect();
+                }
+            }, { rootMargin: "600px 0px" });
+            io.observe(contact);
+        })();
+
         window.handleHeroResumeClick = function() {
             if (activeResumeBlobUrl) {
                 const a = document.createElement("a");
@@ -1040,6 +1116,7 @@
                 a.click();
                 document.body.removeChild(a);
             } else {
+                loadTurnstile();
                 const contactSec = document.getElementById("contact");
                 if (contactSec) {
                     contactSec.scrollIntoView({ behavior: "smooth" });
@@ -1049,7 +1126,7 @@
 
         window.onTurnstileSuccess = async function(token) {
             const statusEl = document.getElementById("gate-status");
-            if (statusEl) statusEl.textContent = "Verifying safety check...";
+            if (statusEl) { statusEl.textContent = "Verifying safety check..."; statusEl.style.color = ""; }
 
             try {
                 const response = await fetch("https://contact-decrypt.cislinij.workers.dev/", {
@@ -1099,18 +1176,10 @@
 
         function base64ToBlob(base64, mimeType) {
             try {
-                const byteCharacters = atob(base64);
-                const byteArrays = [];
-                for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-                    const slice = byteCharacters.slice(offset, offset + 512);
-                    const byteNumbers = new Array(slice.length);
-                    for (let i = 0; i < slice.length; i++) {
-                        byteNumbers[i] = slice.charCodeAt(i);
-                    }
-                    const byteArray = new Uint8Array(byteNumbers);
-                    byteArrays.push(byteArray);
-                }
-                return new Blob(byteArrays, { type: mimeType });
+                const bin = atob(base64);
+                const bytes = new Uint8Array(bin.length);
+                for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+                return new Blob([bytes], { type: mimeType });
             } catch (e) {
                 return new Blob([], { type: mimeType });
             }
@@ -1289,7 +1358,11 @@
                 }
             }
 
+            const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            let rafId = null;
+
             function animate(now) {
+                rafId = requestAnimationFrame(animate);
                 updateFPS(now);
                 ctx.clearRect(0, 0, width, height);
 
@@ -1358,11 +1431,26 @@
                     triggerExplosion();
                 }
 
-                requestAnimationFrame(animate);
             }
 
             initParticles();
-            requestAnimationFrame(animate);
+            if (reduceMotion) {
+                const fps = document.getElementById('fps-widget');
+                if (fps) fps.style.display = 'none';
+            } else {
+                rafId = requestAnimationFrame(animate);
+                // Stop burning CPU/battery in background tabs
+                document.addEventListener('visibilitychange', function() {
+                    if (document.hidden) {
+                        cancelAnimationFrame(rafId);
+                        rafId = null;
+                    } else if (rafId === null) {
+                        lastTime = performance.now();
+                        frameCount = 0;
+                        rafId = requestAnimationFrame(animate);
+                    }
+                });
+            }
 
             window.addEventListener('mousemove', (e) => {
                 mouse.x = e.clientX;
@@ -1389,18 +1477,15 @@
             const themeText = document.getElementById("theme-text");
 
             if (themeToggleBtn) {
-                try {
-                    const savedTheme = localStorage.getItem("cislini_resume_theme");
-                    if (savedTheme === "dark") {
-                        document.body.classList.add("dark-theme");
-                        if (themeIcon) themeIcon.textContent = "☀️";
-                        if (themeText) themeText.textContent = "Light";
-                    }
-                } catch(e) {}
+                if (document.documentElement.classList.contains("dark-theme")) {
+                    if (themeIcon) themeIcon.textContent = "☀️";
+                    if (themeText) themeText.textContent = "Light";
+                }
+                updateParticleColorsCache();
 
                 themeToggleBtn.addEventListener("click", function() {
-                    document.body.classList.toggle("dark-theme");
-                    const isDark = document.body.classList.contains("dark-theme");
+                    document.documentElement.classList.toggle("dark-theme");
+                    const isDark = document.documentElement.classList.contains("dark-theme");
 
                     if (isDark) {
                         if (themeIcon) themeIcon.textContent = "☀️";
