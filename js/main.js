@@ -413,9 +413,13 @@ function updateParticleColorsCache() {
     }
 
     initParticles();
-    if (reduceMotion) {
+
+    // Detects screens under 850px, touch devices, or system-level accessibility settings
+    const isStatic = window.matchMedia && window.matchMedia("(max-width: 850px), (pointer: coarse), (prefers-reduced-motion: reduce)").matches;
+
+    if (isStatic) {
         if (fpsWidget) fpsWidget.style.display = 'none';
-        animate(performance.now(), true);
+        animate(performance.now(), true); // Draw exactly one static frame
     } else {
         rafId = requestAnimationFrame(animate);
         document.addEventListener('visibilitychange', function () {
@@ -443,10 +447,16 @@ function updateParticleColorsCache() {
     let resizeTimeout;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => { initParticles(); if (reduceMotion) animate(performance.now(), true); }, 200);
+        resizeTimeout = setTimeout(() => {
+            initParticles();
+            // Re-draw the static frame if the user resizes a static window
+            if (isStatic) animate(performance.now(), true);
+        }, 200);
     });
 
-    window.redrawParticles = function () { if (reduceMotion) animate(performance.now(), true); };
+    window.redrawParticles = function () {
+        if (isStatic) animate(performance.now(), true);
+    };
 })();
 
 /* Theme Switcher Script & Dynamic Date Status Parser */
