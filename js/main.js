@@ -620,8 +620,15 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             grid.hidden = false;
             fallback.hidden = true;
+
+            // Format the generated date string 
+            const genDate = new Date(data.generated);
+            const formattedDate = genDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
             const summary = data.total + " contributions in the last " + data.weeks.length + " weeks";
-            meta.textContent = summary;
+
+            // Inject the summary and the last updated date
+            meta.innerHTML = summary + "<br><span style='font-size: 0.75rem; opacity: 0.75;'>Last updated: " + formattedDate + "</span>";
             link.setAttribute("aria-label", summary + " – open GitHub profile");
         })
         .catch(function () { fallback.textContent = "View contribution activity on GitHub"; });

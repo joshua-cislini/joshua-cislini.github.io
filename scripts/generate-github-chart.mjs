@@ -27,9 +27,11 @@ if (!res.ok || json.errors) { console.error(JSON.stringify(json.errors || json))
 const apiWeeks = json.data.user.contributionsCollection.contributionCalendar.weeks.slice(-WEEKS);
 let total = 0;
 const weeks = apiWeeks.map((w) => {
-  const col = Array(7).fill(null); // index = weekday (0 = Sunday); null = day outside the range
+  const col = Array(7).fill(null); // index = weekday (0 = Monday); null = day outside the range
   for (const d of w.contributionDays) {
-    col[d.weekday] = { d: d.date, c: d.contributionCount, l: LEVELS[d.contributionLevel] ?? 0 };
+    // Shift the index so Monday is 0, Tuesday is 1 ... Sunday is 6
+    const shiftedWeekday = (d.weekday + 6) % 7;
+    col[shiftedWeekday] = { d: d.date, c: d.contributionCount, l: LEVELS[d.contributionLevel] ?? 0 };
     total += d.contributionCount;
   }
   return col;
