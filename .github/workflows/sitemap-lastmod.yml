@@ -3,24 +3,32 @@ name: Update Site Data (Sitemap & OG Image)
 on:
   push:
     branches: [main]
-    paths: ["index.html", "js/**", "fonts/**", "scripts/**"]
+    paths: ["index.html", "js/**", "fonts/**", "scripts/**", "package*.json"]
+  workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: site-data
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-        
+          cache: npm
+
+      # npm ci installs exactly what package-lock.json says, so resvg's output
+      # stays byte-identical between runs and never rewrites the lockfile.
       - name: Install dependencies
-        run: npm install
-        
+        run: npm ci
+
       - name: Generate new og-image.png
         run: node scripts/generate-og-image.mjs
 
@@ -29,12 +37,14 @@ jobs:
           TODAY=$(date -u +%F)
           sed -i "s|<lastmod>.*</lastmod>|<lastmod>${TODAY}</lastmod>|" sitemap.xml
           sed -i "s|\"dateModified\": \"[0-9-]*\"|\"dateModified\": \"${TODAY}\"|" index.html
-          
+
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add sitemap.xml index.html og-image.png
-          git diff --staged --quiet || git commit -m "chore: auto-update sitemap and og-image"
-          git pull --rebase origin main
-          git push origin main
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: auto-update sitemap and og-image"
+            git pull --rebase origin main
+            git push origin main
+          fi
