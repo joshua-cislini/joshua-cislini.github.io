@@ -636,7 +636,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const summary = data.total + " contributions in the last " + data.weeks.length + " weeks";
 
             // Inject the summary and the last updated date
-            meta.innerHTML = summary + "<br><span style='font-size: 0.75rem; opacity: 0.75;'>Last updated: " + formattedDate + "</span>";
+            meta.innerHTML = summary + "<br><span style='font-size: 0.75rem;'>Last updated: " + formattedDate + "</span>";
             link.setAttribute("aria-label", summary + " – open GitHub profile");
         })
         .catch(function () { fallback.textContent = "View contribution activity on GitHub"; });
