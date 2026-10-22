@@ -27,7 +27,7 @@ jobs:
 
       - name: Cronitor heartbeat (success)
         if: success()
-        run: curl -fsS -m 10 --retry 3 "https://cronitor.link/p/${{ secrets.CRONITOR_API_KEY }}/pdup24?state=complete"
+        run: curl -fsS -m 10 --retry 3 "https://cronitor.link/p/${{ secrets.CRONITOR_API_KEY }}/pdup24?msg=success"
 
       - name: Cronitor heartbeat (failure)
         if: failure()
