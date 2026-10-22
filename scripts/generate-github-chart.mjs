@@ -10,7 +10,8 @@ if (!TOKEN) { console.error("GH_TOKEN is required"); process.exit(1); }
 
 const LEVELS = { NONE: 0, FIRST_QUARTILE: 1, SECOND_QUARTILE: 2, THIRD_QUARTILE: 3, FOURTH_QUARTILE: 4 };
 const to = new Date();
-const from = new Date(to.getTime() - (WEEKS * 7 - 1) * 86400000);
+// Pull a 22-week buffer to ensure our new Mon-Sun chunks are fully populated
+const from = new Date(to.getTime() - (22 * 7) * 86400000);
 
 const query = `query($login:String!,$from:DateTime!,$to:DateTime!){
   user(login:$login){ contributionsCollection(from:$from,to:$to){ contributionCalendar{
@@ -24,20 +25,40 @@ const res = await fetch("https://api.github.com/graphql", {
 const json = await res.json();
 if (!res.ok || json.errors) { console.error(JSON.stringify(json.errors || json)); process.exit(1); }
 
-const apiWeeks = json.data.user.contributionsCollection.contributionCalendar.weeks.slice(-WEEKS);
-let total = 0;
-const weeks = apiWeeks.map((w) => {
-  const col = Array(7).fill(null); // index = weekday (0 = Monday); null = day outside the range
-  for (const d of w.contributionDays) {
-    // Shift the index so Monday is 0, Tuesday is 1 ... Sunday is 6
-    const shiftedWeekday = (d.weekday + 6) % 7;
-    col[shiftedWeekday] = { d: d.date, c: d.contributionCount, l: LEVELS[d.contributionLevel] ?? 0 };
-    total += d.contributionCount;
+// 1. Flatten all days chronologically to break out of GitHub's Sunday-start chunks
+const allDays = json.data.user.contributionsCollection.contributionCalendar.weeks.flatMap(w => w.contributionDays);
+
+// 2. Re-chunk the days starting on Monday (0) and ending on Sunday (6)
+const rawWeeks = [];
+let currentWeek = Array(7).fill(null);
+
+for (const d of allDays) {
+  const shiftedWeekday = (d.weekday + 6) % 7; // Shift so Mon=0 ... Sun=6
+  currentWeek[shiftedWeekday] = { d: d.date, c: d.contributionCount, l: LEVELS[d.contributionLevel] ?? 0 };
+
+  // If we hit Sunday (6), the column is complete. Push it and start a new one.
+  if (shiftedWeekday === 6) {
+    rawWeeks.push(currentWeek);
+    currentWeek = Array(7).fill(null);
   }
-  return col;
-});
+}
+// Push the final partial week if it contains any days
+if (currentWeek.some(day => day !== null)) {
+  rawWeeks.push(currentWeek);
+}
+
+// 3. Keep exactly the last WEEKS (20) so the CSS grid doesn't overflow
+const finalWeeks = rawWeeks.slice(-WEEKS);
+
+// 4. Calculate the accurate total only for the visible cells
+let total = 0;
+for (const w of finalWeeks) {
+  for (const d of w) {
+    if (d) total += d.c;
+  }
+}
 
 await mkdir("data", { recursive: true });
 await writeFile("data/github-contributions.json",
-  JSON.stringify({ generated: to.toISOString(), login: LOGIN, total, weeks }) + "\n");
-console.log(`Wrote ${weeks.length} weeks, ${total} contributions`);
+  JSON.stringify({ generated: to.toISOString(), login: LOGIN, total, weeks: finalWeeks }) + "\n");
+console.log(`Wrote ${finalWeeks.length} weeks, ${total} contributions`);
