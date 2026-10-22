@@ -614,7 +614,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     const cell = document.createElement("span");
                     cell.className = "gh-cell";
                     cell.dataset.l = day ? day.l : "x";
-                    if (day) cell.title = day.c + (day.c === 1 ? " contribution on " : " contributions on ") + day.d;
+
+                    if (day) {
+                        // Convert YYYY-MM-DD to DD.MM.YYYY
+                        const parts = day.d.split("-");
+                        const euroDate = parts.length === 3 ? `${parts[2]}.${parts[1]}.${parts[0]}` : day.d;
+
+                        cell.title = day.c + (day.c === 1 ? " contribution on " : " contributions on ") + euroDate;
+                    }
+
                     grid.appendChild(cell);
                 });
             });
