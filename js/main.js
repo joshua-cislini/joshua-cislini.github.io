@@ -643,34 +643,30 @@ document.addEventListener("DOMContentLoaded", function () {
     const traceCtx = traceCanvas.getContext('2d');
 
     let config = {
-        mask: 'auto', // Ceramic White in Light theme, Industrial Green in Dark theme
-        cardOpacity: 0.85,
-        gridSize: 10,
-        speed: 0.2,
-
-        zoneW: 60,
-        zoneH: 80,
-        diagCutoff: 100,
-        showBoundary: false,
-
-        numPassives: 32,
-        numSOIC: 8,
-        numQFP: 1,
-
-        thickness: 1.5,
-        inertia: 0.98,
-        targetBias: 0.9,
-        branchChance: 0.05,
-
-        passiveSpan: 2,
-        passiveW: 0.6,
-        passiveH: 0.6,
-        icPitch: 1,
-        icWidth: 4,
-        icPadW: 0.8,
-        icPadH: 0.8,
-        viaSize: 0.5,
-        viaDrill: 0.2
+        "mask": "auto",
+        "cardOpacity": 0.85,
+        "gridSize": 10,
+        "speed": 0.2,
+        "zoneW": 45,
+        "zoneH": 80,
+        "diagCutoff": 100,
+        "showBoundary": false,
+        "numPassives": 8,
+        "numSOIC": 1,
+        "numQFP": 1,
+        "thickness": 1.5,
+        "inertia": 0.98,
+        "targetBias": 0.9,
+        "branchChance": 0.05,
+        "passiveSpan": 2,
+        "passiveW": 0.6,
+        "passiveH": 0.6,
+        "icPitch": 1,
+        "icWidth": 4,
+        "icPadW": 0.8,
+        "icPadH": 0.8,
+        "viaSize": 0.5,
+        "viaDrill": 0.2
     };
 
     const uiControls = [
