@@ -24,13 +24,20 @@ jobs:
           node-version: 20
           cache: npm
 
-      # npm ci installs exactly what package-lock.json says, so resvg's output
-      # stays byte-identical between runs and never rewrites the lockfile.
       - name: Install dependencies
         run: npm ci
 
       - name: Generate new og-image.png
         run: node scripts/generate-og-image.mjs
+
+      - name: Inject PCB Passcode Hash
+        env:
+          PCB_PASSCODE: ${{ secrets.PCB_SECRET_PASSCODE }}
+        run: |
+          # Fallback to default hash if repository secret is not set yet
+          RAW_SECRET="${PCB_PASSCODE:-Hardware2026}"
+          HASH=$(echo -n "$RAW_SECRET" | sha256sum | awk '{print $1}')
+          sed -i "s/__PCB_SECRET_PLACEHOLDER__/${HASH}/g" js/main.js
 
       - name: Set lastmod to today (UTC)
         run: |
@@ -42,9 +49,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml index.html og-image.png
+          git add sitemap.xml index.html og-image.png js/main.js
           if ! git diff --staged --quiet; then
-            git commit -m "chore: auto-update sitemap and og-image"
+            git commit -m "chore: auto-update sitemap, og-image, and pcb secret hash"
             git pull --rebase origin main
             git push origin main
           fi

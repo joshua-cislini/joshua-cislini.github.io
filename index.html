@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' https://rum.cronitor.io https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://contact-decrypt.cislinij.workers.dev https://*.cronitor.io https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://rum.cronitor.io https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://contact-decrypt.cislinij.workers.dev https://*.cronitor.io https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'none'">
     <meta name="google-site-verification" content="eyOd2bjKfIzi98xGXxJtUSpQsXCAXazxyoGRd3yZll4" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" id="meta-theme-color" content="#f4f4f4">
@@ -16,7 +16,6 @@
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://joshua-cislini.github.io/">
-
 
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="profile">
@@ -70,7 +69,7 @@
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='16' height='16' rx='3.5' fill='%23009b65'/%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M7 3.5v6.25c0 1.25-.8 2.25-2.1 2.25-1.1 0-1.9-.75-2.05-1.75h1.55c.1.35.3.6.6.6.35 0 .5-.25.5-.75V3.5H7z'/%3E%3Cpath d='M13.2 5.25h-1.5c-.2-.65-.7-1.15-1.45-1.15-1.05 0-1.75.9-1.75 2.4s.7 2.4 1.75 2.4c.75 0 1.25-.5 1.45-1.15h1.5c-.25 1.45-1.45 2.4-2.95 2.4-2 0-3.3-1.5-3.3-3.65s1.3-3.65 3.3-3.65c1.5 0 2.7.95 2.95 2.4z'/%3E%3C/g%3E%3C/svg%3E">
 
-    <!-- Fonts (self-hosted, see docs/SELF-HOSTING-FONTS.md) -->
+    <!-- Fonts (self-hosted) -->
     <link rel="preload" href="fonts/Inter.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/DMSerifDisplay.woff2" as="font" type="font/woff2" crossorigin>
 
@@ -116,7 +115,7 @@
             --ni-green-primary: #009b65;
             --ni-green-hover: #006b46;
             --ni-bg-light: #f4f4f4;
-            --ni-card-bg: rgba(255, 255, 255, 0.2);
+            --ni-card-bg: rgba(255, 255, 255, 0.85);
             --ni-text-dark: #044123;
             --ni-text-body: #2d3748;
             --ni-text-muted: #5a6778;
@@ -153,6 +152,7 @@
             --particle-color-r: 0;
             --particle-color-g: 155;
             --particle-color-b: 101;
+            --panel-bg: rgba(255, 255, 255, 0.95);
         }
 
         html.dark-theme {
@@ -162,7 +162,7 @@
             --ni-green-primary: #009b65;
             --ni-green-hover: #00be7d;
             --ni-bg-light: #0b100d;
-            --ni-card-bg: rgba(18, 26, 21, 0.2);
+            --ni-card-bg: rgba(18, 26, 21, 0.85);
             --ni-text-dark: var(--ni-white);
             --ni-text-body: #e2e8f0;
             --ni-text-muted: #94a3b8;
@@ -182,6 +182,7 @@
             --particle-color-r: 0;
             --particle-color-g: 220;
             --particle-color-b: 140;
+            --panel-bg: rgba(12, 20, 15, 0.95);
         }
 
         * {
@@ -190,7 +191,6 @@
             padding: 0;
         }
 
-        /* Smooth Scrolling & Anchor Offset Fix */
         html {
             scroll-behavior: smooth;
         }
@@ -205,7 +205,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Particle Canvas */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -216,7 +215,6 @@
             z-index: 0;
         }
 
-        /* FPS Counter Widget */
         #fps-widget {
             position: fixed;
             bottom: 24px;
@@ -246,7 +244,6 @@
             display: inline-block;
         }
 
-        /* Easter Egg Popup */
         #easter-egg-popup {
             position: fixed;
             top: 50%;
@@ -272,7 +269,6 @@
             opacity: 1;
         }
 
-        /* Main Structural Containers */
         header,
         .container,
         footer {
@@ -298,7 +294,6 @@
             text-underline-offset: 2px;
         }
 
-        /* Navigation Header */
         header {
             background-color: var(--ni-card-bg);
             backdrop-filter: blur(8px);
@@ -328,6 +323,8 @@
             letter-spacing: -0.5px;
             color: var(--ni-text-dark);
             text-transform: uppercase;
+            cursor: pointer;
+            user-select: none;
         }
 
         .brand-logo span {
@@ -376,7 +373,6 @@
             background-color: var(--ni-green-alpha-08);
         }
 
-        /* Main Content Layout */
         .container {
             max-width: 1100px;
             margin: 2rem auto;
@@ -394,7 +390,24 @@
             border: 1px solid var(--ni-border);
             transition: background-color 0.3s ease, border-color 0.3s ease;
             min-height: 220px;
+            position: relative;
+            overflow: hidden;
             scroll-margin-top: 80px;
+        }
+
+        .hero-pcb-canvas {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
         }
 
         .eyebrow {
@@ -535,7 +548,6 @@
             margin-bottom: 1.25rem;
         }
 
-        /* Timeline Items */
         .timeline-container {
             position: relative;
             padding-left: 40px;
@@ -727,7 +739,6 @@
             gap: 0.5rem;
         }
 
-        /* Styles text contact links to match general links without affecting the download button */
         .contact-info a:not(.btn-primary) {
             color: var(--ni-green-text);
             font-weight: 500;
@@ -741,9 +752,7 @@
         }
 
         .award-box {
-            background:
-                linear-gradient(var(--ni-green-alpha-08), var(--ni-green-alpha-08)),
-                var(--ni-award-bg);
+            background: linear-gradient(var(--ni-green-alpha-08), var(--ni-green-alpha-08)), var(--ni-award-bg);
             backdrop-filter: blur(12px) saturate(140%);
             -webkit-backdrop-filter: blur(12px) saturate(140%);
             border-top: 1px solid var(--ni-award-edge);
@@ -768,7 +777,6 @@
             color: var(--ni-text-body);
         }
 
-        /* GitHub contribution chart (rendered from data/github-contributions.json) */
         [hidden] {
             display: none !important;
         }
@@ -847,6 +855,120 @@
             color: var(--ni-text-muted);
         }
 
+        /* --- PCB Secret Tuning Modal --- */
+        .pcb-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 5000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .pcb-modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .pcb-modal-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--ni-border);
+            box-shadow: 0 12px 32px var(--ni-shadow-medium);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 440px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            color: var(--ni-text-body);
+        }
+
+        .pcb-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--ni-border);
+            margin-bottom: 1rem;
+        }
+
+        .pcb-modal-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--ni-text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pcb-close-btn {
+            background: transparent;
+            border: none;
+            color: var(--ni-text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .pcb-close-btn:hover {
+            color: var(--ni-text-dark);
+        }
+
+        .pcb-modal-body {
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .panel-section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--ni-text-muted);
+            font-weight: 700;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid var(--ni-border);
+            padding-bottom: 0.25rem;
+        }
+
+        .control-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .control-group label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--ni-text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .control-group input[type=range] {
+            width: 100%;
+            accent-color: var(--ni-green-primary);
+            height: 4px;
+        }
+
+        .control-group select {
+            width: 100%;
+            background-color: var(--ni-bg-light);
+            border: 1px solid var(--ni-border);
+            color: var(--ni-text-dark);
+            padding: 0.35rem;
+            border-radius: 0.375rem;
+            font-size: 0.85rem;
+        }
+
         footer {
             background-color: var(--ni-footer-bg);
             color: var(--ni-white);
@@ -882,7 +1004,6 @@
             margin-bottom: 0.4rem;
         }
 
-        /* Hide the FPS counter on phones/tablets and touch devices */
         @media (max-width: 850px),
         (pointer: coarse) {
             #fps-widget {
@@ -918,9 +1039,6 @@
                 padding: 8px 12px;
                 font-size: 0.75rem;
                 bottom: 16px;
-            }
-
-            #fps-widget {
                 left: 16px;
             }
         }
@@ -943,9 +1061,76 @@
         You seriously have nothing better to do?!
     </div>
 
+    <!-- PCB Secret Tuning Modal -->
+    <div id="pcb-secret-modal" class="pcb-modal-overlay" aria-hidden="true">
+        <div class="pcb-modal-card">
+            <div class="pcb-modal-header">
+                <div class="pcb-modal-title">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        style="color: var(--ni-green-primary);">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z">
+                        </path>
+                    </svg>
+                    PCB Generator Config
+                </div>
+                <button class="pcb-close-btn" id="btn-close-pcb-modal" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="pcb-modal-body">
+                <div>
+                    <h3 class="panel-section-title" style="margin-top: 0;">Board Settings</h3>
+                    <div class="control-group">
+                        <label>Solder Mask Override</label>
+                        <select id="ctrl-mask">
+                            <option value="auto">Auto (Theme Native)</option>
+                            <option value="white">Ceramic White</option>
+                            <option value="green">Industrial Green</option>
+                            <option value="black">Matte Black</option>
+                            <option value="blue">Deep Blue</option>
+                            <option value="purple">OSH Park Purple</option>
+                            <option value="red">Prototype Red</option>
+                        </select>
+                    </div>
+                    <div id="ui-board-ranges"></div>
+                </div>
+
+                <div>
+                    <h3 class="panel-section-title">Circuit Area Limits</h3>
+                    <div id="ui-area-ranges"></div>
+                    <div class="control-group" style="margin-top: 0.5rem;">
+                        <label style="justify-content: flex-start; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="ctrl-showBoundary"
+                                style="accent-color: var(--ni-green-primary);">
+                            Show Boundary Outline
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="panel-section-title">Components</h3>
+                    <div id="ui-component-ranges"></div>
+                </div>
+
+                <div>
+                    <h3 class="panel-section-title">Routing Parameters</h3>
+                    <div id="ui-routing-ranges"></div>
+                </div>
+
+                <div>
+                    <h3 class="panel-section-title">Geometry & Sizes</h3>
+                    <div id="ui-size-ranges"></div>
+                </div>
+
+                <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--ni-border);">
+                    <button id="btn-regenerate-pcb" class="btn-primary btn-full">Regenerate Board</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="nav-container">
-            <div class="brand-logo" style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="brand-logo" id="brand-logo" style="display: flex; align-items: center; gap: 0.75rem;">
                 <svg height="28" width="28" viewBox="0 0 16 16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
                     <rect width="16" height="16" rx="3.5" fill="var(--ni-green-primary)" />
                     <g fill="#ffffff">
@@ -974,20 +1159,26 @@
 
         <!-- Hero Spotlight Section -->
         <section class="hero-spotlight" id="about">
-            <p class="eyebrow">Electrical Engineering Student at <a href="https://www.heia-fr.ch/" target="_blank"
-                    rel="noopener noreferrer">HEIA-FR</a></p>
-            <h1 class="hero-title">Precision Hardware & Electronics Systems</h1>
-            <p class="hero-subtitle">
-                Electrical Engineering student and former Electronics Apprentice at <a href="https://www.schindler.ch/"
-                    target="_blank" rel="noopener noreferrer">Schindler</a> R&amp;D, with hands-on experience in
-                hardware development, PCBA prototyping, and operational safety. Recognized as Ticino's Best Apprentice
-                for 2025 by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a>.
-            </p>
-            <div class="btn-group">
-                <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer"
-                    class="btn-primary">Connect on LinkedIn</a>
-                <button type="button" class="btn-primary" id="hero-resume-btn">Download Resume ⤓</button>
-                <a href="#contact" class="btn-secondary">Contact Info</a>
+            <canvas id="hero-pcb-canvas" class="hero-pcb-canvas"></canvas>
+
+            <div class="hero-content">
+                <p class="eyebrow">Electrical Engineering Student at <a href="https://www.heia-fr.ch/" target="_blank"
+                        rel="noopener noreferrer">HEIA-FR</a></p>
+                <h1 class="hero-title">Precision Hardware & Electronics Systems</h1>
+                <p class="hero-subtitle">
+                    Electrical Engineering student and former Electronics Apprentice at <a
+                        href="https://www.schindler.ch/" target="_blank" rel="noopener noreferrer">Schindler</a>
+                    R&amp;D, with hands-on experience in
+                    hardware development, PCBA prototyping, and operational safety. Recognized as Ticino's Best
+                    Apprentice
+                    for 2025 by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a>.
+                </p>
+                <div class="btn-group">
+                    <a href="https://www.linkedin.com/in/joshua-cislini" target="_blank" rel="noopener noreferrer"
+                        class="btn-primary">Connect on LinkedIn</a>
+                    <button type="button" class="btn-primary" id="hero-resume-btn">Download Resume ⤓</button>
+                    <a href="#contact" class="btn-secondary">Contact Info</a>
+                </div>
             </div>
         </section>
 
@@ -1139,7 +1330,6 @@
             </main>
 
             <aside>
-                <!-- 1. Contact Section -->
                 <section class="section-card" id="contact">
                     <h2 class="section-title">Contact</h2>
 
@@ -1170,7 +1360,6 @@
                     </div>
                 </section>
 
-                <!-- 2. LinkedIn Section -->
                 <section class="section-card section-card-accent" id="linkedin-widget">
                     <div class="widget-icon">
                         <svg width="36" height="36" viewBox="0 0 24 24" fill="var(--ni-green-primary)"
@@ -1187,7 +1376,6 @@
                     </a>
                 </section>
 
-                <!-- 3. GitHub Section -->
                 <section class="section-card section-card-accent" id="github-widget">
                     <div class="widget-icon">
                         <svg height="36" width="36" viewBox="0 0 16 16" fill="var(--ni-green-primary)"
@@ -1214,7 +1402,6 @@
                     </a>
                 </section>
 
-                <!-- 4. Languages Section -->
                 <section class="section-card">
                     <h2 class="section-title">Languages</h2>
                     <p class="language-item"><strong>Italian:</strong> Native</p>
@@ -1234,8 +1421,7 @@
             <summary>Privacy notice</summary>
             <ul>
                 <li><strong>No ads, no tracking cookies.</strong> This site sets no cookies. Your theme choice
-                    (light/dark) is
-                    stored only in your browser's local storage.</li>
+                    (light/dark) is stored only in your browser's local storage.</li>
                 <li><strong>Hosting:</strong> GitHub Pages. GitHub may process visitor IP addresses as described in its
                     <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
                         target="_blank" rel="noopener noreferrer">General Privacy Statement</a>.
@@ -1245,10 +1431,8 @@
                         rel="noopener noreferrer">Privacy Policy</a> and <a href="https://cronitor.io/docs/security"
                         target="_blank" rel="noopener noreferrer">Security Documentation</a> for details.</li>
                 <li><strong>Contact details:</strong> they are shown only after a Cloudflare Turnstile check. Your
-                    browser sends
-                    the check token to Cloudflare and to my verification service (a Cloudflare Worker) to unlock them.
-                    See
-                    Cloudflare's <a href="https://www.cloudflare.com/privacypolicy/" target="_blank"
+                    browser sends the check token to Cloudflare and to my verification service (a Cloudflare Worker) to
+                    unlock them. See Cloudflare's <a href="https://www.cloudflare.com/privacypolicy/" target="_blank"
                         rel="noopener noreferrer">Privacy Policy</a>, <a
                         href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank"
                         rel="noopener noreferrer">Turnstile Privacy Policy</a>, <a
@@ -1257,8 +1441,7 @@
                         href="https://www.cloudflare.com/trust-hub/gdpr/" target="_blank" rel="noopener noreferrer">GDPR
                         compliance</a> details.</li>
                 <li><strong>Fonts and GitHub graph</strong> are served from this site, so your browser makes no requests
-                    to
-                    Google or GitHub just to display them.</li>
+                    to Google or GitHub just to display them.</li>
             </ul>
         </details>
     </footer>
