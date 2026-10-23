@@ -642,6 +642,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const traceCanvas = document.createElement('canvas');
     const traceCtx = traceCanvas.getContext('2d');
 
+<<<<<<< HEAD
+=======
+    // GitHub Actions secret placeholder target injected during build
+    const SECRET_PASSCODE = "ca017faedaad26ffab3c7cd20a6bbc9bc9bd69bdf5bd9d29e22dfa51d559d2f4";
+
+>>>>>>> f266f69bd551abc00071db05e03a3d1bf3ffbec5
     let config = {
         mask: 'auto', // Ceramic White in Light theme, Industrial Green in Dark theme
         cardOpacity: 0.85,
