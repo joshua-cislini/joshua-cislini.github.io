@@ -642,11 +642,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const traceCanvas = document.createElement('canvas');
     const traceCtx = traceCanvas.getContext('2d');
 
-    // GitHub Actions secret placeholder target injected during build
-    const SECRET_PASSCODE = "__PCB_SECRET_PLACEHOLDER__";
-
     let config = {
-        mask: 'auto', // 'white' in Light theme, 'green' in Dark theme
+        mask: 'auto', // Ceramic White in Light theme, Industrial Green in Dark theme
         cardOpacity: 0.85,
         gridSize: 10,
         speed: 0.2,
@@ -679,7 +676,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const uiControls = [
         { id: 'gridSize', label: 'Grid Size (Resolution)', min: 6, max: 24, step: 1, suffix: 'px', category: 'ui-board-ranges' },
         { id: 'speed', label: 'Animation Speed', min: 0.1, max: 5.0, step: 0.1, suffix: 'x', category: 'ui-board-ranges' },
-
+        
         { id: 'zoneW', label: 'Zone Width', min: 10, max: 100, step: 1, suffix: '%', category: 'ui-area-ranges' },
         { id: 'zoneH', label: 'Zone Height', min: 10, max: 100, step: 1, suffix: '%', category: 'ui-area-ranges' },
         { id: 'diagCutoff', label: 'Diagonal Cutoff', min: 0, max: 100, step: 1, suffix: '%', category: 'ui-area-ranges' },
@@ -687,12 +684,12 @@ document.addEventListener("DOMContentLoaded", function () {
         { id: 'numPassives', label: 'Passive Components (R/C)', min: 0, max: 60, step: 1, suffix: '', category: 'ui-component-ranges' },
         { id: 'numSOIC', label: 'SOIC ICs', min: 0, max: 15, step: 1, suffix: '', category: 'ui-component-ranges' },
         { id: 'numQFP', label: 'QFP Microcontrollers', min: 0, max: 5, step: 1, suffix: '', category: 'ui-component-ranges' },
-
+        
         { id: 'thickness', label: 'Trace Thickness', min: 0.5, max: 4.0, step: 0.5, suffix: 'px', category: 'ui-routing-ranges' },
         { id: 'inertia', label: 'Routing Inertia', min: 0.0, max: 0.98, step: 0.01, suffix: '', displayMult: 100, displaySuffix: '%', category: 'ui-routing-ranges' },
         { id: 'targetBias', label: 'Target-Seeking Bias', min: 0.0, max: 1.0, step: 0.05, suffix: '', displayMult: 100, displaySuffix: '%', category: 'ui-routing-ranges' },
         { id: 'branchChance', label: 'Trace Branching Chance', min: 0.0, max: 0.2, step: 0.01, suffix: '', displayMult: 100, displaySuffix: '%', category: 'ui-routing-ranges' },
-
+        
         { id: 'passiveSpan', label: 'Passive Pin Span', min: 2, max: 6, step: 1, suffix: '', category: 'ui-size-ranges' },
         { id: 'passiveW', label: 'Passive Pad Width Ratio', min: 0.2, max: 1.5, step: 0.1, suffix: '', category: 'ui-size-ranges' },
         { id: 'passiveH', label: 'Passive Pad Height Ratio', min: 0.2, max: 1.5, step: 0.1, suffix: '', category: 'ui-size-ranges' },
@@ -705,12 +702,12 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     const Themes = {
-        green: { bg: 'rgba(0, 40, 20, 0.4)', trace: '#008f4c', silk: '#ffffff' },
-        white: { bg: 'rgba(235, 240, 235, 0.75)', trace: '#e2e8f0', silk: '#044123' },
-        black: { bg: 'rgba(10, 10, 10, 0.6)', trace: '#3a3a3a', silk: '#e8e8e8' },
-        blue: { bg: 'rgba(0, 20, 50, 0.5)', trace: '#005bb5', silk: '#f0f0f0' },
-        purple: { bg: 'rgba(30, 0, 40, 0.5)', trace: '#8c1da6', silk: '#f3e8f5' },
-        red: { bg: 'rgba(40, 5, 5, 0.5)', trace: '#a81c1c', silk: '#ffffff' },
+        green:  { bg: 'rgba(0, 40, 20, 0.4)',  trace: '#008f4c',  silk: '#ffffff' },
+        white:  { bg: 'rgba(235, 240, 235, 0.75)', trace: '#e2e8f0', silk: '#044123' },
+        black:  { bg: 'rgba(10, 10, 10, 0.6)', trace: '#3a3a3a',  silk: '#e8e8e8' },
+        blue:   { bg: 'rgba(0, 20, 50, 0.5)',  trace: '#005bb5',  silk: '#f0f0f0' },
+        purple: { bg: 'rgba(30, 0, 40, 0.5)',  trace: '#8c1da6',  silk: '#f3e8f5' },
+        red:    { bg: 'rgba(40, 5, 5, 0.5)',   trace: '#a81c1c',  silk: '#ffffff' },
     };
 
     const FINISH = { pad: '#d4af37', hole: '#0a0a0a' };
@@ -728,8 +725,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let startX = 0, startY = 0;
 
     const DIRS = [
-        { x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 1 }, { x: -1, y: 1 },
-        { x: -1, y: 0 }, { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 }
+        { x: 1,  y: 0 },   { x: 1,  y: 1 },   { x: 0,  y: 1 },   { x: -1, y: 1 },
+        { x: -1, y: 0 },   { x: -1, y: -1 },  { x: 0,  y: -1 },  { x: 1,  y: -1 }
     ];
 
     function getActiveMaskKey() {
@@ -761,12 +758,12 @@ document.addEventListener("DOMContentLoaded", function () {
         let pinsPerSide = 4;
         let h = (pinsPerSide - 1) * pitch + 1;
         let pads = [];
-
-        for (let i = 0; i < pinsPerSide; i++) {
-            pads.push({ x: 0, y: i * pitch, escapes: [4, 5, 3] });
-            pads.push({ x: w - 1, y: i * pitch, escapes: [0, 1, 7] });
+        
+        for(let i=0; i<pinsPerSide; i++) {
+            pads.push({ x: 0, y: i*pitch, escapes: [4, 5, 3] });
+            pads.push({ x: w - 1, y: i*pitch, escapes: [0, 1, 7] });
         }
-
+        
         return {
             type: 'SOIC', prefix: 'U', w, h, pads,
             silk: [
@@ -784,14 +781,14 @@ document.addEventListener("DOMContentLoaded", function () {
         let w = edgeLength + offset * 2;
         let h = edgeLength + offset * 2;
         let pads = [];
-
-        for (let i = 0; i < pins; i++) {
-            pads.push({ x: offset + i * pitch, y: 0, escapes: [6, 5, 7] });
-            pads.push({ x: offset + i * pitch, y: h - 1, escapes: [2, 1, 3] });
-            pads.push({ x: 0, y: offset + i * pitch, escapes: [4, 5, 3] });
-            pads.push({ x: w - 1, y: offset + i * pitch, escapes: [0, 1, 7] });
+        
+        for(let i=0; i<pins; i++) {
+            pads.push({ x: offset + i*pitch, y: 0, escapes: [6, 5, 7] });
+            pads.push({ x: offset + i*pitch, y: h - 1, escapes: [2, 1, 3] });
+            pads.push({ x: 0, y: offset + i*pitch, escapes: [4, 5, 3] });
+            pads.push({ x: w - 1, y: offset + i*pitch, escapes: [0, 1, 7] });
         }
-
+        
         return {
             type: 'QFP', prefix: 'U', w, h, pads,
             silk: [
@@ -817,7 +814,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let d45L = (this.dir + 7) % 8;
             let d45R = (this.dir + 1) % 8;
-
+            
             let forwardDirs = [this.dir, d45L, d45R].map(d => {
                 let nx = this.x + DIRS[d].x;
                 let ny = this.y + DIRS[d].y;
@@ -882,8 +879,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (x < startX || x >= cols || y < startY || y >= rows) return false;
         let w = cols - startX;
         let h = rows - startY;
-        if (w <= 0 || h <= 0) return true;
-
+        if (w <= 0 || h <= 0) return true; 
+        
         let val = (x - startX) / w + (y - startY) / h;
         return val >= (config.diagCutoff / 100);
     }
@@ -892,8 +889,8 @@ document.addEventListener("DOMContentLoaded", function () {
         let nx = x + dx;
         let ny = y + dy;
         if (!isValidBound(nx, ny)) return false;
-        if (grid[nx][ny] !== 0) return false;
-
+        if (grid[nx][ny] !== 0) return false; 
+        
         if (dx !== 0 && dy !== 0) {
             if (grid[x + dx][y] !== 0 && grid[x][y + dy] !== 0) return false;
         }
@@ -903,19 +900,19 @@ document.addEventListener("DOMContentLoaded", function () {
     function placeComponentSet(count, footprintGen, countsObj) {
         let attempts = count * 10;
         let placed = 0;
-
+        
         for (let i = 0; i < attempts; i++) {
             if (placed >= count) break;
-
+            
             let template = footprintGen();
             let wSpaces = cols - startX - template.w - 2;
             let hSpaces = rows - startY - template.h - 2;
-
+            
             if (wSpaces <= 0 || hSpaces <= 0) break;
-
+            
             let x = Math.floor(Math.random() * wSpaces) + startX + 1;
             let y = Math.floor(Math.random() * hSpaces) + startY + 1;
-
+            
             let clear = true;
             let margin = 1;
 
@@ -963,14 +960,14 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let c of components) {
             let cx = c.x * config.gridSize;
             let cy = c.y * config.gridSize;
-
+            
             ctx.fillStyle = FINISH.pad;
             for (let p of c.pads) {
                 let pw = (c.type === 'PASSIVE' ? config.passiveW : config.icPadW) * config.gridSize;
                 let ph = (c.type === 'PASSIVE' ? config.passiveH : config.icPadH) * config.gridSize;
                 let px = cx + p.x * config.gridSize + (config.gridSize - pw) / 2;
                 let py = cy + p.y * config.gridSize + (config.gridSize - ph) / 2;
-
+                
                 ctx.beginPath();
                 ctx.roundRect(px, py, pw, ph, 1.5);
                 ctx.fill();
@@ -981,7 +978,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let vx = via.x * config.gridSize + config.gridSize / 2;
             let vy = via.y * config.gridSize + config.gridSize / 2;
             let rad = config.gridSize * (config.viaSize / 2);
-
+            
             ctx.beginPath();
             ctx.arc(vx, vy, rad, 0, Math.PI * 2);
             ctx.fillStyle = FINISH.pad;
@@ -1017,17 +1014,17 @@ document.addEventListener("DOMContentLoaded", function () {
             ctx.fillText(c.name, cx, cy - 4);
             ctx.globalAlpha = 1.0;
         }
-
+        
         if (config.showBoundary) {
             let cRatio = config.diagCutoff / 100;
             let w = (cols - startX);
             let h = (rows - startY);
-
+            
             ctx.strokeStyle = '#fa003f';
             ctx.lineWidth = 2;
             ctx.setLineDash([5, 5]);
             ctx.beginPath();
-
+            
             let p1x = cols * config.gridSize;
             let p1y = rows * config.gridSize;
             let p2x = startX * config.gridSize;
@@ -1053,16 +1050,16 @@ document.addEventListener("DOMContentLoaded", function () {
     function gameLoop() {
         stepAccumulator += config.speed;
         componentSpawnAccumulator += config.speed;
-
-        while (componentSpawnAccumulator >= 2 && pendingComponents.length > 0) {
+        
+        while(componentSpawnAccumulator >= 2 && pendingComponents.length > 0) {
             componentSpawnAccumulator -= 2;
             let nextComp = pendingComponents.pop();
             components.push(nextComp.comp);
-
+            
             nextComp.comp.pads.forEach(p => {
                 let padGridX = nextComp.comp.x + p.x;
                 let padGridY = nextComp.comp.y + p.y;
-
+                
                 let validEscapes = p.escapes.filter(e => {
                     let ex = padGridX + DIRS[e].x;
                     let ey = padGridY + DIRS[e].y;
@@ -1077,10 +1074,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     ey = padGridY + DIRS[escapeDir].y;
                 } else {
                     let found = false;
-                    for (let d = 0; d < 8; d++) {
+                    for(let d=0; d<8; d++) {
                         let nx = padGridX + DIRS[d].x;
                         let ny = padGridY + DIRS[d].y;
-                        if (isValidBound(nx, ny) && grid[nx][ny] === 0) {
+                        if(isValidBound(nx, ny) && grid[nx][ny] === 0) {
                             ex = nx;
                             ey = ny;
                             escapeDir = d;
@@ -1088,13 +1085,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             break;
                         }
                     }
-                    if (!found) return;
+                    if(!found) return;
                 }
-
+                
                 let padCenterX = padGridX * config.gridSize + config.gridSize / 2;
                 let padCenterY = padGridY * config.gridSize + config.gridSize / 2;
                 let half = config.gridSize / 2;
-
+                
                 traceCtx.strokeStyle = Themes[getActiveMaskKey()].trace;
                 traceCtx.lineWidth = config.thickness;
                 traceCtx.lineCap = 'round';
@@ -1102,17 +1099,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 traceCtx.moveTo(padCenterX, padCenterY);
                 traceCtx.lineTo(ex * config.gridSize + half, ey * config.gridSize + half);
                 traceCtx.stroke();
-
+                
                 grid[ex][ey] = 2;
-
+                
                 let targetX = Math.random() > 0.5 ? (Math.random() > 0.5 ? startX : cols) : Math.floor(Math.random() * (cols - startX)) + startX;
                 let targetY = Math.random() > 0.5 ? Math.floor(Math.random() * (rows - startY)) + startY : (Math.random() > 0.5 ? startY : rows);
-
+                
                 activeTraces.push(new Trace(ex, ey, escapeDir, targetX, targetY));
             });
         }
 
-        while (stepAccumulator >= 1) {
+        while(stepAccumulator >= 1) {
             stepAccumulator -= 1;
             for (let t of activeTraces) {
                 if (t.active) t.step();
@@ -1132,7 +1129,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const container = canvas.parentElement;
         dpr = window.devicePixelRatio || 1;
-
+        
         let cw = container.clientWidth;
         let ch = container.clientHeight;
 
@@ -1149,7 +1146,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         cols = Math.floor(cw / config.gridSize);
         rows = Math.floor(ch / config.gridSize);
-
+        
         startX = Math.floor(cols * (1 - config.zoneW / 100));
         startY = Math.floor(rows * (1 - config.zoneH / 100));
 
@@ -1192,7 +1189,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let displayVal = parseFloat(val);
                 if (ctrl.displayMult) displayVal *= ctrl.displayMult;
                 let formatted = Number.isInteger(ctrl.step) ? Math.round(displayVal) : displayVal.toFixed(2).replace(/\.?0+$/, '');
-                if (formatted === "") formatted = "0";
+                if(formatted === "") formatted = "0";
                 valEl.innerText = `${formatted}${ctrl.displaySuffix || ctrl.suffix}`;
             };
 
@@ -1217,24 +1214,48 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         document.getElementById('btn-regenerate-pcb').addEventListener('click', initGenerator);
-    }
 
-    function openSecretModal() {
-        const inputPasscode = prompt("Enter Secret PCB Tuning Passcode:");
-        if (!inputPasscode) return;
-
-        if (inputPasscode.trim() === SECRET_PASSCODE.trim()) {
-            const modal = document.getElementById('pcb-secret-modal');
-            if (modal) {
-                modal.classList.add('open');
-                modal.setAttribute('aria-hidden', 'false');
-            }
-        } else {
-            alert("Access Denied: Incorrect passcode.");
+        const exportBtn = document.getElementById('btn-export-pcb-config');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', () => {
+                const configJson = JSON.stringify(config, null, 4);
+                navigator.clipboard.writeText(configJson).then(() => {
+                    alert("Configuration copied to clipboard!\n\nPaste these values into the 'config' object in js/main.js and commit to make your tuned defaults permanent for all site visitors.");
+                }).catch(() => {
+                    console.log("PCB Config JSON:\n", configJson);
+                    alert("Configuration printed to browser console (Ctrl+Shift+I)!");
+                });
+            });
         }
     }
 
-    // Trigger shortcut: Ctrl+Shift+P OR click brand logo 5 times
+    async function openSecretModal() {
+        const inputPasscode = prompt("Enter Secret PCB Tuning Passcode:");
+        if (!inputPasscode) return;
+
+        try {
+            const response = await fetch("https://contact-decrypt.cislinij.workers.dev/verify-pcb-passcode", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ passcode: inputPasscode.trim() })
+            });
+
+            const data = await response.json();
+
+            if (data && data.success) {
+                const modal = document.getElementById('pcb-secret-modal');
+                if (modal) {
+                    modal.classList.add('open');
+                    modal.setAttribute('aria-hidden', 'false');
+                }
+            } else {
+                alert("Access Denied: Incorrect passcode.");
+            }
+        } catch (err) {
+            alert("Server Error: Could not reach verification service.");
+        }
+    }
+
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'p') {
             e.preventDefault();
