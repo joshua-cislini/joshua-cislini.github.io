@@ -643,7 +643,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const traceCtx = traceCanvas.getContext('2d');
 
     // GitHub Actions secret placeholder target injected during build
-    const SECRET_PASSCODE = "__PCB_SECRET_PLACEHOLDER__";
+    const SECRET_PASSCODE = "ca017faedaad26ffab3c7cd20a6bbc9bc9bd69bdf5bd9d29e22dfa51d559d2f4";
 
     let config = {
         mask: 'auto', // 'white' in Light theme, 'green' in Dark theme
