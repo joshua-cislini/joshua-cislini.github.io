@@ -643,30 +643,34 @@ document.addEventListener("DOMContentLoaded", function () {
     const traceCtx = traceCanvas.getContext('2d');
 
     let config = {
-        "mask": "auto",
-        "cardOpacity": 0.85,
-        "gridSize": 10,
-        "speed": 0.2,
-        "zoneW": 45,
-        "zoneH": 80,
-        "diagCutoff": 100,
-        "showBoundary": false,
-        "numPassives": 8,
-        "numSOIC": 1,
-        "numQFP": 1,
-        "thickness": 1.5,
-        "inertia": 0.98,
-        "targetBias": 0.9,
-        "branchChance": 0.05,
-        "passiveSpan": 2,
-        "passiveW": 0.6,
-        "passiveH": 0.6,
-        "icPitch": 1,
-        "icWidth": 4,
-        "icPadW": 0.8,
-        "icPadH": 0.8,
-        "viaSize": 0.5,
-        "viaDrill": 0.2
+        mask: 'auto', // Ceramic White in Light theme, Industrial Green in Dark theme
+        cardOpacity: 0.85,
+        gridSize: 10,
+        speed: 0.2,
+
+        zoneW: 45,
+        zoneH: 80,
+        diagCutoff: 100,
+        showBoundary: false,
+
+        numPassives: 8,
+        numSOIC: 1,
+        numQFP: 1,
+
+        thickness: 1.5,
+        inertia: 0.98,
+        targetBias: 0.9,
+        branchChance: 0.05,
+
+        passiveSpan: 2,
+        passiveW: 0.6,
+        passiveH: 0.6,
+        icPitch: 1,
+        icWidth: 4,
+        icPadW: 0.8,
+        icPadH: 0.8,
+        viaSize: 0.5,
+        viaDrill: 0.2
     };
 
     const uiControls = [
@@ -699,7 +703,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const Themes = {
         green: { bg: 'rgba(0, 40, 20, 0.4)', trace: '#008f4c', silk: '#ffffff' },
-        white: { bg: 'rgba(235, 240, 235, 0.75)', trace: '#e2e8f0', silk: '#044123' },
+        white: { bg: 'rgba(235, 240, 235, 0.75)', trace: '#718096', silk: '#044123' }, // Darkened ceramic trace color
         black: { bg: 'rgba(10, 10, 10, 0.6)', trace: '#3a3a3a', silk: '#e8e8e8' },
         blue: { bg: 'rgba(0, 20, 50, 0.5)', trace: '#005bb5', silk: '#f0f0f0' },
         purple: { bg: 'rgba(30, 0, 40, 0.5)', trace: '#8c1da6', silk: '#f3e8f5' },
