@@ -271,7 +271,9 @@
             opacity: 1;
         }
 
-        header, .container, footer {
+        header,
+        .container,
+        footer {
             position: relative;
             z-index: 1;
         }
@@ -286,7 +288,10 @@
             text-decoration: underline;
         }
 
-        main a:not(.btn-verify), p a, .item-subtitle a, .eyebrow a {
+        main a:not(.btn-verify),
+        p a,
+        .item-subtitle a,
+        .eyebrow a {
             text-decoration: underline;
             text-underline-offset: 2px;
         }
@@ -454,7 +459,9 @@
             align-items: center;
         }
 
-        .btn-primary, .btn-secondary, .btn-verify {
+        .btn-primary,
+        .btn-secondary,
+        .btn-verify {
             background-color: var(--ni-btn-bg);
             color: var(--ni-white) !important;
             padding: 0.75rem 1.75rem;
@@ -478,7 +485,8 @@
             border: 1px solid var(--ni-border-dark);
         }
 
-        .btn-primary:hover, .btn-verify:hover {
+        .btn-primary:hover,
+        .btn-verify:hover {
             text-decoration: none;
             background-color: var(--ni-btn-hover);
             color: var(--ni-white) !important;
@@ -491,7 +499,9 @@
             background-color: var(--ni-green-alpha-08);
         }
 
-        .btn-full { width: 100%; }
+        .btn-full {
+            width: 100%;
+        }
 
         .btn-verify {
             font-size: 0.85rem;
@@ -542,7 +552,9 @@
             margin-bottom: 0.3rem;
         }
 
-        .widget-icon { margin-bottom: 0.75rem; }
+        .widget-icon {
+            margin-bottom: 0.75rem;
+        }
 
         .widget-description {
             font-size: 0.85rem;
@@ -572,7 +584,9 @@
             margin-bottom: 2rem;
         }
 
-        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
 
         .timeline-item::before {
             content: '';
@@ -590,11 +604,14 @@
         }
 
         @keyframes internal-dot-pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 background-color: var(--ni-card-bg);
                 border-color: var(--ni-green-primary);
                 box-shadow: 0 0 0 0 rgba(0, 155, 101, 0);
             }
+
             50% {
                 background-color: var(--ni-green-primary);
                 border-color: var(--ni-green-hover);
@@ -638,8 +655,14 @@
             border-radius: 2px;
         }
 
-        .timeline-group .timeline-item { margin-bottom: 1.5rem; }
-        .timeline-group .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-group .timeline-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-group .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
         .timeline-group .timeline-item::before {
             border: 2px solid var(--ni-green-primary);
             background-color: var(--ni-card-bg);
@@ -691,7 +714,8 @@
             font-size: 0.95rem;
         }
 
-        .contact-info p, .language-item {
+        .contact-info p,
+        .language-item {
             margin-bottom: 0.75rem;
             font-size: 0.95rem;
         }
@@ -740,7 +764,9 @@
             color: var(--ni-text-body);
         }
 
-        [hidden] { display: none !important; }
+        [hidden] {
+            display: none !important;
+        }
 
         .github-chart {
             display: flex;
@@ -765,11 +791,26 @@
             background: var(--ni-green-primary);
         }
 
-        .gh-cell[data-l="0"] { background: var(--ni-border-dark); opacity: 0.45; }
-        .gh-cell[data-l="1"] { opacity: 0.3; }
-        .gh-cell[data-l="2"] { opacity: 0.5; }
-        .gh-cell[data-l="3"] { opacity: 0.75; }
-        .gh-cell[data-l="x"] { background: transparent; }
+        .gh-cell[data-l="0"] {
+            background: var(--ni-border-dark);
+            opacity: 0.45;
+        }
+
+        .gh-cell[data-l="1"] {
+            opacity: 0.3;
+        }
+
+        .gh-cell[data-l="2"] {
+            opacity: 0.5;
+        }
+
+        .gh-cell[data-l="3"] {
+            opacity: 0.75;
+        }
+
+        .gh-cell[data-l="x"] {
+            background: transparent;
+        }
 
         .gh-meta {
             font-size: 0.8rem;
@@ -828,7 +869,9 @@
             line-height: 1;
         }
 
-        .pcb-close-btn:hover { color: var(--ni-text-dark); }
+        .pcb-close-btn:hover {
+            color: var(--ni-text-dark);
+        }
 
         .pcb-card-body {
             max-height: 500px;
@@ -848,7 +891,10 @@
             padding-bottom: 0.25rem;
         }
 
-        .control-group { margin-bottom: 0.75rem; }
+        .control-group {
+            margin-bottom: 0.75rem;
+        }
+
         .control-group label {
             display: flex;
             justify-content: space-between;
@@ -856,11 +902,13 @@
             color: var(--ni-text-muted);
             margin-bottom: 0.25rem;
         }
+
         .control-group input[type=range] {
             width: 100%;
             accent-color: var(--ni-green-primary);
             height: 4px;
         }
+
         .control-group select {
             width: 100%;
             background-color: var(--ni-bg-light);
@@ -881,7 +929,9 @@
             transition: background-color 0.3s ease;
         }
 
-        footer a { color: #e2e8f0; }
+        footer a {
+            color: #e2e8f0;
+        }
 
         .privacy-notice {
             max-width: 680px;
@@ -896,23 +946,51 @@
             font-weight: 600;
         }
 
-        .privacy-notice ul { margin: 0.75rem 0 0 1.25rem; }
-        .privacy-notice li { margin-bottom: 0.4rem; }
+        .privacy-notice ul {
+            margin: 0.75rem 0 0 1.25rem;
+        }
 
-        @media (max-width: 850px), (pointer: coarse) {
-            #fps-widget { display: none; }
+        .privacy-notice li {
+            margin-bottom: 0.4rem;
+        }
+
+        @media (max-width: 850px),
+        (pointer: coarse) {
+            #fps-widget {
+                display: none;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .timeline-item.active-item::before { animation: none; }
-            * { transition: none !important; }
+            .timeline-item.active-item::before {
+                animation: none;
+            }
+
+            * {
+                transition: none !important;
+            }
         }
 
         @media (max-width: 850px) {
-            .grid-layout { grid-template-columns: 1fr; }
-            .hero-title { font-size: 2.25rem; }
-            .nav-container { flex-direction: column; align-items: flex-start; }
-            #fps-widget { padding: 8px 12px; font-size: 0.75rem; bottom: 16px; left: 16px; }
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 2.25rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            #fps-widget {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+                bottom: 16px;
+                left: 16px;
+            }
         }
     </style>
 </head>
@@ -939,8 +1017,10 @@
                 <svg height="28" width="28" viewBox="0 0 16 16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
                     <rect width="16" height="16" rx="3.5" fill="var(--ni-green-primary)" />
                     <g fill="#ffffff">
-                        <path d="M7 3.5v6.25c0 1.25-.8 2.25-2.1 2.25-1.1 0-1.9-.75-2.05-1.75h1.55c.1.35.3.6.6.6.35 0 .5-.25.5-.75V3.5H7z" />
-                        <path d="M13.2 5.25h-1.5c-.2-.65-.7-1.15-1.45-1.15-1.05 0-1.75.9-1.75 2.4s.7 2.4 1.75 2.4c.75 0 1.25-.5 1.45-1.15h1.5c-.25 1.45-1.45 2.4-2.95 2.4-2 0-3.3-1.5-3.3-3.65s1.3-3.65 3.3-3.65c1.5 0 2.7.95 2.95 2.4z" />
+                        <path
+                            d="M7 3.5v6.25c0 1.25-.8 2.25-2.1 2.25-1.1 0-1.9-.75-2.05-1.75h1.55c.1.35.3.6.6.6.35 0 .5-.25.5-.75V3.5H7z" />
+                        <path
+                            d="M13.2 5.25h-1.5c-.2-.65-.7-1.15-1.45-1.15-1.05 0-1.75.9-1.75 2.4s.7 2.4 1.75 2.4c.75 0 1.25-.5 1.45-1.15h1.5c-.25 1.45-1.45 2.4-2.95 2.4-2 0-3.3-1.5-3.3-3.65s1.3-3.65 3.3-3.65c1.5 0 2.7.95 2.95 2.4z" />
                     </g>
                 </svg>
                 <div>Joshua Cislini <span>| Resume</span></div>
@@ -969,9 +1049,11 @@
                         rel="noopener noreferrer">HEIA-FR</a></p>
                 <h1 class="hero-title">Precision Hardware & Electronics Systems</h1>
                 <p class="hero-subtitle">
-                    Electrical Engineering student and former Electronics Apprentice at <a href="https://www.schindler.ch/"
-                        target="_blank" rel="noopener noreferrer">Schindler</a> R&amp;D, with hands-on experience in
-                    hardware development, PCBA prototyping, and operational safety. Recognized as Ticino's Best Apprentice
+                    Electrical Engineering student and former Electronics Apprentice at <a
+                        href="https://www.schindler.ch/" target="_blank" rel="noopener noreferrer">Schindler</a>
+                    R&amp;D, with hands-on experience in
+                    hardware development, PCBA prototyping, and operational safety. Recognized as Ticino's Best
+                    Apprentice
                     for 2025 by <a href="https://www.ameti.ch/" target="_blank" rel="noopener noreferrer">AMETI</a>.
                 </p>
                 <div class="btn-group">
@@ -979,9 +1061,6 @@
                         class="btn-primary">Connect on LinkedIn</a>
                     <button type="button" class="btn-primary" id="hero-resume-btn">Download Resume ⤓</button>
                     <a href="#contact" class="btn-secondary">Contact Info</a>
-                    <button type="button" class="btn-secondary" id="btn-toggle-pcb-card" title="Toggle PCB Settings (Ctrl+E)">
-                        ⚡ Customize PCB Traces
-                    </button>
                 </div>
             </div>
         </section>
@@ -1139,8 +1218,11 @@
                 <section class="section-card" id="pcb-editor-card" style="display: none;">
                     <div class="pcb-card-header">
                         <div class="pcb-card-title">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--ni-green-primary);">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                style="color: var(--ni-green-primary);">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z">
+                                </path>
                             </svg>
                             PCB Generator Settings
                         </div>
@@ -1169,7 +1251,8 @@
                             <div id="ui-area-ranges"></div>
                             <div class="control-group" style="margin-top: 0.5rem;">
                                 <label style="justify-content: flex-start; gap: 0.5rem; cursor: pointer;">
-                                    <input type="checkbox" id="ctrl-showBoundary" style="accent-color: var(--ni-green-primary);">
+                                    <input type="checkbox" id="ctrl-showBoundary"
+                                        style="accent-color: var(--ni-green-primary);">
                                     Show Boundary Outline
                                 </label>
                             </div>
@@ -1190,9 +1273,11 @@
                             <div id="ui-size-ranges"></div>
                         </div>
 
-                        <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--ni-border); display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <div
+                            style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--ni-border); display: flex; gap: 0.5rem; flex-wrap: wrap;">
                             <button id="btn-regenerate-pcb" class="btn-primary" style="flex: 1;">Regenerate</button>
-                            <button id="btn-export-pcb-config" class="btn-secondary" style="flex: 1;">Copy Config</button>
+                            <button id="btn-export-pcb-config" class="btn-secondary" style="flex: 1;">Copy
+                                Config</button>
                         </div>
                     </div>
                 </section>
@@ -1282,15 +1367,32 @@
     </div>
 
     <footer>
-        <p>&copy; <span id="copyright-start">2026</span><span id="copyright-range"></span> Joshua Cislini. All rights reserved.</p>
+        <p>&copy; <span id="copyright-start">2026</span><span id="copyright-range"></span> Joshua Cislini. All rights
+            reserved.</p>
         <details class="privacy-notice" id="privacy">
             <summary>Privacy notice</summary>
             <ul>
-                <li><strong>No ads, no tracking cookies.</strong> This site sets no cookies. Your theme choice (light/dark) is stored only in your browser's local storage.</li>
-                <li><strong>Hosting:</strong> GitHub Pages. GitHub may process visitor IP addresses as described in its <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">General Privacy Statement</a>.</li>
-                <li><strong>Performance monitoring:</strong> Cronitor Real User Monitoring collects page-performance and availability metrics. See Cronitor's <a href="https://cronitor.io/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="https://cronitor.io/docs/security" target="_blank" rel="noopener noreferrer">Security Documentation</a> for details.</li>
-                <li><strong>Contact details:</strong> they are shown only after a Cloudflare Turnstile check. Your browser sends the check token to Cloudflare and to my verification service (a Cloudflare Worker) to unlock them. See Cloudflare's <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer">Turnstile Privacy Policy</a>, <a href="https://www.cloudflare.com/trust-hub/privacy-and-data-protection/" target="_blank" rel="noopener noreferrer">Data Protection</a>, and <a href="https://www.cloudflare.com/trust-hub/gdpr/" target="_blank" rel="noopener noreferrer">GDPR compliance</a> details.</li>
-                <li><strong>Fonts and GitHub graph</strong> are served from this site, so your browser makes no requests to Google or GitHub just to display them.</li>
+                <li><strong>No ads, no tracking cookies.</strong> This site sets no cookies. Your theme choice
+                    (light/dark) is stored only in your browser's local storage.</li>
+                <li><strong>Hosting:</strong> GitHub Pages. GitHub may process visitor IP addresses as described in its
+                    <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+                        target="_blank" rel="noopener noreferrer">General Privacy Statement</a>.</li>
+                <li><strong>Performance monitoring:</strong> Cronitor Real User Monitoring collects page-performance and
+                    availability metrics. See Cronitor's <a href="https://cronitor.io/privacy" target="_blank"
+                        rel="noopener noreferrer">Privacy Policy</a> and <a href="https://cronitor.io/docs/security"
+                        target="_blank" rel="noopener noreferrer">Security Documentation</a> for details.</li>
+                <li><strong>Contact details:</strong> they are shown only after a Cloudflare Turnstile check. Your
+                    browser sends the check token to Cloudflare and to my verification service (a Cloudflare Worker) to
+                    unlock them. See Cloudflare's <a href="https://www.cloudflare.com/privacypolicy/" target="_blank"
+                        rel="noopener noreferrer">Privacy Policy</a>, <a
+                        href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank"
+                        rel="noopener noreferrer">Turnstile Privacy Policy</a>, <a
+                        href="https://www.cloudflare.com/trust-hub/privacy-and-data-protection/" target="_blank"
+                        rel="noopener noreferrer">Data Protection</a>, and <a
+                        href="https://www.cloudflare.com/trust-hub/gdpr/" target="_blank" rel="noopener noreferrer">GDPR
+                        compliance</a> details.</li>
+                <li><strong>Fonts and GitHub graph</strong> are served from this site, so your browser makes no requests
+                    to Google or GitHub just to display them.</li>
             </ul>
         </details>
     </footer>
