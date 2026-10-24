@@ -1,0 +1,8 @@
+{
+  "name": "joshua-cislini-site",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}

@@ -1,0 +1,47 @@
+name: Build Site Data (Sitemap & OG Image)
+
+on:
+  push:
+    branches: [main]
+    paths: ["index.html", "js/**", "fonts/**", "scripts/**", "package*.json"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Same group name as update-github-chart.yml, so the two workflows never push at the same time
+concurrency:
+  group: site-data
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # npm ci installs exactly what package-lock.json says (keeps the PNG output stable)
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate og-image.png
+        run: node scripts/generate-og-image.mjs
+
+      - name: Set lastmod / dateModified to today (UTC)
+        run: |
+          TODAY=$(date -u +%F)
+          sed -i "s|<lastmod>.*</lastmod>|<lastmod>${TODAY}</lastmod>|" sitemap.xml
+          sed -i "s|\"dateModified\": \"[0-9-]*\"|\"dateModified\": \"${TODAY}\"|" index.html
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-update sitemap and og-image"
+          file_pattern: "sitemap.xml index.html og-image.png"
