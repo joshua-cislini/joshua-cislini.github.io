@@ -1,48 +1,36 @@
-name: Update Site Data (Sitemap & OG Image)
+name: Update Sitemap Lastmod
 
 on:
   push:
-    branches: [main]
-    paths: ["index.html", "js/**", "fonts/**", "scripts/**", "package*.json"]
+    branches:
+      - main
+    paths:
+      - '*.html'
+      - 'pages/**/*.html'
   workflow_dispatch:
 
-permissions:
-  contents: write
-
-concurrency:
-  group: site-data
-  cancel-in-progress: false
-
 jobs:
-  build:
+  update-sitemap:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
-          node-version: 20
-          cache: npm
+          fetch-depth: 0 # Need full history to get modification dates
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-      - name: Generate new og-image.png
-        run: node scripts/generate-og-image.mjs
+      - name: Update Sitemap
+        run: node scripts/update-sitemap.mjs # Assuming you have a script for this
 
-      - name: Set lastmod to today (UTC)
-        run: |
-          TODAY=$(date -u +%F)
-          sed -i "s|<lastmod>.*</lastmod>|<lastmod>${TODAY}</lastmod>|" sitemap.xml
-          sed -i "s|\"dateModified\": \"[0-9-]*\"|\"dateModified\": \"${TODAY}\"|" index.html
-
-      - name: Commit and push changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml index.html og-image.png
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: auto-update sitemap and og-image"
-            git pull --rebase origin main
-            git push origin main
-          fi
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "seo: update sitemap lastmod dates"
+          file_pattern: "sitemap.xml"
