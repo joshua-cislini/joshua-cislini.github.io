@@ -1,12 +1,10 @@
-/* Runs before first paint: saved choice wins, otherwise follow the OS color scheme. */
+/* Immediate theme initialization to prevent UI flash */
 (function () {
-  var dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-  try {
-    var saved = localStorage.getItem("cislini_resume_theme");
-    if (saved === "dark" || saved === "light") dark = saved === "dark";
-  } catch (e) { }
-  var root = document.documentElement;
-  if (dark) root.classList.add("dark-theme");
-  var meta = document.getElementById("meta-theme-color");
-  if (meta) meta.setAttribute("content", dark ? "#0b100d" : "#f4f4f4");
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark-theme');
+    } else {
+        document.documentElement.classList.remove('dark-theme');
+    }
 })();
