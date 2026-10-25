@@ -163,11 +163,20 @@ function unlockContactWithFallback() {
 
 function base64ToBlob(base64, mimeType) {
     try {
-        const bin = atob(base64);
+        // 1. Strip the data URI prefix if it exists
+        let cleanBase64 = base64.includes(',') ? base64.split(',')[1] : base64;
+
+        // 2. Remove any accidental whitespace or newlines from copy-pasting
+        cleanBase64 = cleanBase64.replace(/\s+/g, '');
+
+        const bin = atob(cleanBase64);
         const bytes = new Uint8Array(bin.length);
-        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        for (let i = 0; i < bin.length; i++) {
+            bytes[i] = bin.charCodeAt(i);
+        }
         return new Blob([bytes], { type: mimeType });
     } catch (e) {
+        console.error("Failed to decode base64 resume:", e);
         return new Blob([], { type: mimeType });
     }
 }
