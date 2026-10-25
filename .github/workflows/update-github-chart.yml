@@ -3,13 +3,13 @@ name: Update GitHub Chart
 on:
   schedule:
     - cron: '59 23 * * *'
-  workflow_dispatch: # Allows manual trigger
+  workflow_dispatch:
 
 jobs:
   update-chart:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Needed to push changes
+      contents: write 
 
     steps:
       - name: Checkout Repository
@@ -32,3 +32,11 @@ jobs:
         with:
           commit_message: "chore: auto-update GitHub contribution chart"
           file_pattern: "data/github-contributions.json"
+
+      - name: Send Cronitor Heartbeat
+        if: success()
+        run: curl -sS "https://cronitor.link/p/${{ secrets.CRONITOR_AUTH_KEY }}/pdup24?state=complete"
+
+      - name: Send Cronitor Failure Heartbeat
+        if: failure()
+        run: curl -sS "https://cronitor.link/p/${{ secrets.CRONITOR_AUTH_KEY }}/pdup24?state=fail"
