@@ -2,6 +2,10 @@
 (function initPcbCAD() {
     const canvas = document.getElementById('hero-pcb-canvas');
     if (!canvas) return;
+
+    // Keep phones and touch devices lightweight: no PCB generation or rendering.
+    const pcbDisabledQuery = window.matchMedia('(max-width: 850px), (pointer: coarse)');
+
     const ctx = canvas.getContext('2d');
     const traceCanvas = document.createElement('canvas');
     const traceCtx = traceCanvas.getContext('2d');
@@ -491,8 +495,15 @@
     function initGenerator() {
         if (animId) cancelAnimationFrame(animId);
 
+        if (pcbDisabledQuery.matches) {
+            animId = null;
+            canvas.hidden = true;
+            return;
+        }
+
+        canvas.hidden = false;
         const container = canvas.parentElement;
-        dpr = window.devicePixelRatio || 1;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
 
         let cw = container.clientWidth;
         let ch = container.clientHeight;
@@ -647,6 +658,27 @@
         heroToggleBtn.addEventListener('click', togglePcbCard);
     }
 
+    function handlePcbAvailabilityChange() {
+        if (pcbDisabledQuery.matches) {
+            if (animId) cancelAnimationFrame(animId);
+            animId = null;
+            canvas.hidden = true;
+        } else {
+            canvas.hidden = false;
+            initGenerator();
+        }
+    }
+
+    if (pcbDisabledQuery.addEventListener) {
+        pcbDisabledQuery.addEventListener('change', handlePcbAvailabilityChange);
+    } else if (pcbDisabledQuery.addListener) {
+        pcbDisabledQuery.addListener(handlePcbAvailabilityChange);
+    }
+
     buildUI();
-    setTimeout(initGenerator, 100);
+    if (pcbDisabledQuery.matches) {
+        canvas.hidden = true;
+    } else {
+        setTimeout(initGenerator, 100);
+    }
 })();

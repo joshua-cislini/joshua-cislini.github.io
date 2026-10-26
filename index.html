@@ -634,6 +634,33 @@
             min-height: 1.6rem;
         }
 
+        .active-badge,
+        .valid-badge,
+        .expired-badge {
+            display: inline-flex;
+            align-items: center;
+            min-height: 24px;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+        }
+
+        .active-badge,
+        .valid-badge {
+            color: var(--ni-green-text);
+            background-color: var(--ni-green-alpha-12);
+        }
+
+        .expired-badge {
+            color: var(--ni-danger);
+            background-color: var(--ni-danger-alpha-12);
+        }
+
         .timeline-group {
             position: relative;
             margin-bottom: 2rem;
@@ -701,7 +728,7 @@
         .timeline-item p {
             font-size: 0.95rem;
             margin-top: 0.25rem;
-            text-align: justify;
+            text-align: left;
         }
 
         .timeline-item ul {
@@ -959,9 +986,17 @@
             #fps-widget {
                 display: none;
             }
+
+            .hero-pcb-canvas {
+                display: none;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
             .timeline-item.active-item::before {
                 animation: none;
             }
@@ -985,11 +1020,118 @@
                 align-items: flex-start;
             }
 
+            .nav-links a {
+                display: inline-flex;
+                align-items: center;
+                min-height: 44px;
+            }
+
+            .theme-toggle-btn {
+                min-height: 44px;
+            }
+
             #fps-widget {
                 padding: 8px 12px;
                 font-size: 0.75rem;
                 bottom: 16px;
                 left: 16px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 0.75rem 1rem;
+            }
+
+            .nav-container {
+                gap: 0.35rem;
+            }
+
+            .brand-logo {
+                font-size: 1.05rem;
+            }
+
+            .nav-links {
+                width: 100%;
+                gap: 0 0.75rem;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .theme-toggle-btn {
+                padding: 0.5rem 1rem;
+            }
+
+            .container {
+                margin: 1rem auto;
+                padding: 0 0.75rem;
+            }
+
+            .hero-spotlight {
+                min-height: 0;
+                padding: 1.5rem 1.25rem;
+                margin-bottom: 1rem;
+            }
+
+            .eyebrow {
+                font-size: 0.78rem;
+            }
+
+            .hero-title {
+                font-size: clamp(2rem, 9vw, 2.25rem);
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .btn-group {
+                gap: 0.75rem;
+            }
+
+            .btn-group .btn-primary,
+            .btn-group .btn-secondary {
+                width: 100%;
+                min-height: 48px;
+            }
+
+            .grid-layout {
+                gap: 1rem;
+            }
+
+            .section-card {
+                padding: 1.25rem;
+                margin-bottom: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.65rem;
+                margin-bottom: 1.1rem;
+            }
+
+            .award-box {
+                margin-bottom: 1rem;
+            }
+
+            .item-subtitle {
+                display: block;
+                line-height: 1.5;
+            }
+
+            .contact-info p {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .contact-info a {
+                overflow-wrap: anywhere;
+            }
+
+            footer {
+                margin-top: 2rem;
             }
         }
     </style>
@@ -998,7 +1140,7 @@
 <body>
 
     <!-- Particle Background Canvas -->
-    <canvas id="bg-canvas"></canvas>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
     <!-- Bottom-Left FPS Widget -->
     <div id="fps-widget">
@@ -1042,7 +1184,7 @@
 
         <!-- Hero Spotlight Section -->
         <section class="hero-spotlight" id="about">
-            <canvas id="hero-pcb-canvas" class="hero-pcb-canvas"></canvas>
+            <canvas id="hero-pcb-canvas" class="hero-pcb-canvas" aria-hidden="true"></canvas>
 
             <div class="hero-content">
                 <p class="eyebrow">Electrical Engineering Student at <a href="https://www.heia-fr.ch/" target="_blank"

@@ -5,6 +5,11 @@ on:
     - cron: '59 23 * * *'
   workflow_dispatch:
 
+# Share the build workflow's group so automated commits cannot race each other.
+concurrency:
+  group: site-data
+  cancel-in-progress: false
+
 jobs:
   update-chart:
     runs-on: ubuntu-latest
