@@ -136,31 +136,6 @@ window.onTurnstileSuccess = async function (token) {
     }
 };
 
-// Fallback unlock function if Worker is unreachable
-function unlockContactWithFallback() {
-    // Obfuscated contact strings (Base64)
-    const fallbackEmail = atob("am9zaHVhLmNpc2xpbmlAZ21haWwuY29t"); // joshua.cislini@gmail.com
-    const fallbackPhone = atob("KzQxIDc5IDEyMyA0NSA2Nw==");          // +41 79 123 45 67
-
-    const emailLink = document.getElementById("email-link");
-    const phoneLink = document.getElementById("phone-link");
-
-    if (emailLink && (!emailLink.textContent || emailLink.textContent === "#")) {
-        emailLink.href = "mailto:" + fallbackEmail;
-        emailLink.textContent = fallbackEmail;
-    }
-
-    if (phoneLink && (!phoneLink.textContent || phoneLink.textContent === "#")) {
-        phoneLink.href = "tel:" + fallbackPhone.replace(/\s+/g, '');
-        phoneLink.textContent = fallbackPhone;
-    }
-
-    const gate = document.getElementById("contact-gate");
-    const info = document.getElementById("contact-info-content");
-    if (gate) gate.style.display = "none";
-    if (info) info.style.display = "block";
-}
-
 function base64ToBlob(base64, mimeType) {
     try {
         // 1. Strip the data URI prefix if it exists
