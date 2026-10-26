@@ -1,3 +1,3 @@
 /* Cronitor RUM setup */
-window.cronitor = window.cronitor || function() { (window.cronitor.q = window.cronitor.q || []).push(arguments); };
-cronitor('config', { clientKey: 'c05f77fa8f6f59df05ca5bc9f636a0fb' });
+window.cronitor = window.cronitor || function () { (window.cronitor.q = window.cronitor.q || []).push(arguments); };
+cronitor('config', { clientKey: 'fa1c71777ea3e350d90b75f88bf0d919' });
