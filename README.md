@@ -1,3 +1,8 @@
+<div align="center">
+  <img src="https://joshua-cislini.github.io/og-image.png" alt="OG Image" />
+</div>
+<div align="center">
+
 # [joshua-cislini.github.io](https://joshua-cislini.github.io/)
 ### [Is the webpage down?](https://joshua-cislini.cronitorstatus.com/)
 
