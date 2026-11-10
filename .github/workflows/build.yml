@@ -37,8 +37,9 @@ jobs:
       - name: Set lastmod / dateModified to today (UTC)
         run: |
           TODAY=$(date -u +%F)
+          NOW=$(date -u +%Y-%m-%dT%H:%M:%SZ)
           sed -i "s|<lastmod>.*</lastmod>|<lastmod>${TODAY}</lastmod>|" sitemap.xml
-          sed -i "s|\"dateModified\": \"[0-9-]*\"|\"dateModified\": \"${TODAY}\"|" index.html
+          sed -i -E "s|\"dateModified\": \"[^\"]*\"|\"dateModified\": \"${NOW}\"|" index.html
 
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
